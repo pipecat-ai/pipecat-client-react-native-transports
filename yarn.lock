@@ -1073,10 +1073,10 @@
   resolved "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@daily-co/daily-js@^0.82.0":
-  version "0.82.0"
-  resolved "https://registry.npmjs.org/@daily-co/daily-js/-/daily-js-0.82.0.tgz"
-  integrity sha512-Arp+ToyKWjT8alGark5fxem2prDP3qtVvIqwuzdhv76iFdOHaboAapkHy2zDHGq9T3u6//2hbnNPxuxuWIzAIA==
+"@daily-co/daily-js@^0.84.0":
+  version "0.84.0"
+  resolved "https://registry.yarnpkg.com/@daily-co/daily-js/-/daily-js-0.84.0.tgz#4a1c7c88c8b5c0e3fc0b5b56d52c8c6e6fa9fa98"
+  integrity sha512-/ynXrMDDkRXhLlHxiFNf9QU5yw4ZGPr56wNARgja/Tiid71UIniundTavCNF5cMb2I1vNoMh7oEJ/q8stg/V7g==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@sentry/browser" "^8.33.1"
@@ -1084,20 +1084,20 @@
     dequal "^2.0.3"
     events "^3.1.0"
 
-"@daily-co/react-native-daily-js@^0.79.0":
-  version "0.79.0"
-  resolved "https://registry.npmjs.org/@daily-co/react-native-daily-js/-/react-native-daily-js-0.79.0.tgz"
-  integrity sha512-z3UcZyCgh0tJv9RbSvFN/Ije9slExUsWGnxRKcoB6l6aE2WKuyeL6+54hMnfwZZCgREHg0cxJNDqub/9jIhxSg==
+"@daily-co/react-native-daily-js@^0.81.0":
+  version "0.81.0"
+  resolved "https://registry.yarnpkg.com/@daily-co/react-native-daily-js/-/react-native-daily-js-0.81.0.tgz#59df7870142e6d0fc4e5b729efb64cbe882e307b"
+  integrity sha512-vOizJXTfSLSl2tSPtpiwaBByQ9SH0MeCOD2NMj0FpXhZGtfJbaIcndEfk6DNPRtpuzdF7QTM+QJFWavb5IIPvA==
   dependencies:
-    "@daily-co/daily-js" "^0.82.0"
+    "@daily-co/daily-js" "^0.84.0"
     "@types/react-native-background-timer" "^2.0.0"
     base-64 "^1.0.0"
     react-native-url-polyfill "^1.1.2"
 
-"@daily-co/react-native-webrtc@^118.0.3-daily.4":
-  version "118.0.3-daily.4"
-  resolved "https://registry.npmjs.org/@daily-co/react-native-webrtc/-/react-native-webrtc-118.0.3-daily.4.tgz"
-  integrity sha512-uvF+9aCDJuBap82pCz2UUxF4P4MKuTO6hSHINatDFR8w0ga2Fxk3cnKWLixMS/eS6+QOBT7QQur84I2NLuKSlg==
+"@daily-co/react-native-webrtc@^124.0.6-daily.1":
+  version "124.0.6-daily.1"
+  resolved "https://registry.yarnpkg.com/@daily-co/react-native-webrtc/-/react-native-webrtc-124.0.6-daily.1.tgz#fbb9ed535b0d89cde3fc70e82e49c27bd2f967fa"
+  integrity sha512-oI3vl5hUkoXTiw3zMJZC+eIdYXejCAA1JVkn2/r3b1FStnF6A2/MPCHEXPVmZHPy+rdJcSi7P7TtG2pLkmo8Jw==
   dependencies:
     base64-js "1.5.1"
     debug "4.3.4"
@@ -1424,10 +1424,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@pipecat-ai/client-js@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.npmjs.org/@pipecat-ai/client-js/-/client-js-1.2.0.tgz"
-  integrity sha512-T1RQE7bBD35vq6RHA8Oc1NyBOCOR7FqvpTGH1+e24n4TbXspz9jK4kuj1CoBK02BTKZ+UHJlkHnG9DRLtxpf+A==
+"@pipecat-ai/client-js@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@pipecat-ai/client-js/-/client-js-1.4.0.tgz#fec361219e7a0f4c1c5516934cb0f3e826005c5d"
+  integrity sha512-HOWz4OWXbIetkywwrfVuEiEpU8FVFksmyP/rSWHSQGu/V2MJflAXfFt2tQmtu8RiQCA7C1qurfZGsxeccYmJXw==
   dependencies:
     "@types/events" "^3.0.3"
     bowser "^2.11.0"
