@@ -359,7 +359,7 @@ declare class Logger {
   warn(...args: unknown[]): void;
   error(...args: unknown[]): void;
 }
-export const logger: Logger;
+export const logger: Logger = Logger.getInstance();
 export type ILogger = Logger;
 interface QueuedRTVIMessage {
   message: RTVIMessage;
