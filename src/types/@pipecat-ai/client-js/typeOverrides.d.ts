@@ -50,7 +50,13 @@ export class StartBotError extends RTVIError {
 export class TransportStartError extends RTVIError {
   constructor(message?: string | undefined);
 }
+export class InvalidTransportParamsError extends RTVIError {
+  constructor(message?: string | undefined);
+}
 export class BotNotReadyError extends RTVIError {
+  constructor(message?: string | undefined);
+}
+export class BotAlreadyStartedError extends RTVIError {
   constructor(message?: string | undefined);
 }
 export class UnsupportedFeatureError extends RTVIError {
@@ -91,6 +97,7 @@ export enum RTVIMessageType {
   CLIENT_READY = 'client-ready',
   DISCONNECT_BOT = 'disconnect-bot',
   CLIENT_MESSAGE = 'client-message',
+  SEND_TEXT = 'send-text',
   APPEND_TO_CONTEXT = 'append-to-context',
   /**
    * Inbound Messages
@@ -201,11 +208,17 @@ export type LLMFunctionCallResultResponse = {
   args: Record<string, unknown>;
   result: LLMFunctionCallResult;
 };
+export type SendTextOptions = {
+  run_immediately?: boolean;
+  audio_response?: boolean;
+};
+/** DEPRECATED */
 export type LLMContextMessage = {
   role: 'user' | 'assistant';
   content: unknown;
   run_immediately?: boolean;
 };
+/** DEPRECATED */
 export type AppendToContextResultData = {
   result: Record<string, unknown> | string;
 };
@@ -226,6 +239,7 @@ export enum RTVIEvent {
   Disconnected = 'disconnected',
   TransportStateChanged = 'transportStateChanged',
   /** remote connection state events */
+  BotStarted = 'botStarted',
   BotConnected = 'botConnected',
   BotReady = 'botReady',
   BotDisconnected = 'botDisconnected',
@@ -276,6 +290,7 @@ export type RTVIEvents = Partial<{
   disconnected: () => void;
   transportStateChanged: (state: TransportState) => void;
   /** remote connection state events */
+  botStarted: (botResponse: unknown) => void;
   botConnected: (participant: Participant) => void;
   botReady: (botData: BotReadyData) => void;
   botDisconnected: (participant: Participant) => void;
@@ -378,12 +393,17 @@ type Serializable =
   | {
       [key: number | string]: Serializable;
     };
-interface APIRequest {
+export interface APIRequest {
   endpoint: string | URL | globalThis.Request;
   headers?: Headers;
   requestData?: Serializable;
   timeout?: number;
 }
+export function isAPIRequest(value: unknown): boolean;
+export function makeRequest(
+  cxnOpts: APIRequest,
+  abortController?: AbortController
+): Promise<unknown>;
 export type Tracks = {
   local: {
     audio?: MediaStreamTrack;
@@ -458,6 +478,21 @@ export class TransportWrapper {
   constructor(transport: Transport);
   get proxy(): Transport;
 }
+interface JSAboutClientData extends AboutClientData {
+  platform_details: {
+    browser?: string;
+    browser_version?: string;
+    platform_type?: string;
+    engine?: string;
+    device_memory?: number;
+    language?: string;
+    connection?: {
+      effectiveType?: string;
+      downlink?: number;
+    };
+  };
+}
+export function learnAboutClient(): JSAboutClientData;
 export type FunctionCallParams = {
   functionName: string;
   arguments: Record<string, unknown>;
@@ -470,6 +505,7 @@ export type RTVIEventCallbacks = Partial<{
   onDisconnected: () => void;
   onError: (message: RTVIMessage) => void;
   onTransportStateChanged: (state: TransportState) => void;
+  onBotStarted: (botResponse: unknown) => void;
   onBotConnected: (participant: Participant) => void;
   onBotReady: (botReadyData: BotReadyData) => void;
   onBotDisconnected: (participant: Participant) => void;
@@ -510,6 +546,7 @@ export type RTVIEventCallbacks = Partial<{
   onBotTtsText: (data: BotTTSTextData) => void;
   onBotTtsStarted: () => void;
   onBotTtsStopped: () => void;
+  onLLMFunctionCall: (data: LLMFunctionCallData) => void;
   onBotLlmSearchResponse: (data: BotLLMSearchResponseData) => void;
 }>;
 export interface PipecatClientOptions {
@@ -624,7 +661,10 @@ export class PipecatClient extends RTVIEventEmitter {
     functionName: string,
     callback: FunctionCallCallback
   ): void;
+  unregisterFunctionCallHandler(functionName: string): void;
+  unregisterAllFunctionCallHandlers(): void;
   appendToContext(context: LLMContextMessage): Promise<boolean>;
+  sendText(content: string, options?: SendTextOptions): Promise<void>;
   /**
    * Disconnects the bot, but keeps the session alive
    */

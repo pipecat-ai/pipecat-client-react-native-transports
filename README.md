@@ -22,17 +22,16 @@ Install `@pipecat-ai/react-native-daily-transport` along with its peer dependenc
 
 ```bash
 npm i @pipecat-ai/react-native-daily-transport
-npm i @daily-co/react-native-daily-js@^0.73.0
-npm i @daily-co/react-native-webrtc@^118.0.3-daily.2
-npm i @react-native-async-storage/async-storage@^1.23.1
+npm i @daily-co/react-native-daily-js@^0.81.0
+npm i @daily-co/react-native-webrtc@^124.0.6-daily.1
+npm i @react-native-async-storage/async-storage@^1.24.0
 npm i react-native-background-timer@^2.4.1
 npm i react-native-get-random-values@^1.11.0
 ```
 
 If you are using Expo, you will also need to add the following dependencies:
 ```bash
-npm i @config-plugins/react-native-webrtc@^10.0.0
-npm i @daily-co/config-plugin-rn-daily-js@0.0.7
+npm i @daily-co/config-plugin-rn-daily-js@0.0.10
 ```
 
 All the details about Expo can be found [here](https://github.com/daily-co/rn-daily-js-expo-config-plugin).
@@ -44,51 +43,30 @@ A full demo can be found [here](https://github.com/daily-demos/daily-bots-react-
 Instantiate an `RTVIClient` instance, wire up the bot's audio, and start the conversation:
 
 ```typescript
-let voiceClient = new RTVIClient({
+let pipecatClient = new PipecatClient({
   transport: new RNDailyTransport(),
-  params: {
-    baseUrl: url,
-    config: [
-      {
-        service: "tts",
-        options: [
-          { name: "voice", value: "79a125e8-cd45-4c13-8a67-188112f4dd22" },
-        ],
-      },
-      {
-        service: "llm",
-        options: [
-          { name: "model", value: "meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo" },
-          {
-            name: "initial_messages",
-            value: [
-              {
-                role: "system",
-                content:
-                  "You are a assistant called ExampleBot. You can ask me anything. Keep responses brief and legible. Your responses will converted to audio. Please do not include any special characters in your response other than '!' or '?'. Start by briefly introducing yourself.",
-              },
-            ],
-          },
-          { name: "run_on_config", value: true },
-        ],
-      },
-    ],
-    requestData: {
-      services: {
-        llm: "together",
-        tts: "cartesia",
-      },
-    },
-    endpoints: {
-      connect: "/start",
-      action: "/action"
-    }
-  },
   enableMic: true,
-  enableCam: false
-})
+  enableCam: false,
+  callbacks: {
+    onConnected: () => {
+      setInCall(true);
+    },
+    onDisconnected: () => {
+      setInCall(false);
+    },
+    onTransportStateChanged: (state) => {
+      console.log(`Transport state changed: ${state}`);
+      setCurrentState(state);
+    },
+    onError: (error) => {
+      console.log('Error:', JSON.stringify(error));
+    },
+  },
+});
 
-await voiceClient.start()
+await client?.startBotAndConnect({
+  endpoint: baseUrl + '/connect',
+});
 ```
 
 > Note: To enable screen sharing on iOS, follow the instructions in the [Daily Framework RN Screen Share extension](https://github.com/daily-co/rn-screen-share-extension/).
