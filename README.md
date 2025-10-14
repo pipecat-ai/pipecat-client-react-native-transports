@@ -36,7 +36,7 @@ npm i @daily-co/config-plugin-rn-daily-js@0.0.10
 
 All the details about Expo can be found [here](https://github.com/daily-co/rn-daily-js-expo-config-plugin).
 
-A full demo can be found [here](https://github.com/daily-demos/daily-bots-react-native-demo/)
+A full demo can be found [here](https://github.com/pipecat-ai/pipecat-examples/tree/main/simple-chatbot/client/react-native)
 
 ## Quick Start
 
