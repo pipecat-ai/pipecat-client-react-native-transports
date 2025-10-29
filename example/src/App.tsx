@@ -1,11 +1,5 @@
-import {
-  View,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  Button,
-  TextInput,
-} from 'react-native';
+import { View, StyleSheet, Text, Button, TextInput } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import React, { useState } from 'react';
 
