@@ -19,7 +19,7 @@
     "clean": "del-cli lib",
     "prepare": "bob build",
     "build": "bob build",
-    "tag": "scripts/tag",
+    "tag": "../../scripts/tag",
     "prepublishOnly": "npm run tag"
   },
   "keywords": [
