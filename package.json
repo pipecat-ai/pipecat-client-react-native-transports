@@ -1,0 +1,25 @@
+{
+  "name": "pipecat-react-native-transports",
+  "private": true,
+  "workspaces": [
+    "transports/*"
+  ],
+  "scripts": {
+    "build": "yarn workspaces run build",
+    "clean": "yarn workspaces run clean",
+    "lint": "yarn workspaces run lint",
+    "test": "yarn workspaces run test",
+    "typecheck": "yarn workspaces run typecheck"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "eslint": "8.51.0",
+    "prettier": "3.0.3",
+    "@types/jest": "29.5.5",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "jest": "^29.7.0",
+    "@react-native/eslint-config": "^0.73.1",
+    "@types/react": "19.0.14"
+  }
+}
