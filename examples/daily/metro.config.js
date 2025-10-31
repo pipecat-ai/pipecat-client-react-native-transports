@@ -17,4 +17,11 @@ const config = withMetroConfig(getDefaultConfig(__dirname), {
 
 config.resolver.unstable_enablePackageExports = true;
 
+// Add additional node_modules paths
+config.resolver.nodeModulesPaths = [
+  path.resolve(__dirname, 'node_modules'),
+  path.resolve(__dirname, '../../node_modules'),
+  path.resolve(__dirname, '../../transports/daily/node_modules'),
+];
+
 module.exports = config;
