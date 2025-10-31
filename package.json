@@ -7,11 +7,9 @@
   ],
   "packageManager": "yarn@3.6.1",
   "scripts": {
-    "build": "yarn workspaces run build",
-    "clean": "yarn workspaces run clean",
-    "lint": "yarn workspaces run lint",
-    "test": "yarn workspaces run test",
-    "typecheck": "yarn workspaces run typecheck"
+    "build": "yarn workspaces foreach run build",
+    "clean": "yarn workspaces foreach run clean",
+    "typecheck": "yarn workspaces foreach run typecheck"
   },
   "devDependencies": {
     "@react-native/eslint-config": "^0.73.1",

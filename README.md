@@ -88,8 +88,8 @@ Typical media flow using a DailyTransport:
 ### Build the transport libraries
 
 ```bash
-$ npm i
-$ npm run build
+$ yarn install
+$ yarn build
 ```
 
 ## License
