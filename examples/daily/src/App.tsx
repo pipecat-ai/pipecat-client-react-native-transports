@@ -1,10 +1,11 @@
 import { View, StyleSheet, Text, Button, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import { RNDailyTransport } from '@pipecat-ai/react-native-daily-transport';
 import { PipecatClient, TransportState } from '@pipecat-ai/client-js';
+
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -77,7 +78,7 @@ export default function App() {
     try {
       let client = createPipecatClient();
       await client?.startBotAndConnect({
-        endpoint: baseUrl + '/connect',
+        endpoint: baseUrl + '/start',
       });
       setPipecatClient(client);
     } catch (e) {

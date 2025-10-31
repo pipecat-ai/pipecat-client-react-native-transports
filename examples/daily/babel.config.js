@@ -1,8 +1,8 @@
 const path = require('path');
 const { getConfig } = require('react-native-builder-bob/babel-config');
-const pkg = require('../package.json');
+const pkg = require('../../transports/daily/package.json');
 
-const root = path.resolve(__dirname, '..');
+const root = path.resolve(__dirname, '../../transports/daily/');
 
 module.exports = function (api) {
   api.cache(true);

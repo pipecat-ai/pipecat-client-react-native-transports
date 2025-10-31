@@ -3,16 +3,9 @@
   "version": "1.4.0",
   "license": "BSD-2-Clause",
   "description": "React Native library for connecting to RTVI client using Daily",
-  "main": "./lib/module/index.js",
-  "types": "./lib/typescript/src/index.d.ts",
-  "exports": {
-    ".": {
-      "source": "./src/index.tsx",
-      "types": "./lib/typescript/src/index.d.ts",
-      "default": "./lib/module/index.js"
-    },
-    "./package.json": "./package.json"
-  },
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/module/src/index.d.ts",
   "files": [
     "src",
     "lib",
@@ -84,28 +77,25 @@
       ]
     ]
   },
-  "dependencies": {
-    "@pipecat-ai/client-js": "^1.4.0"
-  },
-  "workspaces": [
-    "example"
-  ],
-  "packageManager": "yarn@3.6.1",
   "peerDependencies": {
-    "@daily-co/react-native-daily-js": "^0.81.0",
+    "@daily-co/react-native-daily-js": "^0.82.0",
     "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
+    "@pipecat-ai/client-js": "*",
     "@react-native-async-storage/async-storage": "^1.24.0",
+    "react-native": "*",
     "react-native-background-timer": "^2.4.1",
     "react-native-get-random-values": "^1.11.0"
   },
   "devDependencies": {
-    "@daily-co/react-native-daily-js": "^0.81.0",
+    "@daily-co/react-native-daily-js": "^0.82.0",
     "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
+    "@pipecat-ai/client-js": "^1.4.0",
     "@react-native-async-storage/async-storage": "^1.24.0",
     "@types/base-64": "^1.0.2",
     "del-cli": "^6.0.0",
     "react-native-background-timer": "^2.4.1",
     "react-native-builder-bob": "^0.40.13",
-    "react-native-get-random-values": "^1.11.0"
+    "react-native-get-random-values": "^1.11.0",
+    "typescript": "*"
   }
 }
