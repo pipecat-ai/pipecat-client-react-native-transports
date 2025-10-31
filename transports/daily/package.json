@@ -30,12 +30,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rtvi-ai/rtvi-client-react-native-daily.git"
+    "url": "git+https://github.com/pipecat-ai/pipecat-client-react-native-transports.git"
   },
   "bugs": {
-    "url": "https://github.com/rtvi-ai/rtvi-client-react-native-daily/issues"
+    "url": "https://github.com/pipecat-ai/pipecat-client-react-native-transports/issues"
   },
-  "homepage": "https://github.com/rtvi-ai/rtvi-client-react-native-daily#readme",
+  "homepage": "https://github.com/pipecat-ai/pipecat-client-react-native-transports#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
