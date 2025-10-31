@@ -25,10 +25,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
-    "typescript": "~5.9.3",
     "@types/react": "19.1.10",
     "react-native-builder-bob": "^0.40.13",
-    "react-native-monorepo-config": "^0.1.9"
+    "react-native-monorepo-config": "^0.1.9",
+    "typescript": "~5.9.3"
   },
   "private": true,
   "resolutions": {
