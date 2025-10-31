@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text, Button, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { RNDailyTransport } from '@pipecat-ai/react-native-daily-transport';
 import { PipecatClient, TransportState } from '@pipecat-ai/client-js';

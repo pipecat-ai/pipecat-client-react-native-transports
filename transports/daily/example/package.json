@@ -1,6 +1,7 @@
 {
   "name": "@pipecat-ai/react-native-daily-example",
   "version": "1.0.0",
+  "main": "index.js",
   "scripts": {
     "start": "expo start --dev-client",
     "android": "expo run:android --device",
@@ -25,8 +26,9 @@
   "devDependencies": {
     "@babel/core": "^7.28.5",
     "typescript": "~5.9.3",
-    "@types/react": "19.1.0",
-    "@types/react-native": "^0.73.0"
+    "@types/react": "19.1.10",
+    "react-native-builder-bob": "^0.40.13",
+    "react-native-monorepo-config": "^0.1.9"
   },
   "private": true,
   "resolutions": {

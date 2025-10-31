@@ -1,5 +1,6 @@
 {
   "name": "@pipecat-ai/react-native-daily-transport",
+  "private": "true",
   "version": "1.4.0",
   "license": "BSD-2-Clause",
   "description": "React Native library for connecting to RTVI client using Daily",
@@ -8,6 +9,7 @@
   "module": "./lib/module/index.js",
   "types": "./lib/typescript/module/src/index.d.ts",
   "files": [
+    "src",
     "lib",
     "package.json",
     "README.md"
@@ -38,9 +40,6 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
-  "resolutions": {
-    "@types/react": "18.0.38"
-  },
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
@@ -48,30 +47,6 @@
       "<rootDir>/lib/"
     ]
   },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@react-native",
-      "prettier"
-    ],
-    "rules": {
-      "react/react-in-jsx-scope": "off",
-      "prettier/prettier": [
-        "error",
-        {
-          "quoteProps": "consistent",
-          "singleQuote": true,
-          "tabWidth": 2,
-          "trailingComma": "es5",
-          "useTabs": false
-        }
-      ]
-    }
-  },
-  "eslintIgnore": [
-    "node_modules/",
-    "lib/"
-  ],
   "prettier": {
     "quoteProps": "consistent",
     "singleQuote": true,
@@ -98,8 +73,7 @@
       [
         "typescript",
         {
-          "project": "tsconfig.build.json",
-          "esm": true
+          "project": "tsconfig.build.json"
         }
       ]
     ]
@@ -107,6 +81,9 @@
   "dependencies": {
     "@pipecat-ai/client-js": "^1.4.0"
   },
+  "workspaces": [
+    "example"
+  ],
   "peerDependencies": {
     "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
     "@daily-co/react-native-daily-js": "^0.81.0",
@@ -121,7 +98,7 @@
     "react-native-get-random-values": "^1.11.0",
     "@types/base-64": "^1.0.2",
     "react-native-background-timer": "^2.4.1",
-    "del-cli": "^5.1.0",
-    "react-native-builder-bob": "^0.39.1"
+    "del-cli": "^6.0.0",
+    "react-native-builder-bob": "^0.40.13"
   }
 }

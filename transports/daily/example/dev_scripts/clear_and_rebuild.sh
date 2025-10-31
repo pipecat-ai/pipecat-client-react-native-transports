@@ -1,5 +1,6 @@
 #!/bin/bash
 # clear
+rm -rf .expo
 rm -rf ./ios/
 rm -rf ./android/
 rm -rf node_modules/
