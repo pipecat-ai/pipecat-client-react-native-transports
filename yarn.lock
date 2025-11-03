@@ -2660,6 +2660,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@pipecat-ai/react-native-small-webrtc-transport@workspace:transports/smallwebrtc":
+  version: 0.0.0-use.local
+  resolution: "@pipecat-ai/react-native-small-webrtc-transport@workspace:transports/smallwebrtc"
+  dependencies:
+    "@daily-co/react-native-webrtc": ^124.0.6-daily.1
+    "@pipecat-ai/client-js": ^1.4.0
+    "@types/base-64": ^1.0.2
+    "@types/lodash": ^4.17.20
+    del-cli: ^6.0.0
+    lodash: ^4.17.21
+    react-native-builder-bob: ^0.40.13
+    typescript: "*"
+  peerDependencies:
+    "@daily-co/react-native-webrtc": ^124.0.6-daily.1
+    react-native: "*"
+  languageName: unknown
+  linkType: soft
+
 "@pkgjs/parseargs@npm:^0.11.0":
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
@@ -3128,6 +3146,13 @@ __metadata:
   version: 7.0.15
   resolution: "@types/json-schema@npm:7.0.15"
   checksum: 97ed0cb44d4070aecea772b7b2e2ed971e10c81ec87dd4ecc160322ffa55ff330dace1793489540e3e318d90942064bb697cc0f8989391797792d919737b3b98
+  languageName: node
+  linkType: hard
+
+"@types/lodash@npm:^4.17.20":
+  version: 4.17.20
+  resolution: "@types/lodash@npm:4.17.20"
+  checksum: dc7bb4653514dd91117a4c4cec2c37e2b5a163d7643445e4757d76a360fabe064422ec7a42dde7450c5e7e0e7e678d5e6eae6d2a919abcddf581d81e63e63839
   languageName: node
   linkType: hard
 

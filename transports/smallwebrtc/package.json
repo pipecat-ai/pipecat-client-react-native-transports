@@ -1,0 +1,95 @@
+{
+  "name": "@pipecat-ai/react-native-small-webrtc-transport",
+  "version": "1.4.0",
+  "license": "BSD-2-Clause",
+  "description": "React Native library for connecting to RTVI client using Small WebRTC",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "types": "./lib/typescript/module/transports/smallwebrtc/src/index.d.ts",
+  "files": [
+    "src",
+    "lib",
+    "package.json",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "jest",
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "clean": "del-cli lib",
+    "prepare": "bob build",
+    "build": "bob build",
+    "tag": "../../scripts/tag",
+    "prepublishOnly": "npm run tag"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pipecat-ai/pipecat-client-react-native-transports.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pipecat-ai/pipecat-client-react-native-transports/issues"
+  },
+  "homepage": "https://github.com/pipecat-ai/pipecat-client-react-native-transports#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "jest": {
+    "preset": "react-native",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/example/node_modules",
+      "<rootDir>/lib/"
+    ]
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      [
+        "commonjs",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "module",
+        {
+          "esm": true
+        }
+      ],
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "@pipecat-ai/client-js": "^1.4.0",
+    "lodash": "^4.17.21"
+  },
+  "peerDependencies": {
+    "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
+    "@types/base-64": "^1.0.2",
+    "@types/lodash": "^4.17.20",
+    "del-cli": "^6.0.0",
+    "react-native-builder-bob": "^0.40.13",
+    "typescript": "*"
+  }
+}
