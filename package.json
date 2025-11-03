@@ -23,9 +23,5 @@
     "jest": "^29.7.0",
     "prettier": "3.0.3",
     "typescript": "5.9.3"
-  },
-  "peerDependencies": {
-    "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
-    "@pipecat-ai/client-js": "^1.4.0"
   }
 }
