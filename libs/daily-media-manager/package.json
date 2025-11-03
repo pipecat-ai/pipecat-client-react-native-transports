@@ -5,7 +5,7 @@
   "description": "React Native Daily Media manager",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
-  "types": "./lib/typescript/module/src/index.d.ts",
+  "types": "./lib/typescript/module/libs/daily-media-manager/src/index.d.ts",
   "files": [
     "src",
     "lib",
