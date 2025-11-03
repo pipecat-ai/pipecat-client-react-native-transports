@@ -2614,6 +2614,28 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@pipecat-ai/react-native-daily-media-manager@workspace:libs/daily-media-manager":
+  version: 0.0.0-use.local
+  resolution: "@pipecat-ai/react-native-daily-media-manager@workspace:libs/daily-media-manager"
+  dependencies:
+    "@daily-co/react-native-daily-js": ^0.82.0
+    "@daily-co/react-native-webrtc": ^124.0.6-daily.1
+    "@react-native-async-storage/async-storage": ^1.24.0
+    del-cli: ^6.0.0
+    react-native-background-timer: ^2.4.1
+    react-native-builder-bob: ^0.40.13
+    react-native-get-random-values: ^1.11.0
+    typescript: "*"
+  peerDependencies:
+    "@daily-co/react-native-daily-js": ^0.82.0
+    "@daily-co/react-native-webrtc": ^124.0.6-daily.1
+    "@react-native-async-storage/async-storage": ^1.24.0
+    react-native: "*"
+    react-native-background-timer: ^2.4.1
+    react-native-get-random-values: ^1.11.0
+  languageName: unknown
+  linkType: soft
+
 "@pipecat-ai/react-native-daily-transport@*, @pipecat-ai/react-native-daily-transport@workspace:transports/daily":
   version: 0.0.0-use.local
   resolution: "@pipecat-ai/react-native-daily-transport@workspace:transports/daily"
@@ -9004,6 +9026,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "pipecat-react-native-transports@workspace:."
   dependencies:
+    "@daily-co/react-native-webrtc": ^124.0.6-daily.1
+    "@pipecat-ai/client-js": ^1.4.0
     "@react-native/eslint-config": ^0.73.1
     "@types/jest": 29.5.5
     eslint: 8.51.0
@@ -9012,6 +9036,9 @@ __metadata:
     jest: ^29.7.0
     prettier: 3.0.3
     typescript: 5.9.3
+  peerDependencies:
+    "@daily-co/react-native-webrtc": ^124.0.6-daily.1
+    "@pipecat-ai/client-js": ^1.4.0
   languageName: unknown
   linkType: soft
 

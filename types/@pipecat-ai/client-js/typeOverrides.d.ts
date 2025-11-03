@@ -359,6 +359,7 @@ declare class Logger {
   warn(...args: unknown[]): void;
   error(...args: unknown[]): void;
 }
+// @ts-ignore
 export const logger: Logger = Logger.getInstance();
 export type ILogger = Logger;
 interface QueuedRTVIMessage {

@@ -2,6 +2,7 @@
   "name": "pipecat-react-native-transports",
   "private": true,
   "workspaces": [
+    "libs/*",
     "transports/*",
     "examples/*"
   ],
@@ -12,6 +13,8 @@
     "typecheck": "yarn workspaces foreach run typecheck"
   },
   "devDependencies": {
+    "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
+    "@pipecat-ai/client-js": "^1.4.0",
     "@react-native/eslint-config": "^0.73.1",
     "@types/jest": "29.5.5",
     "eslint": "8.51.0",
@@ -20,5 +23,9 @@
     "jest": "^29.7.0",
     "prettier": "3.0.3",
     "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
+    "@pipecat-ai/client-js": "^1.4.0"
   }
 }
