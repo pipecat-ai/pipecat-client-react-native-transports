@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 
 import { RNSmallWebRTCTransport, SmallWebRTCTransportConstructorOptions } from '@pipecat-ai/react-native-small-webrtc-transport';
 import { PipecatClient, TransportState } from '@pipecat-ai/client-js';
+import {DailyMediaManager} from "@pipecat-ai/react-native-daily-media-manager/src";
 
 
 const styles = StyleSheet.create({
@@ -53,8 +54,7 @@ export default function App() {
 
   const createPipecatClient = () => {
     const options: SmallWebRTCTransportConstructorOptions = {
-      //TODO: implement it
-      mediaManager: null
+      mediaManager: new DailyMediaManager()
     }
     return new PipecatClient({
       transport: new RNSmallWebRTCTransport(options),
