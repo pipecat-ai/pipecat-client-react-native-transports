@@ -6,7 +6,7 @@ import {
 import { MediaDeviceInfo } from '@daily-co/react-native-webrtc';
 
 export abstract class MediaManager {
-  declare protected _options: PipecatClientOptions;
+  protected _options?: PipecatClientOptions;
   protected _callbacks: RTVIEventCallbacks = {};
 
   protected _micEnabled: boolean;
