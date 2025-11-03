@@ -1,3 +1,3 @@
-import { RNSmallWebRTCTransport } from './transport';
+import { RNSmallWebRTCTransport, SmallWebRTCTransportConstructorOptions } from './transport';
 
-export { RNSmallWebRTCTransport };
+export { RNSmallWebRTCTransport, SmallWebRTCTransportConstructorOptions };
