@@ -7,7 +7,6 @@
   "module": "./lib/module/index.js",
   "types": "./lib/typescript/module/transports/smallwebrtc/src/index.d.ts",
   "files": [
-    "src",
     "lib",
     "package.json",
     "README.md"
