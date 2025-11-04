@@ -463,7 +463,7 @@ export class RNSmallWebRTCTransport extends Transport {
     // @ts-ignore
     pc.addEventListener('signalingstatechange', () => {
       logger.debug(`signalingState: ${this.pc!.signalingState}`);
-      if (this.pc!.signalingState == 'stable') {
+      if (this.pc!.signalingState === 'stable') {
         this.handleReconnectionCompleted();
       }
     });
@@ -1052,12 +1052,12 @@ export class RNSmallWebRTCTransport extends Transport {
       if (isKind) {
         const match = lines[i]?.match(codecRegex);
         if (match) {
-          allowed.push(parseInt(match[1]!));
+          allowed.push(parseInt(match[1]!, 10));
         }
 
         const matchRtx = lines[i]?.match(rtxRegex);
-        if (matchRtx && allowed.includes(parseInt(matchRtx[2]!))) {
-          allowed.push(parseInt(matchRtx[1]!));
+        if (matchRtx && allowed.includes(parseInt(matchRtx[2]!, 10))) {
+          allowed.push(parseInt(matchRtx[1]!, 10));
         }
       }
     }
@@ -1075,7 +1075,7 @@ export class RNSmallWebRTCTransport extends Transport {
 
       if (isKind) {
         const skipMatch = lines[i]?.match(skipRegex);
-        if (skipMatch && !allowed.includes(parseInt(skipMatch[2]!))) {
+        if (skipMatch && !allowed.includes(parseInt(skipMatch[2]!, 10))) {
           continue;
         } else if (lines[i]?.match(videoRegex)) {
           sdp +=

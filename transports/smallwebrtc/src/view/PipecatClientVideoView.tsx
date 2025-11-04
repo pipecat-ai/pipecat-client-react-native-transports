@@ -23,8 +23,8 @@ export default function PipecatClientVideoView(props: Props) {
     const tracks = [props.videoTrack, props.audioTrack].filter(
       (t) => t
     ) as MediaStreamTrack[];
-    const stream = tracks.length > 0 ? new MediaStream(tracks) : null;
-    setStream(stream);
+    const newStream = tracks.length > 0 ? new MediaStream(tracks) : null;
+    setStream(newStream);
   }, [props.videoTrack, props.audioTrack]);
 
   const rtcView = stream ? (
@@ -41,7 +41,8 @@ export default function PipecatClientVideoView(props: Props) {
       style={
         props.videoTrack || Platform.OS === 'android'
           ? props.style
-          : { display: 'none' }
+          : // eslint-disable-next-line react-native/no-inline-styles
+            { display: 'none' }
       }
     />
   ) : null;

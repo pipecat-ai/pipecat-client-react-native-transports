@@ -21,9 +21,16 @@ export default defineConfig([
     rules: {
       'react/react-in-jsx-scope': 'off',
       'prettier/prettier': 'error',
+      'no-void': 'off',
     },
   },
   {
-    ignores: ['node_modules/', 'lib/'],
+    ignores: [
+      'node_modules/',
+      'transports/*/lib/',
+      'transports/*/node_modules/',
+      'libs/*/node_modules/',
+      'libs/*/lib/',
+    ],
   },
 ]);
