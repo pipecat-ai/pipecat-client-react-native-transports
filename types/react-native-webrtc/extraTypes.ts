@@ -18,5 +18,5 @@ export interface RTCIceServer {
   /**
    * Optional credential type. Usually "password" or "oauth".
    */
-  credentialType?: "password" | "oauth";
+  credentialType?: 'password' | 'oauth';
 }

@@ -3,10 +3,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import React, { useState } from 'react';
 
-import { RNSmallWebRTCTransport, SmallWebRTCTransportConstructorOptions } from '@pipecat-ai/react-native-small-webrtc-transport';
-import {APIRequest, PipecatClient, TransportState} from '@pipecat-ai/client-js';
-import {DailyMediaManager} from "@pipecat-ai/react-native-daily-media-manager/src";
-
+import {
+  RNSmallWebRTCTransport,
+  SmallWebRTCTransportConstructorOptions,
+} from '@pipecat-ai/react-native-small-webrtc-transport';
+import {
+  APIRequest,
+  PipecatClient,
+  TransportState,
+} from '@pipecat-ai/client-js';
+import { DailyMediaManager } from '@pipecat-ai/react-native-daily-media-manager/src';
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -57,8 +63,8 @@ export default function App() {
 
   const createPipecatClient = () => {
     const options: SmallWebRTCTransportConstructorOptions = {
-      mediaManager: new DailyMediaManager()
-    }
+      mediaManager: new DailyMediaManager(),
+    };
     return new PipecatClient({
       transport: new RNSmallWebRTCTransport(options),
       enableMic: true,
@@ -89,14 +95,14 @@ export default function App() {
         endpoint: baseUrl + '/start',
         requestData: {
           createDailyRoom: false,
-          enableDefaultIceServers: true
-        }
+          enableDefaultIceServers: true,
+        },
       };
 
       // Add authorization token if provided
       if (authorizationToken.trim()) {
         const headers = new Headers();
-        headers.append("Authorization", `Bearer ${authorizationToken}`);
+        headers.append('Authorization', `Bearer ${authorizationToken}`);
         connectParams.headers = headers;
       }
 

@@ -1,4 +1,4 @@
-import cloneDeep from "lodash/cloneDeep";
+import cloneDeep from 'lodash/cloneDeep';
 import {
   logger,
   makeRequest,
@@ -12,14 +12,19 @@ import {
   UnsupportedFeatureError,
   APIRequest,
   isAPIRequest,
-} from "@pipecat-ai/client-js";
-import { MediaManager } from "../../../types/media-manager/mediaManager";
-import { MediaStreamTrack, RTCPeerConnection, RTCIceCandidate, MediaDeviceInfo } from '@daily-co/react-native-webrtc';
+} from '@pipecat-ai/client-js';
+import { MediaManager } from '../../../types/media-manager/mediaManager';
+import {
+  MediaStreamTrack,
+  RTCPeerConnection,
+  RTCIceCandidate,
+  MediaDeviceInfo,
+} from '@daily-co/react-native-webrtc';
 import { RTCIceServer } from '../../../types/react-native-webrtc/extraTypes';
-import {RTCSessionDescriptionInit} from "@daily-co/react-native-webrtc/lib/typescript/RTCSessionDescription";
+import { RTCSessionDescriptionInit } from '@daily-co/react-native-webrtc/lib/typescript/RTCSessionDescription';
 
 class TrackStatusMessage {
-  type = "trackStatus";
+  type = 'trackStatus';
   receiver_index: number;
   enabled: boolean;
   constructor(receiver_index: number, enabled: boolean) {
@@ -30,11 +35,11 @@ class TrackStatusMessage {
 
 class WebRTCTrack {
   track: MediaStreamTrack;
-  status: "new" | "muted" | "unmuted" | "ended";
+  status: 'new' | 'muted' | 'unmuted' | 'ended';
 
   constructor(track: MediaStreamTrack) {
     this.track = track;
-    this.status = "new";
+    this.status = 'new';
   }
 }
 
@@ -60,12 +65,12 @@ export interface SmallWebRTCTransportConstructorOptions
   mediaManager: MediaManager;
 }
 
-const RENEGOTIATE_TYPE = "renegotiate";
+const RENEGOTIATE_TYPE = 'renegotiate';
 class RenegotiateMessage {
   type = RENEGOTIATE_TYPE;
 }
 
-const PEER_LEFT_TYPE = "peerLeft";
+const PEER_LEFT_TYPE = 'peerLeft';
 class PeerLeftMessageMessage {
   type = PEER_LEFT_TYPE;
 }
@@ -75,7 +80,7 @@ type OutboundSignallingMessage = TrackStatusMessage;
 type InboundSignallingMessage = RenegotiateMessage | PeerLeftMessageMessage;
 
 // Interface for the structure of the signalling message
-const SIGNALLING_TYPE = "signalling";
+const SIGNALLING_TYPE = 'signalling';
 class SignallingMessageObject {
   type: typeof SIGNALLING_TYPE = SIGNALLING_TYPE;
   message: InboundSignallingMessage | OutboundSignallingMessage;
@@ -108,8 +113,8 @@ export class RNSmallWebRTCTransport extends Transport {
   // TODO: need to fix our type definition
   // @ts-ignore
   private dc: RTCDataChannel | null = null;
-  private audioCodec: string | null | "default" = null;
-  private videoCodec: string | null | "default" = null;
+  private audioCodec: string | null | 'default' = null;
+  private videoCodec: string | null | 'default' = null;
   private pc_id: string | null = null;
 
   private reconnectionAttempts = 0;
@@ -136,26 +141,26 @@ export class RNSmallWebRTCTransport extends Transport {
 
     this._webrtcRequest = this._resolveRequestInfo(opts);
 
-    this.mediaManager = opts.mediaManager
+    this.mediaManager = opts.mediaManager;
   }
 
   public initialize(
     options: PipecatClientOptions,
-    messageHandler: (ev: RTVIMessage) => void,
+    messageHandler: (ev: RTVIMessage) => void
   ): void {
     this._options = options;
     this._callbacks = options.callbacks ?? {};
     this._onMessage = messageHandler;
     this.mediaManager.setClientOptions(options);
 
-    this.state = "disconnected";
-    logger.debug("[RTVI Transport] Initialized");
+    this.state = 'disconnected';
+    logger.debug('[RTVI Transport] Initialized');
   }
 
   async initDevices() {
-    this.state = "initializing";
+    this.state = 'initializing';
     await this.mediaManager.initialize();
-    this.state = "initialized";
+    this.state = 'initialized';
   }
 
   setAudioCodec(audioCodec: string | null): void {
@@ -169,19 +174,19 @@ export class RNSmallWebRTCTransport extends Transport {
   _resolveRequestInfo(
     params:
       | SmallWebRTCTransportConstructorOptions
-      | SmallWebRTCTransportConnectionOptions,
+      | SmallWebRTCTransportConnectionOptions
   ): APIRequest | null {
     let requestInfo: APIRequest | null = null;
     const _webrtcUrl = params.webrtcUrl ?? params.connectionUrl ?? null;
     if (_webrtcUrl) {
-      const key = params.webrtcUrl ? "webrtcUrl" : "connectionUrl";
+      const key = params.webrtcUrl ? 'webrtcUrl' : 'connectionUrl';
       logger.warn(`${key} is deprecated. Use webrtcRequestParams instead.`);
       if (params.webrtcRequestParams) {
         logger.warn(
-          `Both ${key} and webrtcRequestParams provided. Using webrtcRequestParams.`,
+          `Both ${key} and webrtcRequestParams provided. Using webrtcRequestParams.`
         );
       } else {
-        if (typeof _webrtcUrl === "string") {
+        if (typeof _webrtcUrl === 'string') {
           requestInfo = { endpoint: _webrtcUrl };
         } else {
           logger.error(`Invalid ${key} provided in params. Ignoring.`);
@@ -194,7 +199,7 @@ export class RNSmallWebRTCTransport extends Transport {
         requestInfo = params.webrtcRequestParams;
       } else {
         logger.error(
-          `Invalid webrtcRequestParams provided in params. Ignoring.`,
+          `Invalid webrtcRequestParams provided in params. Ignoring.`
         );
       }
     }
@@ -204,9 +209,9 @@ export class RNSmallWebRTCTransport extends Transport {
   _getStartEndpointAsString(): string | undefined {
     const startEndpoint = this.startBotParams?.endpoint;
     switch (typeof startEndpoint) {
-      case "string":
+      case 'string':
         return startEndpoint;
-      case "object":
+      case 'object':
         if (startEndpoint instanceof URL) {
           return startEndpoint.toString();
         }
@@ -219,19 +224,19 @@ export class RNSmallWebRTCTransport extends Transport {
 
   private _isValidObject(value: unknown): value is object {
     if (value === null || value === undefined) return false;
-    if (typeof value !== "object") {
-      throw new RTVIError("Invalid connection parameters");
+    if (typeof value !== 'object') {
+      throw new RTVIError('Invalid connection parameters');
     }
     return true;
   }
 
   private _fixConnectionOptionsParams(
     params: Record<string, any>,
-    supportedKeys: string[],
+    supportedKeys: string[]
   ): SmallWebRTCTransportConnectionOptions {
     const snakeToCamel = (snakeCaseString: string) => {
       return snakeCaseString.replace(/_([a-z,A-Z])/g, (_, letter) =>
-        letter.toUpperCase(),
+        letter.toUpperCase()
       );
     };
 
@@ -239,7 +244,7 @@ export class RNSmallWebRTCTransport extends Transport {
     let sessionId;
     for (const [key, val] of Object.entries(params)) {
       const camelKey = snakeToCamel(key);
-      if (camelKey === "sessionId") {
+      if (camelKey === 'sessionId') {
         sessionId = val;
         continue;
       }
@@ -260,7 +265,7 @@ export class RNSmallWebRTCTransport extends Transport {
   }
 
   private _shouldUseStartBotFallback(
-    options: SmallWebRTCTransportConnectionOptions,
+    options: SmallWebRTCTransportConnectionOptions
   ): boolean {
     const hasStartEndpoint = !!this._getStartEndpointAsString();
 
@@ -273,12 +278,12 @@ export class RNSmallWebRTCTransport extends Transport {
   }
 
   private _buildRequestParamsBasedOnStartBotParams(
-    sessionId: string,
+    sessionId: string
   ): APIRequest {
     const startEndpoint = this._getStartEndpointAsString()!;
     const offerUrl = startEndpoint.replace(
-      "/start",
-      `/sessions/${sessionId}/api/offer`,
+      '/start',
+      `/sessions/${sessionId}/api/offer`
     );
     return {
       endpoint: offerUrl,
@@ -287,17 +292,17 @@ export class RNSmallWebRTCTransport extends Transport {
   }
 
   _validateConnectionParams(
-    connectParams: unknown,
+    connectParams: unknown
   ): SmallWebRTCTransportConnectionOptions | undefined {
     if (!this._isValidObject(connectParams)) return undefined;
 
     const params = connectParams as Record<string, any>;
 
     const supportedKeys = [
-      "webrtcUrl",
-      "connectionUrl",
-      "webrtcRequestParams",
-      "iceConfig",
+      'webrtcUrl',
+      'connectionUrl',
+      'webrtcRequestParams',
+      'iceConfig',
     ];
 
     const fixedParams = this._fixConnectionOptionsParams(params, supportedKeys);
@@ -315,11 +320,11 @@ export class RNSmallWebRTCTransport extends Transport {
   }
 
   async _connect(
-    connectParams?: SmallWebRTCTransportConnectionOptions,
+    connectParams?: SmallWebRTCTransportConnectionOptions
   ): Promise<void> {
     if (this._abortController?.signal.aborted) return;
 
-    this.state = "connecting";
+    this.state = 'connecting';
 
     if (connectParams?.iceConfig?.iceServers) {
       this._iceServers = connectParams?.iceConfig?.iceServers;
@@ -331,8 +336,8 @@ export class RNSmallWebRTCTransport extends Transport {
     this._webrtcRequest =
       connectParams?.webrtcRequestParams ?? this._webrtcRequest;
     if (!this._webrtcRequest) {
-      logger.error("No request details provided for WebRTC connection");
-      this.state = "error";
+      logger.error('No request details provided for WebRTC connection');
+      this.state = 'error';
       throw new TransportStartError();
     }
 
@@ -342,7 +347,7 @@ export class RNSmallWebRTCTransport extends Transport {
 
     if (this._abortController?.signal.aborted) return;
 
-    if (this.dc?.readyState !== "open") {
+    if (this.dc?.readyState !== 'open') {
       // Wait until we are actually connected and the data channel is ready
       await new Promise<void>((resolve, reject) => {
         this._connectResolved = resolve;
@@ -350,7 +355,7 @@ export class RNSmallWebRTCTransport extends Transport {
       });
     }
 
-    this.state = "connected";
+    this.state = 'connected';
     this._callbacks.onConnected?.();
   }
 
@@ -359,35 +364,35 @@ export class RNSmallWebRTCTransport extends Transport {
     this.sendSignallingMessage(
       new TrackStatusMessage(
         AUDIO_TRANSCEIVER_INDEX,
-        this.mediaManager.isMicEnabled,
-      ),
+        this.mediaManager.isMicEnabled
+      )
     );
     this.sendSignallingMessage(
       new TrackStatusMessage(
         VIDEO_TRANSCEIVER_INDEX,
-        this.mediaManager.isCamEnabled,
-      ),
+        this.mediaManager.isCamEnabled
+      )
     );
     if (this.mediaManager.supportsScreenShare) {
       this.sendSignallingMessage(
         new TrackStatusMessage(
           SCREEN_VIDEO_TRANSCEIVER_INDEX,
           this.mediaManager.isSharingScreen &&
-          !!this.mediaManager.tracks().local.screenVideo,
-        ),
+            !!this.mediaManager.tracks().local.screenVideo
+        )
       );
     }
   }
 
   sendReadyMessage() {
-    this.state = "ready";
+    this.state = 'ready';
     // Sending message that the client is ready, just for testing
     //this.dc?.send(JSON.stringify({id: 'clientReady', label: 'rtvi-ai', type:'client-ready'}))
     this.sendMessage(RTVIMessage.clientReady());
   }
 
   sendMessage(message: RTVIMessage) {
-    if (!this.dc || this.dc.readyState !== "open") {
+    if (!this.dc || this.dc.readyState !== 'open') {
       logger.warn(`Datachannel is not ready. Message not sent: ${message}`);
       return;
     }
@@ -395,7 +400,7 @@ export class RNSmallWebRTCTransport extends Transport {
   }
 
   private sendSignallingMessage(message: OutboundSignallingMessage) {
-    if (!this.dc || this.dc.readyState !== "open") {
+    if (!this.dc || this.dc.readyState !== 'open') {
       logger.warn(`Datachannel is not ready. Message not sent: ${message}`);
       return;
     }
@@ -404,9 +409,9 @@ export class RNSmallWebRTCTransport extends Transport {
   }
 
   async _disconnect(): Promise<void> {
-    this.state = "disconnecting";
+    this.state = 'disconnecting';
     await this.stop();
-    this.state = "disconnected";
+    this.state = 'disconnected';
   }
 
   private createPeerConnection(): RTCPeerConnection {
@@ -420,25 +425,25 @@ export class RNSmallWebRTCTransport extends Transport {
 
     // TODO: need to fix our type definition
     // @ts-ignore
-    pc.addEventListener("icecandidate", async (event: any) => {
+    pc.addEventListener('icecandidate', async (event: any) => {
       if (event.candidate) {
-        logger.debug("New ICE candidate:", event.candidate);
+        logger.debug('New ICE candidate:', event.candidate);
         await this.sendIceCandidate(event.candidate);
       } else {
-        logger.info("All ICE candidates have been sent.");
+        logger.info('All ICE candidates have been sent.');
       }
     });
 
     // TODO: need to fix our type definition
     // @ts-ignore
-    pc.addEventListener("icegatheringstatechange", () => {
+    pc.addEventListener('icegatheringstatechange', () => {
       if (
-        pc.iceGatheringState === "complete" &&
-        pc.iceConnectionState === "checking" &&
+        pc.iceGatheringState === 'complete' &&
+        pc.iceConnectionState === 'checking' &&
         this._waitForICEGathering
       ) {
         logger.info(
-          "Ice gathering completed and connection is still checking. Trying to reconnect.",
+          'Ice gathering completed and connection is still checking. Trying to reconnect.'
         );
         // If ICE gathering has completed and the previous connection was still in the "checking" state,
         // we will reconnect to use all the new ICE candidates.
@@ -448,17 +453,17 @@ export class RNSmallWebRTCTransport extends Transport {
 
     // TODO: need to fix our type definition
     // @ts-ignore
-    pc.addEventListener("iceconnectionstatechange", () =>
-      this.handleICEConnectionStateChange(),
+    pc.addEventListener('iceconnectionstatechange', () =>
+      this.handleICEConnectionStateChange()
     );
 
     logger.debug(`iceConnectionState: ${pc.iceConnectionState}`);
 
     // TODO: need to fix our type definition
     // @ts-ignore
-    pc.addEventListener("signalingstatechange", () => {
+    pc.addEventListener('signalingstatechange', () => {
       logger.debug(`signalingState: ${this.pc!.signalingState}`);
-      if (this.pc!.signalingState == "stable") {
+      if (this.pc!.signalingState == 'stable') {
         this.handleReconnectionCompleted();
       }
     });
@@ -466,35 +471,35 @@ export class RNSmallWebRTCTransport extends Transport {
 
     // TODO: need to fix our type definition
     // @ts-ignore
-    pc.addEventListener("track", (evt: RTCTrackEvent) => {
+    pc.addEventListener('track', (evt: RTCTrackEvent) => {
       const streamType = evt.transceiver
-        ? evt.transceiver.mid === "0"
-          ? "microphone"
-          : evt.transceiver.mid === "1"
-            ? "camera"
-            : "screenVideo"
+        ? evt.transceiver.mid === '0'
+          ? 'microphone'
+          : evt.transceiver.mid === '1'
+          ? 'camera'
+          : 'screenVideo'
         : null;
       if (!streamType) {
-        logger.warn("Received track without transceiver mid", evt);
+        logger.warn('Received track without transceiver mid', evt);
         return;
       }
       logger.debug(`Received new remote track for ${streamType}`);
       this._incomingTracks.set(streamType, new WebRTCTrack(evt.track));
-      evt.track.addEventListener("unmute", () => {
+      evt.track.addEventListener('unmute', () => {
         const t = this._incomingTracks.get(streamType);
         if (!t) return;
         logger.debug(`Remote track unmuted: ${streamType}`);
-        t.status = "unmuted";
+        t.status = 'unmuted';
         this._callbacks.onTrackStarted?.(evt.track);
       });
-      evt.track.addEventListener("mute", () => {
+      evt.track.addEventListener('mute', () => {
         const t = this._incomingTracks.get(streamType);
-        if (!t || t.status !== "unmuted") return;
+        if (!t || t.status !== 'unmuted') return;
         logger.debug(`Remote track muted: ${streamType}`);
-        t.status = "muted";
+        t.status = 'muted';
         this._callbacks.onTrackStopped?.(evt.track);
       });
-      evt.track.addEventListener("ended", () => {
+      evt.track.addEventListener('ended', () => {
         logger.debug(`Remote track ended: ${streamType}`);
         this._callbacks.onTrackStopped?.(evt.track);
         this._incomingTracks.delete(streamType);
@@ -508,14 +513,14 @@ export class RNSmallWebRTCTransport extends Transport {
     if (!this.pc) return;
     logger.debug(`ICE Connection State: ${this.pc.iceConnectionState}`);
 
-    if (this.pc.iceConnectionState === "failed") {
-      logger.debug("ICE connection failed, attempting restart.");
+    if (this.pc.iceConnectionState === 'failed') {
+      logger.debug('ICE connection failed, attempting restart.');
       void this.attemptReconnection(true);
-    } else if (this.pc.iceConnectionState === "disconnected") {
+    } else if (this.pc.iceConnectionState === 'disconnected') {
       // Waiting before trying to reconnect to see if it handles it automatically
       setTimeout(() => {
-        if (this.pc?.iceConnectionState === "disconnected") {
-          logger.debug("Still disconnected, attempting reconnection.");
+        if (this.pc?.iceConnectionState === 'disconnected') {
+          logger.debug('Still disconnected, attempting reconnection.');
           void this.attemptReconnection(true);
         }
       }, 5000);
@@ -528,14 +533,14 @@ export class RNSmallWebRTCTransport extends Transport {
   }
 
   private async attemptReconnection(
-    recreatePeerConnection: boolean = false,
+    recreatePeerConnection: boolean = false
   ): Promise<void> {
     if (this.isReconnecting) {
-      logger.debug("Reconnection already in progress, skipping.");
+      logger.debug('Reconnection already in progress, skipping.');
       return;
     }
     if (this.reconnectionAttempts >= this.maxReconnectionAttempts) {
-      logger.debug("Max reconnection attempts reached. Stopping transport.");
+      logger.debug('Max reconnection attempts reached. Stopping transport.');
       await this.stop();
       return;
     }
@@ -548,7 +553,7 @@ export class RNSmallWebRTCTransport extends Transport {
       const oldPC = this.pc;
       await this.startNewPeerConnection(recreatePeerConnection);
       if (oldPC) {
-        logger.debug("closing old peer connection");
+        logger.debug('closing old peer connection');
         this.closePeerConnection(oldPC);
       }
     } else {
@@ -558,11 +563,11 @@ export class RNSmallWebRTCTransport extends Transport {
 
   private async waitForIceGatheringComplete(timeoutMs = 2000): Promise<void> {
     const pc = this.pc!;
-    if (pc.iceGatheringState === "complete") return;
+    if (pc.iceGatheringState === 'complete') return;
 
     logger.info(
-      "Waiting for ICE gathering to complete. Current state:",
-      pc.iceGatheringState,
+      'Waiting for ICE gathering to complete. Current state:',
+      pc.iceGatheringState
     );
 
     return new Promise<void>((resolve) => {
@@ -570,12 +575,12 @@ export class RNSmallWebRTCTransport extends Transport {
       const cleanup = () => {
         // TODO: need to fix our type definition
         // @ts-ignore
-        pc.removeEventListener("icegatheringstatechange", checkState);
+        pc.removeEventListener('icegatheringstatechange', checkState);
         clearTimeout(timeoutId);
       };
       const checkState = () => {
-        logger.debug("icegatheringstatechange:", pc.iceGatheringState);
-        if (pc.iceGatheringState === "complete") {
+        logger.debug('icegatheringstatechange:', pc.iceGatheringState);
+        if (pc.iceGatheringState === 'complete') {
           cleanup();
           resolve();
         }
@@ -587,7 +592,7 @@ export class RNSmallWebRTCTransport extends Transport {
       };
       // TODO: need to fix our type definition
       // @ts-ignore
-      pc.addEventListener("icegatheringstatechange", checkState);
+      pc.addEventListener('icegatheringstatechange', checkState);
       timeoutId = setTimeout(onTimeout, timeoutMs);
       // Checking the state again to avoid race conditions
       checkState();
@@ -596,7 +601,7 @@ export class RNSmallWebRTCTransport extends Transport {
 
   private async sendIceCandidate(candidate: RTCIceCandidate): Promise<void> {
     if (!this._webrtcRequest) {
-      logger.error("No request details provided for WebRTC connection");
+      logger.error('No request details provided for WebRTC connection');
       return;
     }
     this._candidateQueue.push(candidate);
@@ -604,7 +609,7 @@ export class RNSmallWebRTCTransport extends Transport {
     if (!this.__flushTimeout) {
       this.__flushTimeout = setTimeout(
         () => this.flushIceCandidates(),
-        this._flushDelay,
+        this._flushDelay
       );
     }
   }
@@ -621,14 +626,14 @@ export class RNSmallWebRTCTransport extends Transport {
     // Drain queue
     const candidates = this._candidateQueue.splice(
       0,
-      this._candidateQueue.length,
+      this._candidateQueue.length
     );
 
     try {
       const headers = new Headers({
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         ...Object.fromEntries(
-          (this._webrtcRequest.headers ?? new Headers()).entries(),
+          (this._webrtcRequest.headers ?? new Headers()).entries()
         ),
       });
 
@@ -642,7 +647,7 @@ export class RNSmallWebRTCTransport extends Transport {
       };
 
       await fetch(this._webrtcRequest.endpoint, {
-        method: "PATCH",
+        method: 'PATCH',
         headers,
         body: JSON.stringify(payload),
       });
@@ -652,14 +657,14 @@ export class RNSmallWebRTCTransport extends Transport {
   }
 
   private async negotiate(
-    recreatePeerConnection: boolean = false,
+    recreatePeerConnection: boolean = false
   ): Promise<void> {
     if (!this.pc) {
-      return Promise.reject("Peer connection is not initialized");
+      return Promise.reject('Peer connection is not initialized');
     }
     if (!this._webrtcRequest) {
-      logger.error("No request details provided for WebRTC connection");
-      this.state = "error";
+      logger.error('No request details provided for WebRTC connection');
+      this.state = 'error';
       throw new TransportStartError();
     }
 
@@ -675,21 +680,21 @@ export class RNSmallWebRTCTransport extends Transport {
 
       let offerSdp = this.pc!.localDescription!;
       // Filter audio codec
-      if (this.audioCodec && this.audioCodec !== "default") {
+      if (this.audioCodec && this.audioCodec !== 'default') {
         // @ts-ignore
         offerSdp.sdp = this.sdpFilterCodec(
-          "audio",
+          'audio',
           this.audioCodec,
-          offerSdp.sdp,
+          offerSdp.sdp
         );
       }
       // Filter video codec
-      if (this.videoCodec && this.videoCodec !== "default") {
+      if (this.videoCodec && this.videoCodec !== 'default') {
         // @ts-ignore
         offerSdp.sdp = this.sdpFilterCodec(
-          "video",
+          'video',
           this.videoCodec,
-          offerSdp.sdp,
+          offerSdp.sdp
         );
       }
 
@@ -714,7 +719,7 @@ export class RNSmallWebRTCTransport extends Transport {
       }
       request.requestData = requestData;
       const answer: RTCSessionDescriptionInit = (await makeRequest(
-        request,
+        request
       )) as RTCSessionDescriptionInit;
 
       // @ts-ignore
@@ -724,7 +729,7 @@ export class RNSmallWebRTCTransport extends Transport {
       await this.pc!.setRemoteDescription(answer);
     } catch (e) {
       logger.debug(
-        `Reconnection attempt ${this.reconnectionAttempts} failed: ${e}`,
+        `Reconnection attempt ${this.reconnectionAttempts} failed: ${e}`
       );
       this.isReconnecting = false;
       setTimeout(() => this.attemptReconnection(true), 2000);
@@ -736,11 +741,11 @@ export class RNSmallWebRTCTransport extends Transport {
     // For now we support 3 transceivers meant to hold the following
     // tracks in the given order:
     // audio, video, screenVideo
-    this.pc!.addTransceiver("audio", { direction: "sendrecv" });
-    this.pc!.addTransceiver("video", { direction: "sendrecv" });
+    this.pc!.addTransceiver('audio', { direction: 'sendrecv' });
+    this.pc!.addTransceiver('video', { direction: 'sendrecv' });
     if (this.mediaManager.supportsScreenShare) {
       // For now, we only support receiving a single video track
-      this.pc!.addTransceiver("video", { direction: "sendonly" });
+      this.pc!.addTransceiver('video', { direction: 'sendonly' });
     }
   }
 
@@ -763,11 +768,11 @@ export class RNSmallWebRTCTransport extends Transport {
   }
 
   private async startNewPeerConnection(
-    recreatePeerConnection: boolean = false,
+    recreatePeerConnection: boolean = false
   ) {
     this.pc = this.createPeerConnection();
     this.addInitialTransceivers();
-    this.dc = this.createDataChannel("chat", { ordered: true });
+    this.dc = this.createDataChannel('chat', { ordered: true });
     await this.addUserMedia();
     await this.negotiate(recreatePeerConnection);
     // Sending the ice candidates
@@ -803,16 +808,16 @@ export class RNSmallWebRTCTransport extends Transport {
   handleMessage(message: string): void {
     try {
       const messageObj = JSON.parse(message); // Type is `any` initially
-      logger.debug("received message:", messageObj);
+      logger.debug('received message:', messageObj);
 
       // Check if it's a signalling message
       if (messageObj.type === SIGNALLING_TYPE) {
         void this.handleSignallingMessage(
-          messageObj as SignallingMessageObject,
+          messageObj as SignallingMessageObject
         ); // Delegate to handleSignallingMessage
       } else {
         // Bubble any messages with rtvi-ai label
-        if (messageObj.label === "rtvi-ai") {
+        if (messageObj.label === 'rtvi-ai') {
           this._onMessage({
             id: messageObj.id,
             type: messageObj.type,
@@ -821,13 +826,13 @@ export class RNSmallWebRTCTransport extends Transport {
         }
       }
     } catch (error) {
-      logger.error("Failed to parse JSON message:", error);
+      logger.error('Failed to parse JSON message:', error);
     }
   }
 
   // Method to handle signalling messages specifically
   async handleSignallingMessage(
-    messageObj: SignallingMessageObject,
+    messageObj: SignallingMessageObject
   ): Promise<void> {
     // Cast the object to the correct type after verification
     const signallingMessage = messageObj as SignallingMessageObject;
@@ -841,7 +846,7 @@ export class RNSmallWebRTCTransport extends Transport {
         void this.disconnect();
         break;
       default:
-        logger.warn("Unknown signalling message:", signallingMessage.message);
+        logger.warn('Unknown signalling message:', signallingMessage.message);
     }
   }
 
@@ -849,7 +854,7 @@ export class RNSmallWebRTCTransport extends Transport {
     label: string,
     // TODO: need to fix our type definition
     // @ts-ignore
-    options: RTCDataChannelInit,
+    options: RTCDataChannelInit
     // TODO: need to fix our type definition
     // @ts-ignore
   ): RTCDataChannel {
@@ -857,8 +862,8 @@ export class RNSmallWebRTCTransport extends Transport {
 
     // TODO: need to fix our type definition
     // @ts-ignore
-    dc.addEventListener("close", () => {
-      logger.debug("datachannel closed");
+    dc.addEventListener('close', () => {
+      logger.debug('datachannel closed');
       if (this.keepAliveInterval) {
         clearInterval(this.keepAliveInterval);
         this.keepAliveInterval = null;
@@ -867,8 +872,8 @@ export class RNSmallWebRTCTransport extends Transport {
 
     // TODO: need to fix our type definition
     // @ts-ignore
-    dc.addEventListener("open", () => {
-      logger.debug("datachannel opened");
+    dc.addEventListener('open', () => {
+      logger.debug('datachannel opened');
       if (this._connectResolved) {
         this.syncTrackStatus();
         this._connectResolved();
@@ -877,14 +882,14 @@ export class RNSmallWebRTCTransport extends Transport {
       }
       // @ts-ignore
       this.keepAliveInterval = setInterval(() => {
-        const message = "ping: " + new Date().getTime();
+        const message = 'ping: ' + new Date().getTime();
         dc.send(message);
       }, 1000);
     });
 
     // TODO: need to fix our type definition
     // @ts-ignore
-    dc.addEventListener("message", (evt: MessageEvent) => {
+    dc.addEventListener('message', (evt: MessageEvent) => {
       let message = evt.data;
       this.handleMessage(message);
     });
@@ -908,7 +913,7 @@ export class RNSmallWebRTCTransport extends Transport {
 
   private async stop(): Promise<void> {
     if (!this.pc) {
-      logger.debug("Peer connection is already closed or null.");
+      logger.debug('Peer connection is already closed or null.');
       return;
     }
 
@@ -978,26 +983,26 @@ export class RNSmallWebRTCTransport extends Transport {
   enableMic(enable: boolean): void {
     this.mediaManager.enableMic(enable);
     this.sendSignallingMessage(
-      new TrackStatusMessage(AUDIO_TRANSCEIVER_INDEX, enable),
+      new TrackStatusMessage(AUDIO_TRANSCEIVER_INDEX, enable)
     );
   }
   enableCam(enable: boolean): void {
     this.mediaManager.enableCam(enable);
     this.sendSignallingMessage(
-      new TrackStatusMessage(VIDEO_TRANSCEIVER_INDEX, enable),
+      new TrackStatusMessage(VIDEO_TRANSCEIVER_INDEX, enable)
     );
   }
   async enableScreenShare(enable: boolean): Promise<void> {
     if (!this.mediaManager.supportsScreenShare) {
       throw new UnsupportedFeatureError(
-        "enableScreenShare",
-        "mediaManager",
-        "Screen sharing is not supported by the current media manager",
+        'enableScreenShare',
+        'mediaManager',
+        'Screen sharing is not supported by the current media manager'
       );
     }
     this.mediaManager.enableScreenShare(enable);
     this.sendSignallingMessage(
-      new TrackStatusMessage(SCREEN_VIDEO_TRANSCEIVER_INDEX, enable),
+      new TrackStatusMessage(SCREEN_VIDEO_TRANSCEIVER_INDEX, enable)
     );
   }
 
@@ -1028,19 +1033,19 @@ export class RNSmallWebRTCTransport extends Transport {
 
   private sdpFilterCodec(kind: string, codec: string, realSdp: string): string {
     const allowed: number[] = [];
-    const rtxRegex = new RegExp("a=fmtp:(\\d+) apt=(\\d+)\\r$");
+    const rtxRegex = new RegExp('a=fmtp:(\\d+) apt=(\\d+)\\r$');
     const codecRegex = new RegExp(
-      "a=rtpmap:([0-9]+) " + this.escapeRegExp(codec),
+      'a=rtpmap:([0-9]+) ' + this.escapeRegExp(codec)
     );
-    const videoRegex = new RegExp("(m=" + kind + " .*?)( ([0-9]+))*\\s*$");
+    const videoRegex = new RegExp('(m=' + kind + ' .*?)( ([0-9]+))*\\s*$');
 
-    const lines = realSdp.split("\n");
+    const lines = realSdp.split('\n');
 
     let isKind = false;
     for (let i = 0; i < lines.length; i++) {
-      if (lines[i]?.startsWith("m=" + kind + " ")) {
+      if (lines[i]?.startsWith('m=' + kind + ' ')) {
         isKind = true;
-      } else if (lines[i]?.startsWith("m=")) {
+      } else if (lines[i]?.startsWith('m=')) {
         isKind = false;
       }
 
@@ -1057,14 +1062,14 @@ export class RNSmallWebRTCTransport extends Transport {
       }
     }
 
-    const skipRegex = "a=(fmtp|rtcp-fb|rtpmap):([0-9]+)";
-    let sdp = "";
+    const skipRegex = 'a=(fmtp|rtcp-fb|rtpmap):([0-9]+)';
+    let sdp = '';
 
     isKind = false;
     for (let i = 0; i < lines.length; i++) {
-      if (lines[i]?.startsWith("m=" + kind + " ")) {
+      if (lines[i]?.startsWith('m=' + kind + ' ')) {
         isKind = true;
-      } else if (lines[i]?.startsWith("m=")) {
+      } else if (lines[i]?.startsWith('m=')) {
         isKind = false;
       }
 
@@ -1073,12 +1078,13 @@ export class RNSmallWebRTCTransport extends Transport {
         if (skipMatch && !allowed.includes(parseInt(skipMatch[2]!))) {
           continue;
         } else if (lines[i]?.match(videoRegex)) {
-          sdp += lines[i]?.replace(videoRegex, "$1 " + allowed.join(" ")) + "\n";
+          sdp +=
+            lines[i]?.replace(videoRegex, '$1 ' + allowed.join(' ')) + '\n';
         } else {
-          sdp += lines[i] + "\n";
+          sdp += lines[i] + '\n';
         }
       } else {
-        sdp += lines[i] + "\n";
+        sdp += lines[i] + '\n';
       }
     }
 
@@ -1086,6 +1092,6 @@ export class RNSmallWebRTCTransport extends Transport {
   }
 
   private escapeRegExp(string: string): string {
-    return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
 }

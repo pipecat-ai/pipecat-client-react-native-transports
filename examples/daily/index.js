@@ -6,8 +6,8 @@ debug.disable('rn-webrtc:*');
 // https://github.com/ocetnik/react-native-background-timer/issues/366
 import { LogBox } from 'react-native';
 LogBox.ignoreLogs([
-  "`new NativeEventEmitter()` was called with a non-null argument without the required `addListener` method.",
-  "`new NativeEventEmitter()` was called with a non-null argument without the required `removeListeners` method."
+  '`new NativeEventEmitter()` was called with a non-null argument without the required `addListener` method.',
+  '`new NativeEventEmitter()` was called with a non-null argument without the required `removeListeners` method.',
 ]);
 
 import { registerRootComponent } from 'expo';

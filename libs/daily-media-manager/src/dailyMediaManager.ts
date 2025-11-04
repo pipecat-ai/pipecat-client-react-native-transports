@@ -1,4 +1,4 @@
-import { MediaManager } from "../../../types/media-manager/mediaManager";
+import { MediaManager } from '../../../types/media-manager/mediaManager';
 
 import Daily, {
   DailyCall,
@@ -6,18 +6,19 @@ import Daily, {
   DailyCameraErrorType,
   DailyEventObjectAvailableDevicesUpdated,
   DailyEventObjectCameraError,
-  DailyEventObjectLocalAudioLevel, DailyEventObjectRemoteParticipantsAudioLevel,
+  DailyEventObjectLocalAudioLevel,
+  DailyEventObjectRemoteParticipantsAudioLevel,
   DailyEventObjectTrack,
   DailyParticipant,
   DailyParticipantsObject,
-} from "@daily-co/react-native-daily-js";
+} from '@daily-co/react-native-daily-js';
 
 import {
   DeviceArray,
   DeviceError,
   Participant,
   Tracks,
-} from "@pipecat-ai/client-js";
+} from '@pipecat-ai/client-js';
 import { MediaDeviceInfo } from '@daily-co/react-native-webrtc';
 
 export class DailyMediaManager extends MediaManager {
@@ -36,7 +37,7 @@ export class DailyMediaManager extends MediaManager {
 
   constructor(
     onTrackStartedCallback?: (event: DailyEventObjectTrack) => void,
-    onTrackStoppedCallback?: (event: DailyEventObjectTrack) => void,
+    onTrackStoppedCallback?: (event: DailyEventObjectTrack) => void
   ) {
     super();
     this._initialized = false;
@@ -49,20 +50,20 @@ export class DailyMediaManager extends MediaManager {
 
     this._daily = Daily.getCallInstance() ?? Daily.createCallObject();
 
-    this._daily.on("track-started", this.handleTrackStarted.bind(this));
-    this._daily.on("track-stopped", this.handleTrackStopped.bind(this));
+    this._daily.on('track-started', this.handleTrackStarted.bind(this));
+    this._daily.on('track-stopped', this.handleTrackStopped.bind(this));
     this._daily.on(
-      "available-devices-updated",
-      this._handleAvailableDevicesUpdated.bind(this),
+      'available-devices-updated',
+      this._handleAvailableDevicesUpdated.bind(this)
     );
     this._daily.on(
       // TODO, we need to add DailyEventObjectSelectedDevicesUpdated to types overrides inside react-ntive-daily-js
       // @ts-ignore
-      "selected-devices-updated",
-      this._handleSelectedDevicesUpdated.bind(this),
+      'selected-devices-updated',
+      this._handleSelectedDevicesUpdated.bind(this)
     );
-    this._daily.on("camera-error", this.handleDeviceError.bind(this));
-    this._daily.on("local-audio-level", this._handleLocalAudioLevel.bind(this));
+    this._daily.on('camera-error', this.handleDeviceError.bind(this));
+    this._daily.on('local-audio-level', this._handleLocalAudioLevel.bind(this));
     this._daily.on(
       'remote-participants-audio-level',
       this._handleRemoteAudioLevel.bind(this)
@@ -71,17 +72,17 @@ export class DailyMediaManager extends MediaManager {
 
   async initialize(): Promise<void> {
     if (this._initialized) {
-      console.warn("DailyMediaManager already initialized");
+      console.warn('DailyMediaManager already initialized');
       return;
     }
     await this._daily.startCamera({
       startVideoOff: !this._camEnabled,
-      startAudioOff: !this._micEnabled
+      startAudioOff: !this._micEnabled,
     });
     const { devices } = await this._daily.enumerateDevices();
-    const cams = devices.filter((d) => d.kind === "videoinput");
-    const mics = devices.filter((d) => d.kind === "audio");
-    const speakers = devices.filter((d) => d.kind === "audio");
+    const cams = devices.filter((d) => d.kind === 'videoinput');
+    const mics = devices.filter((d) => d.kind === 'audio');
+    const speakers = devices.filter((d) => d.kind === 'audio');
     this._callbacks.onAvailableCamsUpdated?.(cams);
     this._callbacks.onAvailableMicsUpdated?.(mics);
     this._callbacks.onAvailableSpeakersUpdated?.(speakers);
@@ -103,7 +104,7 @@ export class DailyMediaManager extends MediaManager {
 
   async connect(): Promise<void> {
     if (this._connected) {
-      console.warn("DailyMediaManager already connected");
+      console.warn('DailyMediaManager already connected');
       return;
     }
     this._connected = true;
@@ -127,15 +128,15 @@ export class DailyMediaManager extends MediaManager {
 
   async getAllMics(): Promise<MediaDeviceInfo[]> {
     let devices = (await this._daily.enumerateDevices()).devices;
-    return devices.filter((device) => device.kind === "audio");
+    return devices.filter((device) => device.kind === 'audio');
   }
   async getAllCams(): Promise<MediaDeviceInfo[]> {
     let devices = (await this._daily.enumerateDevices()).devices;
-    return devices.filter((device) => device.kind === "videoinput");
+    return devices.filter((device) => device.kind === 'videoinput');
   }
   async getAllSpeakers(): Promise<MediaDeviceInfo[]> {
     let devices = (await this._daily.enumerateDevices()).devices;
-    return devices.filter((device) => device.kind === "audio");
+    return devices.filter((device) => device.kind === 'audio');
   }
 
   updateMic(micId: string) {
@@ -207,26 +208,26 @@ export class DailyMediaManager extends MediaManager {
   }
 
   private _handleAvailableDevicesUpdated(
-    event: DailyEventObjectAvailableDevicesUpdated,
+    event: DailyEventObjectAvailableDevicesUpdated
   ) {
     this._callbacks.onAvailableCamsUpdated?.(
-      event.availableDevices.filter((d) => d.kind === "videoinput"),
+      event.availableDevices.filter((d) => d.kind === 'videoinput')
     );
     this._callbacks.onAvailableMicsUpdated?.(
-      event.availableDevices.filter((d) => d.kind === "audio"),
+      event.availableDevices.filter((d) => d.kind === 'audio')
     );
     this._callbacks.onAvailableSpeakersUpdated?.(
-      event.availableDevices.filter((d) => d.kind === "audio"),
+      event.availableDevices.filter((d) => d.kind === 'audio')
     );
-    if (this._selectedSpeaker.deviceId === "default") {
-      this.updateSpeaker("default");
+    if (this._selectedSpeaker.deviceId === 'default') {
+      this.updateSpeaker('default');
     }
   }
 
   // TODO, we need to add DailyEventObjectSelectedDevicesUpdated to types overrides inside react-ntive-daily-js
   private _handleSelectedDevicesUpdated(
     // @ts-ignore
-    event: DailyEventObjectSelectedDevicesUpdated,
+    event: DailyEventObjectSelectedDevicesUpdated
   ) {
     if (this._selectedCam?.deviceId !== event.devices.camera) {
       this._selectedCam = event.devices.camera;
@@ -240,50 +241,50 @@ export class DailyMediaManager extends MediaManager {
 
   private handleDeviceError(ev: DailyEventObjectCameraError) {
     const generateDeviceError = (
-      error: DailyCameraErrorObject<DailyCameraErrorType>,
+      error: DailyCameraErrorObject<DailyCameraErrorType>
     ) => {
       const devices: DeviceArray = [];
       switch (error.type) {
-        case "permissions": {
+        case 'permissions': {
           error.blockedMedia.forEach((d) => {
-            devices.push(d === "video" ? "cam" : "mic");
+            devices.push(d === 'video' ? 'cam' : 'mic');
           });
           return new DeviceError(devices, error.type, error.msg, {
             blockedBy: error.blockedBy,
           });
         }
-        case "not-found": {
+        case 'not-found': {
           error.missingMedia.forEach((d) => {
-            devices.push(d === "video" ? "cam" : "mic");
+            devices.push(d === 'video' ? 'cam' : 'mic');
           });
           return new DeviceError(devices, error.type, error.msg);
         }
-        case "constraints": {
+        case 'constraints': {
           error.failedMedia.forEach((d) => {
-            devices.push(d === "video" ? "cam" : "mic");
+            devices.push(d === 'video' ? 'cam' : 'mic');
           });
           return new DeviceError(devices, error.type, error.msg, {
             reason: error.reason,
           });
         }
-        case "cam-in-use": {
-          devices.push("cam");
-          return new DeviceError(devices, "in-use", error.msg);
+        case 'cam-in-use': {
+          devices.push('cam');
+          return new DeviceError(devices, 'in-use', error.msg);
         }
-        case "mic-in-use": {
-          devices.push("mic");
-          return new DeviceError(devices, "in-use", error.msg);
+        case 'mic-in-use': {
+          devices.push('mic');
+          return new DeviceError(devices, 'in-use', error.msg);
         }
-        case "cam-mic-in-use": {
-          devices.push("cam");
-          devices.push("mic");
-          return new DeviceError(devices, "in-use", error.msg);
+        case 'cam-mic-in-use': {
+          devices.push('cam');
+          devices.push('mic');
+          return new DeviceError(devices, 'in-use', error.msg);
         }
-        case "undefined-mediadevices":
-        case "unknown":
+        case 'undefined-mediadevices':
+        case 'unknown':
         default: {
-          devices.push("cam");
-          devices.push("mic");
+          devices.push('cam');
+          devices.push('mic');
           return new DeviceError(devices, error.type, error.msg);
         }
       }
@@ -316,7 +317,7 @@ export class DailyMediaManager extends MediaManager {
 
   protected async handleTrackStarted(event: DailyEventObjectTrack) {
     if (!event.participant?.local) return;
-    if (event.track.kind === "audio") {
+    if (event.track.kind === 'audio') {
       if (this._connectResolve) {
         this._connectResolve();
         this._connectResolve = null;
@@ -326,7 +327,7 @@ export class DailyMediaManager extends MediaManager {
       event.track,
       event.participant
         ? dailyParticipantToParticipant(event.participant)
-        : undefined,
+        : undefined
     );
     this.onTrackStartedCallback?.(event);
   }
@@ -337,7 +338,7 @@ export class DailyMediaManager extends MediaManager {
       event.track,
       event.participant
         ? dailyParticipantToParticipant(event.participant)
-        : undefined,
+        : undefined
     );
     this.onTrackStoppedCallback?.(event);
   }

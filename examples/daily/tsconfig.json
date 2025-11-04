@@ -1,7 +1,7 @@
 {
   "extends": "../../transports/daily/tsconfig",
   "compilerOptions": {
-      "jsx": "react"
+    "jsx": "react"
     // Avoid expo-cli auto-generating a tsconfig
   }
 }

@@ -2,7 +2,7 @@ import {
   PipecatClientOptions,
   RTVIEventCallbacks,
   Tracks,
-} from "@pipecat-ai/client-js";
+} from '@pipecat-ai/client-js';
 import { MediaDeviceInfo } from '@daily-co/react-native-webrtc';
 
 export abstract class MediaManager {

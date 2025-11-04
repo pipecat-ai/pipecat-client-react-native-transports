@@ -15,19 +15,14 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bitcode": false,
       "bundleIdentifier": "co.daily.expo.SmallWebRTCDemo",
       "infoPlist": {
-        "UIBackgroundModes": [
-          "voip"
-        ]
-      },
-      "appleTeamId": "EEBGKV9N3N"
+        "UIBackgroundModes": ["voip"]
+      }
     },
     "android": {
       "adaptiveIcon": {

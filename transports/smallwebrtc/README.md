@@ -30,6 +30,7 @@ npm i react-native-get-random-values@^1.11.0
 ```
 
 If you are using Expo, you will also need to add the following dependencies:
+
 ```bash
 npm i @daily-co/config-plugin-rn-daily-js@0.0.10
 ```
@@ -70,7 +71,6 @@ await client?.startBotAndConnect({
 ```
 
 > Note: To enable screen sharing on iOS, follow the instructions in the [Daily Framework RN Screen Share extension](https://github.com/daily-co/rn-screen-share-extension/).
-
 
 ## Documentation
 

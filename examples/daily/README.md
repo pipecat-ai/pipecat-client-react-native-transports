@@ -26,6 +26,7 @@ If you do not have experience with Xcode and Android Studio builds or do not hav
 ### Building locally
 
 You will need to have installed locally on your computer:
+
 - [Xcode](https://developer.apple.com/xcode/) to build for iOS;
 - [Android Studio](https://developer.android.com/studio) to build for Android;
 
@@ -74,6 +75,7 @@ npm run ios
 - You may also be prompted to enter you login keychain password. Be sure to click `Always trust` to avoid the prompt showing multiple times.
 
 After, run the following command:
+
 ```
 npm run ios
 ```

@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import { RNDailyTransport } from '@pipecat-ai/react-native-daily-transport';
 import { PipecatClient, TransportState } from '@pipecat-ai/client-js';
 
-
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,

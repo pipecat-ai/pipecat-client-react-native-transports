@@ -10,10 +10,24 @@
   "scripts": {
     "build": "yarn workspaces foreach run build",
     "clean": "yarn workspaces foreach run clean",
-    "typecheck": "yarn workspaces foreach run typecheck"
+    "typecheck": "yarn workspaces foreach run typecheck",
+    "lint": "yarn workspaces foreach run lint",
+    "lint:fix": "yarn workspaces foreach run lint:fix",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\""
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
   },
   "devDependencies": {
     "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
+    "@eslint/compat": "^1.4.1",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.39.1",
     "@pipecat-ai/client-js": "^1.4.0",
     "@react-native/eslint-config": "^0.73.1",
     "@types/jest": "29.5.5",

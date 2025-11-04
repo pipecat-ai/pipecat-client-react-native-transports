@@ -2,7 +2,9 @@
   "compilerOptions": {
     "paths": {
       "@pipecat-ai/react-native-small-webrtc-transport": ["./src/index"],
-      "@pipecat-ai/client-js": ["../../types/@pipecat-ai/client-js/typeOverrides"]
+      "@pipecat-ai/client-js": [
+        "../../types/@pipecat-ai/client-js/typeOverrides"
+      ]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
