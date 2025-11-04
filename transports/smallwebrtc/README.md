@@ -7,7 +7,7 @@ TODO: fix it
 [![Docs](https://img.shields.io/badge/documentation-blue)](https://docs.pipecat.ai/client/introduction)
 ![NPM Version](https://img.shields.io/npm/v/@pipecat-ai/react-native-daily-transport)
 
-The Pipecat client React Native Transport library exports a `RNDailyTransport` that has the [SmallWebRTCTransport](https://docs.pipecat.ai/client/js/transports/small-webrtc) transport associated.
+The Pipecat client React Native Transport library exports a `RNSmallWebRTCTransport` that has the [SmallWebRTCTransport](https://docs.pipecat.ai/client/js/transports/small-webrtc) transport associated.
 
 ## Minimum OS/SDK versions
 
