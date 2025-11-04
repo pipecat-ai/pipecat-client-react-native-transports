@@ -34,7 +34,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "co.daily.expo.DailyDemo",
+      "package": "co.daily.expo.SmallWebRTCDemo",
       "permissions": [
         "android.permission.ACCESS_NETWORK_STATE",
         "android.permission.BLUETOOTH",
