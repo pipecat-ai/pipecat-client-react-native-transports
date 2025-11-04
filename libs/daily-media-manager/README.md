@@ -1,5 +1,3 @@
-TODO: fix it
-
 <h1><div align="center">
  <img alt="pipecat client react native" width="500px" height="auto" src="https://raw.githubusercontent.com/pipecat-ai/pipecat-client-react-native-daily-transport/main/pipecat-react-native.png">
 </div></h1>
@@ -7,24 +5,23 @@ TODO: fix it
 [![Docs](https://img.shields.io/badge/documentation-blue)](https://docs.pipecat.ai/client/introduction)
 ![NPM Version](https://img.shields.io/npm/v/@pipecat-ai/react-native-daily-transport)
 
-The Pipecat client React Native Transport library exports a `RNDailyTransport` that has the [SmallWebRTCTransport](https://docs.pipecat.ai/client/js/transports/small-webrtc) transport associated.
+A comprehensive media management layer built on Daily’s React Native SDK.
 
-## Minimum OS/SDK versions
+While [SmallWebRTCTransport](/transports/smallwebrtc/README.md) enables lightweight peer-to-peer communication without relying on Daily’s infrastructure,
+the Daily Media Manager leverages Daily’s mature SDK to deliver enterprise-grade device management and media handling.
 
-This package introduces some constraints on what OS/SDK versions your project can support:
+### Key Features
 
-- **iOS**: Deployment target >= 15
-- **Android**: `minSdkVersion` >= 24
+- **Complete Device Management**: Full control over cameras, microphones, and speakers with automatic device enumeration and selection
+- **Audio Level Monitoring**: Real-time audio level detection for both local and remote participants
+- **Device Error Handling**: Comprehensive error handling for device permissions, constraints, and availability issues
+- **Media Control**: Enable/disable microphone, camera, and screen sharing with simple API calls
+- **Track Management**: Access to WebRTC media tracks for advanced media processing
+- **Real-time Updates**: Automatic callbacks for device changes, audio levels, and track events
 
 ## Installation
 
-Install `@pipecat-ai/react-native-small-webrtc-transport`.
-
-```bash
-npm i @pipecat-ai/react-native-small-webrtc-transport
-```
-
-If you are using the [DailyMediaManager](../../libs/daily-media-manager/README.md), you will also need to install it along with its peer dependencies:
+Install `@pipecat-ai/react-native-daily-media-manager` along with its peer dependencies:
 
 ```bash
 npm i @pipecat-ai/react-native-daily-media-manager
@@ -38,7 +35,7 @@ npm i react-native-get-random-values@^1.11.0
 If you are using Expo, you will also need to add the following dependencies:
 
 ```bash
-npm i @daily-co/config-plugin-rn-daily-js@0.0.10
+npm i @daily-co/config-plugin-rn-daily-js@0.0.11
 ```
 
 All the details about Expo can be found [here](https://github.com/daily-co/rn-daily-js-expo-config-plugin).
@@ -47,52 +44,14 @@ A full demo can be found [here](https://github.com/pipecat-ai/pipecat-examples/t
 
 ## Quick Start
 
-Instantiate an `RTVIClient` instance, wire up the bot's audio, and start the conversation:
+Instantiate the `DailyMediaManager` instance, to use it together with the `SmallWebRTCTransport`:
 
 ```typescript
 const options: SmallWebRTCTransportConstructorOptions = {
   mediaManager: new DailyMediaManager(),
 };
-let pipecatClient = new PipecatClient({
-  transport: new RNSmallWebRTCTransport(options),
-  enableMic: true,
-  enableCam: false,
-  callbacks: {
-    onConnected: () => {
-      setInCall(true);
-    },
-    onDisconnected: () => {
-      setInCall(false);
-    },
-    onTransportStateChanged: (state) => {
-      console.log(`Transport state changed: ${state}`);
-      setCurrentState(state);
-    },
-    onError: (error) => {
-      console.log('Error:', JSON.stringify(error));
-    },
-  },
-});
-
-await client?.startBotAndConnect({
-  endpoint: baseUrl + '/start',
-});
+const transport = new RNSmallWebRTCTransport(options);
 ```
-
-> Note: To enable screen sharing on iOS, follow the instructions in the [Daily Framework RN Screen Share extension](https://github.com/daily-co/rn-screen-share-extension/).
-
-## Documentation
-
-Pipecat Client React Native implements a client instance that:
-
-- Facilitates requests to an endpoint you create.
-- Dispatches single-turn actions to a HTTP bot service when disconnected.
-- Provides methods that handle the connectivity state and realtime interaction with your bot service.
-- Manages media transport (such as audio and video).
-- Provides callbacks and events for handling bot messages and actions.
-- Optionally configures your AI services and pipeline.
-
-Docs and API reference can be found at https://docs.pipecat.ai/client/introduction.
 
 ## Contributing
 

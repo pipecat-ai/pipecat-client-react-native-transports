@@ -15,17 +15,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bitcode": false,
       "bundleIdentifier": "co.daily.expo.SmallWebRTCDemo",
       "infoPlist": {
-        "UIBackgroundModes": [
-          "voip"
-        ]
+        "UIBackgroundModes": ["voip"]
       }
     },
     "android": {

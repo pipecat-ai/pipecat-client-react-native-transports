@@ -66,7 +66,7 @@ let pipecatClient = new PipecatClient({
 });
 
 await client?.startBotAndConnect({
-  endpoint: baseUrl + '/connect',
+  endpoint: baseUrl + '/start',
 });
 ```
 
@@ -89,7 +89,7 @@ Docs and API reference can be found at https://docs.pipecat.ai/client/introducti
 
 We welcome contributions from the community! Whether you're fixing bugs, improving documentation, or adding new features, here's how you can help:
 
-- **Found a bug?** Open an [issue](https://github.com/pipecat-ai/pipecat-client-react-native-daily-transport/issues)
+- **Found a bug?** Open an [issue](https://github.com/pipecat-ai/pipecat-client-react-native-transports/issues)
 - **Have a feature idea?** Start a [discussion](https://discord.gg/pipecat)
 - **Want to contribute code?** Check our [CONTRIBUTING.md](CONTRIBUTING.md) guide
 - **Documentation improvements?** [Docs](https://github.com/pipecat-ai/docs) PRs are always welcome

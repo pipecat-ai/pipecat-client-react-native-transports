@@ -11,12 +11,12 @@ Please refer to the full Pipecat client documentation [here](https://docs.pipeca
 
 ## Current Transports
 
-### [SmallWebRTCTransport](/transports/small-webrtc-transport/README.md)
+### [SmallWebRTCTransport](/transports/smallwebrtc/README.md)
 
 [![Docs](https://img.shields.io/badge/Documentation-blue)](https://docs.pipecat.ai/client/js/transports/small-webrtc)
-[![README](https://img.shields.io/badge/README-goldenrod)](/transports/small-webrtc-transport/README.md)
+[![README](https://img.shields.io/badge/README-goldenrod)](/transports/smallwebrtc/README.md)
 [![Demo](https://img.shields.io/badge/Demo-forestgreen)](https://github.com/pipecat-ai/pipecat/tree/main/examples/p2p-webrtc)
-![NPM Version](https://img.shields.io/npm/v/@pipecat-ai/small-webrtc-transport)
+![NPM Version](https://img.shields.io/npm/v/@pipecat-ai/react-native-small-webrtc-transport)
 
 This Transport creates a peer-to-peer WebRTC connection between the client and the bot process. This Transport is the client-side counterpart to the Pipecat [SmallWebRTCTransport component](https://docs.pipecat.ai/server/services/transport/small-webrtc).
 
@@ -55,7 +55,7 @@ Typical media flow using a SmallWebRTCTransport:
 [![Docs](https://img.shields.io/badge/Documention-blue)](https://docs.pipecat.ai/client/js/transports/daily)
 [![README](https://img.shields.io/badge/README-goldenrod)](/transports/daily/README.md)
 [![Demo](https://img.shields.io/badge/Demo-forestgreen)](https://github.com/pipecat-ai/pipecat/tree/main/examples/simple-chatbot)
-![NPM Version](https://img.shields.io/npm/v/@pipecat-ai/daily-transport)
+![NPM Version](https://img.shields.io/npm/v/@pipecat-ai/react-native-daily-transport)
 
 This Transport uses the [Daily](https://daily.co) audio and video calling service to connect to a bot and stream media over a WebRTC connection. This Transport is the client-side counterpart to the Pipecat [DailyTransport component](https://docs.pipecat.ai/server/services/transport/daily).
 
