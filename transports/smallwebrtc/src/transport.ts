@@ -13,7 +13,7 @@ import {
   APIRequest,
   isAPIRequest,
 } from '@pipecat-ai/client-js';
-import { MediaManager } from '../../../types/media-manager/mediaManager';
+import { MediaManager } from './media-manager/mediaManager';
 import {
   MediaStreamTrack,
   RTCPeerConnection,

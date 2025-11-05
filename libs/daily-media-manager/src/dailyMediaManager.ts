@@ -1,4 +1,4 @@
-import { MediaManager } from '../../../types/media-manager/mediaManager';
+import { MediaManager } from '@pipecat-ai/react-native-small-webrtc-transport';
 
 import Daily, {
   DailyCall,

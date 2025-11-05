@@ -5,9 +5,8 @@
   "description": "React Native Daily Media manager",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
-  "types": "./lib/typescript/module/libs/daily-media-manager/src/index.d.ts",
+  "types": "./lib/typescript/module/index.d.ts",
   "files": [
-    "src",
     "lib",
     "package.json",
     "README.md"
@@ -71,6 +70,7 @@
   "peerDependencies": {
     "@daily-co/react-native-daily-js": "^0.82.0",
     "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
+    "@pipecat-ai/react-native-small-webrtc-transport": "*",
     "@react-native-async-storage/async-storage": "^1.24.0",
     "react-native": "*",
     "react-native-background-timer": "^2.4.1",
@@ -79,6 +79,7 @@
   "devDependencies": {
     "@daily-co/react-native-daily-js": "^0.82.0",
     "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
+    "@pipecat-ai/react-native-small-webrtc-transport": "*",
     "@react-native-async-storage/async-storage": "^1.24.0",
     "del-cli": "^6.0.0",
     "react-native-background-timer": "^2.4.1",
