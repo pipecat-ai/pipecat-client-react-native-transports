@@ -2,7 +2,7 @@ import {
   RNSmallWebRTCTransport,
   SmallWebRTCTransportConstructorOptions,
 } from './transport';
-import { MediaManager } from './media-manager/mediaManager';
+import { MediaManager, TrackEvent } from './media-manager/mediaManager';
 import PipecatClientVideoView from './view/PipecatClientVideoView';
 
 export {
@@ -10,4 +10,5 @@ export {
   SmallWebRTCTransportConstructorOptions,
   MediaManager,
   PipecatClientVideoView,
+  TrackEvent,
 };

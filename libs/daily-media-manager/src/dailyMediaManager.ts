@@ -1,4 +1,7 @@
-import { MediaManager } from '@pipecat-ai/react-native-small-webrtc-transport';
+import {
+  MediaManager,
+  TrackEvent,
+} from '@pipecat-ai/react-native-small-webrtc-transport';
 
 import Daily, {
   DailyCall,
@@ -32,19 +35,16 @@ export class DailyMediaManager extends MediaManager {
   private _selectedMic: MediaDeviceInfo | Record<string, never> = {};
   private _selectedSpeaker: MediaDeviceInfo | Record<string, never> = {};
 
-  private onTrackStartedCallback?: (event: DailyEventObjectTrack) => void;
-  private onTrackStoppedCallback?: (event: DailyEventObjectTrack) => void;
-
   constructor(
-    onTrackStartedCallback?: (event: DailyEventObjectTrack) => void,
-    onTrackStoppedCallback?: (event: DailyEventObjectTrack) => void
+    onTrackStartedCallback?: (event: TrackEvent) => void,
+    onTrackStoppedCallback?: (event: TrackEvent) => void
   ) {
     super();
     this._initialized = false;
     this._connected = false;
     this._connectResolve = null;
-    this.onTrackStartedCallback = onTrackStartedCallback;
-    this.onTrackStoppedCallback = onTrackStoppedCallback;
+    this._onTrackStartedCallback = onTrackStartedCallback;
+    this._onTrackStoppedCallback = onTrackStoppedCallback;
 
     this._supportsScreenShare = true;
 
@@ -331,7 +331,7 @@ export class DailyMediaManager extends MediaManager {
         ? dailyParticipantToParticipant(event.participant)
         : undefined
     );
-    this.onTrackStartedCallback?.(event);
+    this._onTrackStartedCallback?.(event);
   }
 
   protected handleTrackStopped(event: DailyEventObjectTrack) {
@@ -342,7 +342,7 @@ export class DailyMediaManager extends MediaManager {
         ? dailyParticipantToParticipant(event.participant)
         : undefined
     );
-    this.onTrackStoppedCallback?.(event);
+    this._onTrackStoppedCallback?.(event);
   }
 }
 

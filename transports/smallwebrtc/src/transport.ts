@@ -13,7 +13,7 @@ import {
   APIRequest,
   isAPIRequest,
 } from '@pipecat-ai/client-js';
-import { MediaManager } from './media-manager/mediaManager';
+import { MediaManager, TrackEvent } from './media-manager/mediaManager';
 import {
   MediaStreamTrack,
   RTCPeerConnection,
@@ -142,6 +142,24 @@ export class RNSmallWebRTCTransport extends Transport {
     this._webrtcRequest = this._resolveRequestInfo(opts);
 
     this.mediaManager = opts.mediaManager;
+    this.mediaManager.onTrackStarted = this._handleTrackStarted.bind(this);
+  }
+
+  private async _handleTrackStarted(event: TrackEvent) {
+    if (event.type === 'audio') {
+      logger.info('SmallWebRTCMediaManager replacing audio track');
+      await this.getAudioTransceiver()?.sender.replaceTrack(event.track);
+    } else if (event.type === 'video') {
+      logger.info('SmallWebRTCMediaManager replacing video track');
+      await this.getVideoTransceiver()?.sender.replaceTrack(event.track);
+    } else if (event.type === 'screenVideo') {
+      logger.info('SmallWebRTCMediaManager replacing screen video track');
+      await this.getScreenVideoTransceiver()?.sender.replaceTrack(event.track);
+    } else if (event.type === 'screenAudio') {
+      logger.info(
+        'SmallWebRTCMediaManager does not yet support screen audio. Track is ignored.'
+      );
+    }
   }
 
   public initialize(

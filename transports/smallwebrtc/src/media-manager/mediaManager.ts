@@ -3,7 +3,15 @@ import {
   RTVIEventCallbacks,
   Tracks,
 } from '@pipecat-ai/client-js';
-import { MediaDeviceInfo } from '@daily-co/react-native-webrtc';
+import {
+  MediaDeviceInfo,
+  MediaStreamTrack,
+} from '@daily-co/react-native-webrtc';
+
+export interface TrackEvent {
+  track: MediaStreamTrack;
+  type: 'video' | 'audio' | 'screenVideo' | 'screenAudio' | string;
+}
 
 export abstract class MediaManager {
   protected _options?: PipecatClientOptions;
@@ -13,6 +21,9 @@ export abstract class MediaManager {
   protected _camEnabled: boolean;
 
   protected _supportsScreenShare: boolean;
+
+  protected _onTrackStartedCallback?: (event: TrackEvent) => void;
+  protected _onTrackStoppedCallback?: (event: TrackEvent) => void;
 
   constructor() {
     this._micEnabled = true;
@@ -56,5 +67,21 @@ export abstract class MediaManager {
 
   get supportsScreenShare(): boolean {
     return this._supportsScreenShare;
+  }
+
+  get onTrackStarted(): ((event: TrackEvent) => void) | undefined {
+    return this._onTrackStartedCallback;
+  }
+
+  set onTrackStarted(callback: ((event: TrackEvent) => void) | undefined) {
+    this._onTrackStartedCallback = callback;
+  }
+
+  get onTrackStopped(): ((event: TrackEvent) => void) | undefined {
+    return this._onTrackStoppedCallback;
+  }
+
+  set onTrackStopped(callback: ((event: TrackEvent) => void) | undefined) {
+    this._onTrackStoppedCallback = callback;
   }
 }
