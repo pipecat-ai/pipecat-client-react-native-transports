@@ -1,3 +1,5 @@
+TODO: fix it
+
 <h1><div align="center">
  <img alt="pipecat client react native" width="500px" height="auto" src="https://raw.githubusercontent.com/pipecat-ai/pipecat-client-react-native-daily-transport/main/pipecat-react-native.png">
 </div></h1>
@@ -5,24 +7,28 @@
 [![Docs](https://img.shields.io/badge/documentation-blue)](https://docs.pipecat.ai/client/introduction)
 ![NPM Version](https://img.shields.io/npm/v/@pipecat-ai/react-native-daily-transport)
 
-The Pipecat client React Native Transport library exports a `RNDailyTransport` that has the [Daily](https://www.daily.co/) transport associated.
-
-To connect to a bot, you will need both this SDK and the [`@pipecat-client/client-js`](https://www.npmjs.com/package/@pipecat-ai/client-js) to create an `RTVIClient`.
+The Pipecat client React Native Transport library exports a `RNSmallWebRTCTransport` that has the [SmallWebRTCTransport](https://docs.pipecat.ai/client/js/transports/small-webrtc) transport associated.
 
 ## Minimum OS/SDK versions
 
 This package introduces some constraints on what OS/SDK versions your project can support:
 
-- **iOS**: Deployment target >= 13
+- **iOS**: Deployment target >= 15
 - **Android**: `minSdkVersion` >= 24
 
 ## Installation
 
-Install `@pipecat-ai/react-native-daily-transport` along with its peer dependencies:
+Install `@pipecat-ai/react-native-small-webrtc-transport`.
 
 ```bash
-npm i @pipecat-ai/react-native-daily-transport
-npm i @daily-co/react-native-daily-js@^0.81.0
+npm i @pipecat-ai/react-native-small-webrtc-transport
+```
+
+If you are using the [DailyMediaManager](../../libs/daily-media-manager/README.md), you will also need to install it along with its peer dependencies:
+
+```bash
+npm i @pipecat-ai/react-native-daily-media-manager
+npm i @daily-co/react-native-daily-js@^0.82.0
 npm i @daily-co/react-native-webrtc@^124.0.6-daily.1
 npm i @react-native-async-storage/async-storage@^1.24.0
 npm i react-native-background-timer@^2.4.1
@@ -37,15 +43,18 @@ npm i @daily-co/config-plugin-rn-daily-js@0.0.10
 
 All the details about Expo can be found [here](https://github.com/daily-co/rn-daily-js-expo-config-plugin).
 
-A full demo can be found [here](https://github.com/pipecat-ai/pipecat-examples/tree/main/simple-chatbot/client/react-native)
+A full demo can be found [here](https://github.com/pipecat-ai/pipecat-examples/tree/main/p2p-webrtc/video-transform/client/react-native)
 
 ## Quick Start
 
 Instantiate an `RTVIClient` instance, wire up the bot's audio, and start the conversation:
 
 ```typescript
+const options: SmallWebRTCTransportConstructorOptions = {
+  mediaManager: new DailyMediaManager(),
+};
 let pipecatClient = new PipecatClient({
-  transport: new RNDailyTransport(),
+  transport: new RNSmallWebRTCTransport(options),
   enableMic: true,
   enableCam: false,
   callbacks: {

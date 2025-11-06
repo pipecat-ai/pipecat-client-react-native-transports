@@ -11,20 +11,22 @@ Please refer to the full Pipecat client documentation [here](https://docs.pipeca
 
 ## Current Transports
 
-### [SmallWebRTCTransport](/transports/small-webrtc-transport/README.md)
+### [SmallWebRTCTransport](/transports/smallwebrtc/README.md)
 
 [![Docs](https://img.shields.io/badge/Documentation-blue)](https://docs.pipecat.ai/client/js/transports/small-webrtc)
-[![README](https://img.shields.io/badge/README-goldenrod)](/transports/small-webrtc-transport/README.md)
+[![README](https://img.shields.io/badge/README-goldenrod)](/transports/smallwebrtc/README.md)
 [![Demo](https://img.shields.io/badge/Demo-forestgreen)](https://github.com/pipecat-ai/pipecat/tree/main/examples/p2p-webrtc)
-![NPM Version](https://img.shields.io/npm/v/@pipecat-ai/small-webrtc-transport)
+![NPM Version](https://img.shields.io/npm/v/@pipecat-ai/react-native-small-webrtc-transport)
 
 This Transport creates a peer-to-peer WebRTC connection between the client and the bot process. This Transport is the client-side counterpart to the Pipecat [SmallWebRTCTransport component](https://docs.pipecat.ai/server/services/transport/small-webrtc).
 
 This is the simplest low-latency audio/video transport for Pipecat. This transport is recommended for local development and demos. Things to be aware of:
-  - This transport is a direct connection between the client and the bot process. If you need multiple clients to connect to the same bot, you will need to use a different transport.
-  - For production usage at scale, a distributed WebRTC network that can do edge/mesh routing, has session-level observability and metrics, and can offload recording and other auxiliary services is often useful.
+
+- This transport is a direct connection between the client and the bot process. If you need multiple clients to connect to the same bot, you will need to use a different transport.
+- For production usage at scale, a distributed WebRTC network that can do edge/mesh routing, has session-level observability and metrics, and can offload recording and other auxiliary services is often useful.
 
 Typical media flow using a SmallWebRTCTransport:
+
 ```
                                             ┌──────────────────────────────────────────────────┐
                                             │                                                  │
@@ -53,11 +55,12 @@ Typical media flow using a SmallWebRTCTransport:
 [![Docs](https://img.shields.io/badge/Documention-blue)](https://docs.pipecat.ai/client/js/transports/daily)
 [![README](https://img.shields.io/badge/README-goldenrod)](/transports/daily/README.md)
 [![Demo](https://img.shields.io/badge/Demo-forestgreen)](https://github.com/pipecat-ai/pipecat/tree/main/examples/simple-chatbot)
-![NPM Version](https://img.shields.io/npm/v/@pipecat-ai/daily-transport)
+![NPM Version](https://img.shields.io/npm/v/@pipecat-ai/react-native-daily-transport)
 
 This Transport uses the [Daily](https://daily.co) audio and video calling service to connect to a bot and stream media over a WebRTC connection. This Transport is the client-side counterpart to the Pipecat [DailyTransport component](https://docs.pipecat.ai/server/services/transport/daily).
 
 Typical media flow using a DailyTransport:
+
 ```
 
                                        ┌────────────────────────────────────────────┐
@@ -93,9 +96,11 @@ $ yarn build
 ```
 
 ## License
+
 BSD-2 Clause
 
 ## Contributing
+
 We welcome contributions from the community! Whether you're fixing bugs, improving documentation, or adding new features, here's how you can help:
 
 - **Found a bug?** Open an [issue](https://github.com/pipecat-ai/pipecat-client-react-native-transports/issues)

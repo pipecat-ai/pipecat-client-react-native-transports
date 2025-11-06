@@ -3,8 +3,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import React, { useState } from 'react';
 
-import { RNDailyTransport } from '@pipecat-ai/react-native-daily-transport';
-import { PipecatClient, TransportState } from '@pipecat-ai/client-js';
+import {
+  RNSmallWebRTCTransport,
+  SmallWebRTCTransportConstructorOptions,
+} from '@pipecat-ai/react-native-small-webrtc-transport';
+import {
+  APIRequest,
+  PipecatClient,
+  TransportState,
+} from '@pipecat-ai/client-js';
+import { DailyMediaManager } from '@pipecat-ai/react-native-daily-media-manager/src';
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -41,6 +49,9 @@ export default function App() {
   const [baseUrl, setBaseUrl] = useState<string>(
     process.env.EXPO_PUBLIC_BASE_URL || ''
   );
+  const [authorizationToken, setAuthorizationToken] = useState<string>(
+    process.env.EXPO_PUBLIC_AUTHORIZATION_TOKEN || ''
+  );
 
   const [pipecatClient, setPipecatClient] = useState<
     PipecatClient | undefined
@@ -51,8 +62,11 @@ export default function App() {
     useState<TransportState>('disconnected');
 
   const createPipecatClient = () => {
+    const options: SmallWebRTCTransportConstructorOptions = {
+      mediaManager: new DailyMediaManager(),
+    };
     return new PipecatClient({
-      transport: new RNDailyTransport(),
+      transport: new RNSmallWebRTCTransport(options),
       enableMic: true,
       enableCam: false,
       callbacks: {
@@ -76,9 +90,23 @@ export default function App() {
   const start = async () => {
     try {
       let client = createPipecatClient();
-      await client?.startBotAndConnect({
+
+      const connectParams: APIRequest = {
         endpoint: baseUrl + '/start',
-      });
+        requestData: {
+          createDailyRoom: false,
+          enableDefaultIceServers: true,
+        },
+      };
+
+      // Add authorization token if provided
+      if (authorizationToken.trim()) {
+        const headers = new Headers();
+        headers.append('Authorization', `Bearer ${authorizationToken}`);
+        connectParams.headers = headers;
+      }
+
+      await client?.startBotAndConnect(connectParams);
       setPipecatClient(client);
     } catch (e) {
       console.log('Failed to start the bot', e);
@@ -118,6 +146,17 @@ export default function App() {
             onChangeText={(newbaseUrl) => {
               setBaseUrl(newbaseUrl);
             }}
+            placeholder="Enter backend URL"
+          />
+          <Text style={styles.text}>Authorization Token (optional)</Text>
+          <TextInput
+            style={styles.baseUrlInput}
+            value={authorizationToken}
+            onChangeText={(newToken) => {
+              setAuthorizationToken(newToken);
+            }}
+            placeholder="Enter authorization token"
+            secureTextEntry={true}
           />
           <Button onPress={() => start()} title="Connect"></Button>
         </View>

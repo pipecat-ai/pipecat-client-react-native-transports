@@ -359,6 +359,7 @@ declare class Logger {
   warn(...args: unknown[]): void;
   error(...args: unknown[]): void;
 }
+// @ts-ignore
 export const logger: Logger = Logger.getInstance();
 export type ILogger = Logger;
 interface QueuedRTVIMessage {
@@ -425,6 +426,7 @@ export abstract class Transport {
   protected _callbacks: RTVIEventCallbacks;
   protected _abortController: AbortController | undefined;
   protected _state: TransportState;
+  protected _startBotParams: APIRequest | undefined;
   constructor();
   /** called from PipecatClient constructor to wire up callbacks */
   abstract initialize(
@@ -445,6 +447,15 @@ export abstract class Transport {
    * implementation. It is used to pass connection parameters to the transport.
    */
   connect(connectParams?: TransportConnectionParams): Promise<void>;
+  /**
+   * Allow the transports to determine how the bot was started.
+   */
+  get startBotParams(): APIRequest | undefined;
+  /**
+   * Set the parameters used to start the bot.
+   * @param startBotParams
+   */
+  set startBotParams(startBotParams: APIRequest);
   abstract _validateConnectionParams(connectParams?: unknown): unknown;
   abstract _connect(connectParams?: TransportConnectionParams): Promise<void>;
   /**

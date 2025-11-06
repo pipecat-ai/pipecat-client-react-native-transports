@@ -1,18 +1,17 @@
 {
-  "name": "@pipecat-ai/react-native-daily-transport",
+  "name": "@pipecat-ai/react-native-small-webrtc-transport",
   "version": "1.4.0",
   "license": "BSD-2-Clause",
-  "description": "React Native library for connecting to RTVI client using Daily",
+  "description": "React Native library for connecting to RTVI client using Small WebRTC",
   "main": "./lib/commonjs/index.js",
   "module": "./lib/module/index.js",
-  "types": "./lib/typescript/module/src/index.d.ts",
+  "types": "./lib/typescript/module/transports/smallwebrtc/src/index.d.ts",
   "files": [
     "lib",
     "package.json",
     "README.md"
   ],
   "scripts": {
-    "example": "yarn workspace @pipecat-ai/react-native-daily-transport-example",
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -71,25 +70,21 @@
     ]
   },
   "dependencies": {
-    "@pipecat-ai/client-js": "^1.4.0"
+    "@pipecat-ai/client-js": "^1.4.0",
+    "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@daily-co/react-native-daily-js": "^0.82.0",
     "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
-    "@react-native-async-storage/async-storage": "^1.24.0",
-    "react-native": "*",
-    "react-native-background-timer": "^2.4.1",
-    "react-native-get-random-values": "^1.11.0"
+    "react-native": "*"
   },
   "devDependencies": {
-    "@daily-co/react-native-daily-js": "^0.82.0",
     "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
-    "@react-native-async-storage/async-storage": "^1.24.0",
     "@types/base-64": "^1.0.2",
+    "@types/lodash": "^4.17.20",
+    "@types/react": "18.3.21",
     "del-cli": "^6.0.0",
-    "react-native-background-timer": "^2.4.1",
+    "react-native": "*",
     "react-native-builder-bob": "^0.40.13",
-    "react-native-get-random-values": "^1.11.0",
     "typescript": "*"
   }
 }
