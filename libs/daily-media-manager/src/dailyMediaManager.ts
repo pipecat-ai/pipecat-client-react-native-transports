@@ -93,11 +93,13 @@ export class DailyMediaManager extends MediaManager {
     this._selectedMic = inputDevices.mic;
     this._callbacks.onMicUpdated?.(this._selectedMic as MediaDeviceInfo);
 
+    // TODO: keeping it disabled for now
+    // It is not possible to use the audio observers provided by Daily
     // Instantiate audio observers
-    if (!this._daily.isLocalAudioLevelObserverRunning())
+    /*if (!this._daily.isLocalAudioLevelObserverRunning())
       await this._daily.startLocalAudioLevelObserver(100);
     if (!this._daily.isRemoteParticipantsAudioLevelObserverRunning())
-      await this._daily.startRemoteParticipantsAudioLevelObserver(100);
+      await this._daily.startRemoteParticipantsAudioLevelObserver(100);*/
 
     this._initialized = true;
   }

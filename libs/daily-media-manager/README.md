@@ -13,11 +13,10 @@ the Daily Media Manager leverages Daily’s mature SDK to deliver enterprise-gra
 ### Key Features
 
 - **Complete Device Management**: Full control over cameras, microphones, and speakers with automatic device enumeration and selection
-- **Audio Level Monitoring**: Real-time audio level detection for both local and remote participants
 - **Device Error Handling**: Comprehensive error handling for device permissions, constraints, and availability issues
 - **Media Control**: Enable/disable microphone, camera, and screen sharing with simple API calls
 - **Track Management**: Access to WebRTC media tracks for advanced media processing
-- **Real-time Updates**: Automatic callbacks for device changes, audio levels, and track events
+- **Real-time Updates**: Automatic callbacks for device changes and track events
 
 ## Installation
 
