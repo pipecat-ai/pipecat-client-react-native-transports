@@ -1,5 +1,5 @@
 <h1><div align="center">
- <img alt="pipecat client react native" width="500px" height="auto" src="https://raw.githubusercontent.com/pipecat-ai/pipecat-client-react-native-transports/main/pipecat-react-native.png">
+ <img alt="pipecat client react native" width="500px" height="auto" src="https://github.com/pipecat-ai/pipecat-client-react-native-transports/blob/main/pipecat-react-native.png">
 </div></h1>
 
 [![Docs](https://img.shields.io/badge/documentation-blue)](https://docs.pipecat.ai/client/introduction)
