@@ -8,41 +8,38 @@ export class LocalAudioLevelObserver {
   private mediaManager: MediaManager;
   private _onLocalAudioLevel?: (level: number) => void;
 
-  private inProgress: boolean;
   private failsCount: number;
   private captureLocalAudioLevelsInterval: ReturnType<
     typeof setInterval
   > | null = null;
 
-  constructor(pc: RTCPeerConnection, mediaManager: MediaManager) {
-    this.pc = pc;
+  constructor(mediaManager: MediaManager) {
     this.mediaManager = mediaManager;
-    this.inProgress = false;
     this.captureLocalAudioLevelsInterval = null;
     this.failsCount = 0;
     this._onLocalAudioLevel = undefined;
   }
 
-  start(interval?: number) {
-    if (this.inProgress) {
+  start(pc: RTCPeerConnection, interval?: number) {
+    if (this.pc) {
       throw new Error(
         'The local audio level observer has already been started. Please call stop() before starting again.'
       );
     }
     logger.info('Starting LocalAudioLevelObserver.');
-    this.inProgress = true;
+    this.pc = pc;
     this.startCapturingLocalAudioLevels(
       interval || DEFAULT_LOCAL_AUDIO_OBSERVER_INTERVAL_MS
     );
   }
 
   stop() {
-    if (!this.inProgress) {
+    if (!this.pc) {
       // No op
       return;
     }
     logger.info('Stopping LocalAudioLevelObserver.');
-    this.inProgress = false;
+    this.pc = null;
     this.failsCount = 0;
     if (this.captureLocalAudioLevelsInterval) {
       clearInterval(this.captureLocalAudioLevelsInterval);
@@ -50,7 +47,7 @@ export class LocalAudioLevelObserver {
     }
   }
 
-  set onLocalAudioLevel(value: (level: number) => void) {
+  set onLocalAudioLevel(value: ((level: number) => void) | undefined) {
     this._onLocalAudioLevel = value;
   }
 
