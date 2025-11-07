@@ -9,8 +9,6 @@ import Daily, {
   DailyCameraErrorType,
   DailyEventObjectAvailableDevicesUpdated,
   DailyEventObjectCameraError,
-  DailyEventObjectLocalAudioLevel,
-  DailyEventObjectRemoteParticipantsAudioLevel,
   DailyEventObjectTrack,
   DailyParticipant,
   DailyParticipantsObject,
@@ -63,11 +61,6 @@ export class DailyMediaManager extends MediaManager {
       this._handleSelectedDevicesUpdated.bind(this)
     );
     this._daily.on('camera-error', this.handleDeviceError.bind(this));
-    this._daily.on('local-audio-level', this._handleLocalAudioLevel.bind(this));
-    this._daily.on(
-      'remote-participants-audio-level',
-      this._handleRemoteAudioLevel.bind(this)
-    );
   }
 
   async initialize(): Promise<void> {
@@ -93,14 +86,6 @@ export class DailyMediaManager extends MediaManager {
     this._selectedMic = inputDevices.mic;
     this._callbacks.onMicUpdated?.(this._selectedMic as MediaDeviceInfo);
 
-    // TODO: keeping it disabled for now
-    // It is not possible to use the audio observers provided by Daily
-    // Instantiate audio observers
-    /*if (!this._daily.isLocalAudioLevelObserverRunning())
-      await this._daily.startLocalAudioLevelObserver(100);
-    if (!this._daily.isRemoteParticipantsAudioLevelObserverRunning())
-      await this._daily.startRemoteParticipantsAudioLevelObserver(100);*/
-
     this._initialized = true;
   }
 
@@ -121,8 +106,6 @@ export class DailyMediaManager extends MediaManager {
   }
 
   async disconnect(): Promise<void> {
-    this._daily.stopLocalAudioLevelObserver();
-    this._daily.stopRemoteParticipantsAudioLevelObserver();
     await this._daily.leave();
     this._initialized = false;
     this._connected = false;
@@ -292,29 +275,6 @@ export class DailyMediaManager extends MediaManager {
       }
     };
     this._callbacks.onDeviceError?.(generateDeviceError(ev.error));
-  }
-
-  private _handleLocalAudioLevel(ev: DailyEventObjectLocalAudioLevel) {
-    this._callbacks.onLocalAudioLevel?.(ev.audioLevel);
-  }
-
-  private _handleRemoteAudioLevel(
-    ev: DailyEventObjectRemoteParticipantsAudioLevel
-  ) {
-    const participants = this._daily.participants();
-
-    for (const participantId in ev.participantsAudioLevel) {
-      if (ev.participantsAudioLevel.hasOwnProperty(participantId)) {
-        const audioLevel = ev.participantsAudioLevel[participantId];
-        let participant = participants[participantId];
-        if (audioLevel && participant) {
-          this._callbacks.onRemoteAudioLevel?.(
-            audioLevel,
-            dailyParticipantToParticipant(participant)
-          );
-        }
-      }
-    }
   }
 
   protected async handleTrackStarted(event: DailyEventObjectTrack) {
