@@ -9,6 +9,7 @@ import {
 } from '@pipecat-ai/react-native-small-webrtc-transport';
 import {
   APIRequest,
+  Participant,
   PipecatClient,
   TransportState,
 } from '@pipecat-ai/client-js';
@@ -85,6 +86,14 @@ export default function App() {
         },
         onLocalAudioLevel(level) {
           console.log('Local audio level:', level);
+        },
+        onRemoteAudioLevel(level: number, participant: Participant) {
+          console.log(
+            'Remote audio level:',
+            level,
+            'participant:',
+            participant.id
+          );
         },
       },
     });
