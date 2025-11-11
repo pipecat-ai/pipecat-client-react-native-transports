@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.4.1] - [Unreleased]
 
 - Adding support for the `onLocalAudioLevel` callback.
+- Adding support for the `onRemoteAudioLevel` callback.
 
 ## [1.4.0] - 2025-11-07
 
