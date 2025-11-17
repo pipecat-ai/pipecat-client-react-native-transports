@@ -22,6 +22,7 @@ import {
 } from '@daily-co/react-native-webrtc';
 import { RTCIceServer } from '../../../types/react-native-webrtc/extraTypes';
 import { RTCSessionDescriptionInit } from '@daily-co/react-native-webrtc/lib/typescript/RTCSessionDescription';
+import { AudioLevelObserver } from './util/audioLevelObserver';
 
 class TrackStatusMessage {
   type = 'trackStatus';
@@ -132,6 +133,8 @@ export class RNSmallWebRTCTransport extends Transport {
   private __flushTimeout: ReturnType<typeof setTimeout> | null = null;
   private _flushDelay = 200;
 
+  private audioLevelObserver: AudioLevelObserver;
+
   constructor(opts: SmallWebRTCTransportConstructorOptions) {
     super();
     this._iceServers = opts.iceServers ?? [];
@@ -143,6 +146,7 @@ export class RNSmallWebRTCTransport extends Transport {
 
     this.mediaManager = opts.mediaManager;
     this.mediaManager.onTrackStarted = this._handleTrackStarted.bind(this);
+    this.audioLevelObserver = new AudioLevelObserver(this.mediaManager);
   }
 
   private async _handleTrackStarted(event: TrackEvent) {
@@ -170,6 +174,10 @@ export class RNSmallWebRTCTransport extends Transport {
     this._callbacks = options.callbacks ?? {};
     this._onMessage = messageHandler;
     this.mediaManager.setClientOptions(options);
+    this.audioLevelObserver.onLocalAudioLevel =
+      options.callbacks?.onLocalAudioLevel;
+    this.audioLevelObserver.onRemoteAudioLevel =
+      options.callbacks?.onRemoteAudioLevel;
 
     this.state = 'disconnected';
     logger.debug('[RTVI Transport] Initialized');
@@ -796,6 +804,7 @@ export class RNSmallWebRTCTransport extends Transport {
     // Sending the ice candidates
     this._canSendIceCandidates = true;
     await this.flushIceCandidates();
+    this.audioLevelObserver.start(this.pc);
   }
 
   private async addUserMedia(): Promise<void> {
@@ -939,6 +948,7 @@ export class RNSmallWebRTCTransport extends Transport {
       this.dc.close();
     }
 
+    this.audioLevelObserver.stop();
     this.closePeerConnection(this.pc);
     this.pc = null;
 

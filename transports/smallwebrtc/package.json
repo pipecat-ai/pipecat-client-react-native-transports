@@ -1,6 +1,6 @@
 {
   "name": "@pipecat-ai/react-native-small-webrtc-transport",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "license": "BSD-2-Clause",
   "description": "React Native library for connecting to RTVI client using Small WebRTC",
   "main": "./lib/commonjs/index.js",

@@ -9,6 +9,7 @@ import {
 } from '@pipecat-ai/react-native-small-webrtc-transport';
 import {
   APIRequest,
+  Participant,
   PipecatClient,
   TransportState,
 } from '@pipecat-ai/client-js';
@@ -83,6 +84,17 @@ export default function App() {
         onError: (error) => {
           console.log('Error:', JSON.stringify(error));
         },
+        onLocalAudioLevel(level) {
+          console.log('Local audio level:', level);
+        },
+        onRemoteAudioLevel(level: number, participant: Participant) {
+          console.log(
+            'Remote audio level:',
+            level,
+            'participant:',
+            participant.id
+          );
+        },
       },
     });
   };
@@ -134,7 +146,7 @@ export default function App() {
             onPress={() => leave()}
             color="#FF0000" // Red color
             title="Disconnect"
-          ></Button>
+          />
         </View>
       ) : (
         <View style={styles.mainContainer}>
@@ -158,7 +170,7 @@ export default function App() {
             placeholder="Enter authorization token"
             secureTextEntry={true}
           />
-          <Button onPress={() => start()} title="Connect"></Button>
+          <Button onPress={() => start()} title="Connect" />
         </View>
       )}
     </SafeAreaView>
