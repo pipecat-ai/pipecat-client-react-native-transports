@@ -66,13 +66,14 @@ export default function App() {
     const options: SmallWebRTCTransportConstructorOptions = {
       mediaManager: new DailyMediaManager(),
     };
-    return new PipecatClient({
+    const client = new PipecatClient({
       transport: new RNSmallWebRTCTransport(options),
       enableMic: true,
       enableCam: false,
       callbacks: {
         onConnected: () => {
           setInCall(true);
+          client.updateMic('SPEAKERPHONE');
         },
         onDisconnected: () => {
           setInCall(false);
@@ -95,8 +96,12 @@ export default function App() {
             participant.id
           );
         },
+        onBotOutput: (output) => {
+          console.log('Bot output:', output);
+        },
       },
     });
+    return client;
   };
 
   const start = async () => {
