@@ -66,6 +66,9 @@ export default function App() {
           console.log(`Transport state changed: ${state}`);
           setCurrentState(state);
         },
+        onBotOutput: (output) => {
+          console.log('Bot output:', output);
+        },
         onError: (error) => {
           console.log('Error:', JSON.stringify(error));
         },

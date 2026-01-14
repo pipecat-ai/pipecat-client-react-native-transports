@@ -64,6 +64,7 @@ export interface SmallWebRTCTransportConstructorOptions
   audioCodec?: string;
   videoCodec?: string;
   mediaManager: MediaManager;
+  offerUrlTemplate?: string;
 }
 
 const RENEGOTIATE_TYPE = 'renegotiate';
@@ -117,6 +118,7 @@ export class RNSmallWebRTCTransport extends Transport {
   private audioCodec: string | null | 'default' = null;
   private videoCodec: string | null | 'default' = null;
   private pc_id: string | null = null;
+  private offerUrlTemplate: string | null = null;
 
   private reconnectionAttempts = 0;
   private maxReconnectionAttempts = 3;
@@ -141,6 +143,7 @@ export class RNSmallWebRTCTransport extends Transport {
     this._waitForICEGathering = opts.waitForICEGathering ?? false;
     this.audioCodec = opts.audioCodec ?? null;
     this.videoCodec = opts.videoCodec ?? null;
+    this.offerUrlTemplate = opts.offerUrlTemplate ?? null;
 
     this._webrtcRequest = this._resolveRequestInfo(opts);
 
@@ -307,13 +310,16 @@ export class RNSmallWebRTCTransport extends Transport {
     sessionId: string
   ): APIRequest {
     const startEndpoint = this._getStartEndpointAsString()!;
-    const offerUrl = startEndpoint.replace(
-      '/start',
-      `/sessions/${sessionId}/api/offer`
-    );
+    const offerUrl = this.offerUrlTemplate
+      ? this.offerUrlTemplate.replace(':sessionId', sessionId)
+      : startEndpoint.replace('/start', `/sessions/${sessionId}/api/offer`);
+    const offerRequestData = this.startBotParams!.requestData
+      ? (this.startBotParams!.requestData as any).body
+      : undefined;
     return {
       endpoint: offerUrl,
       headers: this.startBotParams!.headers,
+      requestData: offerRequestData,
     };
   }
 

@@ -86,7 +86,7 @@ export class DeviceError extends RTVIError {
     details?: DeviceErrorDetails
   );
 }
-export const RTVI_PROTOCOL_VERSION = '1.0.0';
+export const RTVI_PROTOCOL_VERSION = '1.1.0';
 export const RTVI_MESSAGE_LABEL = 'rtvi-ai';
 /**
  * Messages the corresponding server-side client expects to receive about
@@ -113,6 +113,7 @@ export enum RTVIMessageType {
   APPEND_TO_CONTEXT_RESULT = 'append-to-context-result', // Result of appending to context
   /** Transcription Messages */
   USER_TRANSCRIPTION = 'user-transcription', // Local user speech to text transcription (partials and finals)
+  BOT_OUTPUT = 'bot-output', // A best effort aggregation of all bot output along with metadata like if it's spoken
   BOT_TRANSCRIPTION = 'bot-transcription', // Bot full text transcription (sentence aggregated)
   USER_STARTED_SPEAKING = 'user-started-speaking', // User started speaking
   USER_STOPPED_SPEAKING = 'user-stopped-speaking', // User stopped speaking
@@ -168,6 +169,15 @@ export type TranscriptData = {
   final: boolean;
   timestamp: string;
   user_id: string;
+};
+export enum AggregationType {
+  WORD = 'word',
+  SENTENCE = 'sentence',
+}
+export type BotOutputData = {
+  text: string;
+  spoken: boolean;
+  aggregated_by?: AggregationType | string;
 };
 export type BotLLMTextData = {
   text: string;
@@ -255,6 +265,7 @@ export enum RTVIEvent {
   UserStartedSpeaking = 'userStartedSpeaking',
   UserStoppedSpeaking = 'userStoppedSpeaking',
   UserTranscript = 'userTranscript',
+  BotOutput = 'botOutput',
   BotTranscript = 'botTranscript',
   BotLlmText = 'botLlmText',
   BotLlmStarted = 'botLlmStarted',
@@ -306,6 +317,7 @@ export type RTVIEvents = Partial<{
   userStartedSpeaking: () => void;
   userStoppedSpeaking: () => void;
   userTranscript: (data: TranscriptData) => void;
+  botOutput: (data: BotOutputData) => void;
   botTranscript: (data: BotLLMTextData) => void;
   botLlmText: (data: BotLLMTextData) => void;
   botLlmStarted: () => void;
@@ -550,6 +562,7 @@ export type RTVIEventCallbacks = Partial<{
   onUserStartedSpeaking: () => void;
   onUserStoppedSpeaking: () => void;
   onUserTranscript: (data: TranscriptData) => void;
+  onBotOutput: (data: BotOutputData) => void;
   onBotTranscript: (data: BotLLMTextData) => void;
   onBotLlmText: (data: BotLLMTextData) => void;
   onBotLlmStarted: () => void;
