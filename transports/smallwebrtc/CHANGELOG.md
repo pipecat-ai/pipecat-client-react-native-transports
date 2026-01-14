@@ -20,11 +20,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   the LLM text is aggregated, you can handle custom `aggregated_by` fields, like `"code"` or
   `"address"` or `"url"`, allowing the server to do the parsing.
 - Saved the parameters used to start the bot, so transports can access them.
+- Added `offerUrlTemplate` inside the `SmallWebRTCTransportConstructorOptions`, allowing to define a template which will be used
+  during the transformation between startBot and connect, to create the offer url pointing to a custom endpoint other than `/api/offer`.
+  ``` javascript
+    transport: new SmallWebRTCTransport({
+      offerUrlTemplate: `${this.baseUrl}/sessions/:sessionId/api/offer`
+    }),
+  ```
+-
 
 ### Deprecated
 
 - Deprecated the `botTranscript` event and associated `onBotTranscript` callbacks in lieu of
   the more thorough and accurate `botOutput` event.
+
+### Fixed
+
+- Fixed an issue in `startBotAndConnect` where `requestData` was not carried over when invoking the `connect` endpoint.
 
 ## [1.4.1]
 
