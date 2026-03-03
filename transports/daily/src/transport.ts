@@ -99,11 +99,6 @@ export class RNDailyTransport extends Transport {
     super();
     this._callbacks = {} as RTVIEventCallbacks;
     this._dailyFactoryOptions = opts;
-    this._daily = Daily.createCallObject({
-      ...this._dailyFactoryOptions,
-      allowMultipleCallInstances: true,
-    });
-    this._dailyWrapper = new DailyCallWrapper(this._daily);
   }
 
   public initialize(
@@ -127,6 +122,12 @@ export class RNDailyTransport extends Transport {
       // Default is mic on
       this._dailyFactoryOptions.startAudioOff = !(options.enableMic ?? true);
     }
+
+    this._daily = Daily.createCallObject({
+      ...this._dailyFactoryOptions,
+      allowMultipleCallInstances: true,
+    });
+    this._dailyWrapper = new DailyCallWrapper(this._daily);
 
     this.attachEventListeners();
 
