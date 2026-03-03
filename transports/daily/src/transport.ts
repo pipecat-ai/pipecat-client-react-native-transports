@@ -264,7 +264,10 @@ export class RNDailyTransport extends Transport {
     }
 
     this.state = 'initializing';
-    await this._daily.startCamera();
+    await this._daily.startCamera({
+      startVideoOff: this._dailyFactoryOptions.startVideoOff,
+      startAudioOff: this._dailyFactoryOptions.startAudioOff,
+    });
     const { devices } = await this._daily.enumerateDevices();
     const cams = devices.filter((d) => d.kind === 'videoinput');
     const mics = devices.filter((d) => d.kind === 'audio');
