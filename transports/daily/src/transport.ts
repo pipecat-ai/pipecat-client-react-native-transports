@@ -15,6 +15,7 @@ import Daily, {
   DailyEventObjectTrack,
   DailyFactoryOptions,
   DailyParticipant,
+  DailyRoomInfo,
 } from '@daily-co/react-native-daily-js';
 
 import {
@@ -30,6 +31,7 @@ import {
   TransportStartError,
   TransportState,
   logger,
+  MessageTooLargeError,
 } from '@pipecat-ai/client-js';
 import { MediaDeviceInfo } from '@daily-co/react-native-webrtc';
 
@@ -264,10 +266,7 @@ export class RNDailyTransport extends Transport {
     }
 
     this.state = 'initializing';
-    await this._daily.startCamera({
-      startVideoOff: this._dailyFactoryOptions.startVideoOff,
-      startAudioOff: this._dailyFactoryOptions.startAudioOff,
-    });
+    await this._daily.startCamera(this._dailyFactoryOptions);
     const { devices } = await this._daily.enumerateDevices();
     const cams = devices.filter((d) => d.kind === 'videoinput');
     const mics = devices.filter((d) => d.kind === 'audio');
@@ -347,6 +346,12 @@ export class RNDailyTransport extends Transport {
 
     if (this._abortController?.signal.aborted) return;
 
+    const r = await this._daily.room();
+    this._maxMessageSize =
+      // @ts-ignore
+      (r as DailyRoomInfo)?.domainConfig?.max_app_message_size ||
+      10 * 1024 * 1024;
+
     this.state = 'connected';
 
     this._callbacks.onConnected?.();
@@ -406,7 +411,17 @@ export class RNDailyTransport extends Transport {
   }
 
   public sendMessage(message: RTVIMessage) {
-    this._daily.sendAppMessage(message, '*');
+    try {
+      this._daily.sendAppMessage(message, '*');
+    } catch (error: unknown) {
+      if (
+        error instanceof Error &&
+        error.message.includes('Message data too large')
+      ) {
+        throw new MessageTooLargeError(error.message);
+      }
+      throw error;
+    }
   }
 
   private handleAppMessage(ev: DailyEventObjectAppMessage) {

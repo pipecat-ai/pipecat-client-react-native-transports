@@ -12,6 +12,8 @@ import {
   UnsupportedFeatureError,
   APIRequest,
   isAPIRequest,
+  messageSizeWithinLimit,
+  MessageTooLargeError,
 } from '@pipecat-ai/client-js';
 import { MediaManager, TrackEvent } from './media-manager/mediaManager';
 import {
@@ -428,6 +430,14 @@ export class RNSmallWebRTCTransport extends Transport {
       logger.warn(`Datachannel is not ready. Message not sent: ${message}`);
       return;
     }
+
+    // Note: This shouldn't happen since client-js should have already checked this
+    if (!messageSizeWithinLimit(message, this._maxMessageSize)) {
+      throw new MessageTooLargeError(
+        'Message data too large. Max size is ' + this._maxMessageSize
+      );
+    }
+
     this.dc?.send(JSON.stringify(message));
   }
 
@@ -907,6 +917,10 @@ export class RNSmallWebRTCTransport extends Transport {
     // @ts-ignore
     dc.addEventListener('open', () => {
       logger.debug('datachannel opened');
+      // using default value here since react-native-webrtc does not expose this.pc?.sctp?.maxMessageSize
+      // we may inspect SDP in the future if needed and look for a=max-message-size:
+      // But for now, this is the default value which aiortc provides from server side.
+      this._maxMessageSize = 64 * 1024;
       if (this._connectResolved) {
         this.syncTrackStatus();
         this._connectResolved();
