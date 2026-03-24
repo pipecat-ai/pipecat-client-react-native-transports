@@ -5,6 +5,29 @@ All notable changes to **Pipecat Client React Native Small WebRTC** will be docu
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - Unreleased
+
+### Added
+
+- `_maxMessageSize` introduced to `Transports` along with a `MessageTooLargeError` for
+  proper handling of attempts to send a message larger than what the transport can handle
+- Added support for new `llm-function-call-started`, `llm-function-call-in-progress`, and `llm-function-call-stopped` RTVI events with corresponding `onLLMFunctionCallStarted`, `onLLMFunctionCallInProgress`, and `onLLMFunctionCallStopped` callbacks. These events optionally include metadata about the function call that triggered them, as dictated by the server. See below: `onLLMFunctionCallInProgress` should be used in lieu of the now deprecated `onLLMFunctionCall` callback.
+- Added support for new `user-mute-started` and `user-mute-stopped` RTVI events with corresponding `onUserMuteStarted` and `onUserMuteStopped` callbacks. These events notify when the server is ignoring audio from the client (server-side muting). The client should continue sending audio normally but may want to show some indication to the user.
+
+### Changed
+
+- Updated RTVI Version to 1.2.0 to indicate recent changes:
+  - New Message Support: `send-text`, `bot-output`, function call events, user mute events
+  - Deprecated Messages: `append-to-context`, `bot-transcription`, and `llm-function-call`
+
+### Fixed
+
+- Fixed a bug where the transport would not initialize devices when starting a bot if the transport was already disconnected.
+
+### Deprecated
+
+- Per the introduction of the more thorough set of function call events, `onLLMFunctionCall` has been deprecated and replaced by `onLLMFunctionCallInProgress`. The existence of the `function_name` and `args` in the data provided is determined by the server as a security measure. Note that the `FunctionCallHandler`s are still valid and are now triggered from `llm-function-call-in-progress` events that include a `function_name`. These callbacks are specifically meant for returning data to the server that is needed to resolve the function call (ex. getting the location of the client to resolve a get_weather function call).
+
 ## [1.5.0] - 2026-01-14
 
 ### Added

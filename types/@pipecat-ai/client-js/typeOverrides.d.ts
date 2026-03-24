@@ -63,6 +63,9 @@ export class UnsupportedFeatureError extends RTVIError {
   readonly feature: string;
   constructor(feature: string, source?: string, message?: string);
 }
+export class MessageTooLargeError extends RTVIError {
+  constructor(message?: string | undefined);
+}
 export type DeviceArray = Array<'cam' | 'mic' | 'speaker'>;
 export type DeviceErrorType =
   | 'in-use'
@@ -86,7 +89,7 @@ export class DeviceError extends RTVIError {
     details?: DeviceErrorDetails
   );
 }
-export const RTVI_PROTOCOL_VERSION = '1.1.0';
+export const RTVI_PROTOCOL_VERSION = '1.2.0';
 export const RTVI_MESSAGE_LABEL = 'rtvi-ai';
 /**
  * Messages the corresponding server-side client expects to receive about
@@ -111,20 +114,25 @@ export enum RTVIMessageType {
   SERVER_RESPONSE = 'server-response', // Server response to client message
   ERROR_RESPONSE = 'error-response', // Error message in response to an outbound message
   APPEND_TO_CONTEXT_RESULT = 'append-to-context-result', // Result of appending to context
-  /** Transcription Messages */
-  USER_TRANSCRIPTION = 'user-transcription', // Local user speech to text transcription (partials and finals)
-  BOT_OUTPUT = 'bot-output', // A best effort aggregation of all bot output along with metadata like if it's spoken
-  BOT_TRANSCRIPTION = 'bot-transcription', // Bot full text transcription (sentence aggregated)
+  /** Speaking and Transcription Messages */
   USER_STARTED_SPEAKING = 'user-started-speaking', // User started speaking
   USER_STOPPED_SPEAKING = 'user-stopped-speaking', // User stopped speaking
   BOT_STARTED_SPEAKING = 'bot-started-speaking', // Bot started speaking
   BOT_STOPPED_SPEAKING = 'bot-stopped-speaking', // Bot stopped speaking
+  USER_MUTE_STARTED = 'user-mute-started', // User muted server-side.
+  USER_MUTE_STOPPED = 'user-mute-stopped', // User unmuted server-side.
+  USER_TRANSCRIPTION = 'user-transcription', // Local user speech to text transcription (partials and finals)
+  BOT_OUTPUT = 'bot-output', // A best effort aggregation of all bot output along with metadata like if it's spoken
+  BOT_TRANSCRIPTION = 'bot-transcription', // Bot full text transcription (sentence aggregated)
   /** LLM Messages */
   USER_LLM_TEXT = 'user-llm-text', // Aggregated user input text which is sent to LLM
   BOT_LLM_TEXT = 'bot-llm-text', // Streamed token returned by the LLM
   BOT_LLM_STARTED = 'bot-llm-started', // Bot LLM inference starts
   BOT_LLM_STOPPED = 'bot-llm-stopped', // Bot LLM inference stops
   LLM_FUNCTION_CALL = 'llm-function-call', // Inbound function call from LLM
+  LLM_FUNCTION_CALL_STARTED = 'llm-function-call-started', // Inbound function call started
+  LLM_FUNCTION_CALL_IN_PROGRESS = 'llm-function-call-in-progress', // Inbound function call in progress
+  LLM_FUNCTION_CALL_STOPPED = 'llm-function-call-stopped', // Inbound function call stopped
   LLM_FUNCTION_CALL_RESULT = 'llm-function-call-result', // Outbound result of function call
   BOT_LLM_SEARCH_RESPONSE = 'bot-llm-search-response', // Bot LLM search response
   /** TTS Messages */
@@ -206,8 +214,17 @@ export type LLMSearchOrigin = {
   site_title?: string;
   results: LLMSearchResult[];
 };
+export type LLMFunctionCallStartedData = {
+  function_name?: string;
+};
+export type LLMFunctionCallInProgressData = {
+  function_name?: string;
+  tool_call_id: string;
+  arguments?: Record<string, unknown>;
+};
+/** @deprecated Use LLMFunctionCallInProgressData instead */
 export type LLMFunctionCallData = {
-  function_name: string;
+  function_name?: string;
   tool_call_id: string;
   args: Record<string, unknown>;
 };
@@ -215,8 +232,14 @@ export type LLMFunctionCallResult = Record<string, unknown> | string;
 export type LLMFunctionCallResultResponse = {
   function_name: string;
   tool_call_id: string;
-  args: Record<string, unknown>;
+  arguments: Record<string, unknown>;
   result: LLMFunctionCallResult;
+};
+export type LLMFunctionCallStoppedData = {
+  function_name?: string;
+  tool_call_id: string;
+  cancelled: boolean;
+  result?: unknown;
 };
 export type SendTextOptions = {
   run_immediately?: boolean;
@@ -264,6 +287,8 @@ export enum RTVIEvent {
   BotStoppedSpeaking = 'botStoppedSpeaking',
   UserStartedSpeaking = 'userStartedSpeaking',
   UserStoppedSpeaking = 'userStoppedSpeaking',
+  UserMuteStarted = 'userMuteStarted',
+  UserMuteStopped = 'userMuteStopped',
   UserTranscript = 'userTranscript',
   BotOutput = 'botOutput',
   BotTranscript = 'botTranscript',
@@ -271,6 +296,9 @@ export enum RTVIEvent {
   BotLlmStarted = 'botLlmStarted',
   BotLlmStopped = 'botLlmStopped',
   LLMFunctionCall = 'llmFunctionCall',
+  LLMFunctionCallStarted = 'llmFunctionCallStarted',
+  LLMFunctionCallInProgress = 'llmFunctionCallInProgress',
+  LLMFunctionCallStopped = 'llmFunctionCallStopped',
   BotLlmSearchResponse = 'botLlmSearchResponse',
   BotTtsText = 'botTtsText',
   BotTtsStarted = 'botTtsStarted',
@@ -316,13 +344,19 @@ export type RTVIEvents = Partial<{
   botStoppedSpeaking: () => void;
   userStartedSpeaking: () => void;
   userStoppedSpeaking: () => void;
+  userMuteStarted: () => void;
+  userMuteStopped: () => void;
   userTranscript: (data: TranscriptData) => void;
   botOutput: (data: BotOutputData) => void;
   botTranscript: (data: BotLLMTextData) => void;
   botLlmText: (data: BotLLMTextData) => void;
   botLlmStarted: () => void;
   botLlmStopped: () => void;
+  /** @deprecated Use LLMFunctionCallInProgress instead */
   llmFunctionCall: (func: LLMFunctionCallData) => void;
+  llmFunctionCallStarted: (data: LLMFunctionCallStartedData) => void;
+  llmFunctionCallInProgress: (data: LLMFunctionCallInProgressData) => void;
+  llmFunctionCallStopped: (data: LLMFunctionCallStoppedData) => void;
   botLlmSearchResponse: (data: BotLLMSearchResponseData) => void;
   botTtsText: (data: BotTTSTextData) => void;
   botTtsStarted: () => void;
@@ -439,6 +473,19 @@ export abstract class Transport {
   protected _abortController: AbortController | undefined;
   protected _state: TransportState;
   protected _startBotParams: APIRequest | undefined;
+  /**
+   * Maximum allowed size in bytes for a single signaling/message payload.
+   *
+   * The default is 64 KiB (`64 * 1024`), which is chosen to stay well within
+   * typical WebSocket, proxy, and intermediary limits and to discourage
+   * transports from sending very large payloads in a single message.
+   *
+   * Transport implementations may override this value in subclasses or
+   * constructors if their underlying transport has stricter or more relaxed
+   * limits, as long as they continue to honor this field when enforcing
+   * message size constraints.
+   */
+  protected _maxMessageSize: number;
   constructor();
   /** called from PipecatClient constructor to wire up callbacks */
   abstract initialize(
@@ -495,6 +542,12 @@ export abstract class Transport {
   abstract get isMicEnabled(): boolean;
   abstract get isSharingScreen(): boolean;
   abstract sendMessage(message: RTVIMessage): void;
+  /**
+   * Maximum size, in bytes, of a single message that this transport will attempt
+   * to send. Callers should ensure that any outbound {@link RTVIMessage} payloads
+   * do not exceed this limit to avoid transport or server errors.
+   */
+  get maxMessageSize(): number;
   abstract tracks(): Tracks;
 }
 export class TransportWrapper {
@@ -516,6 +569,10 @@ interface JSAboutClientData extends AboutClientData {
   };
 }
 export function learnAboutClient(): JSAboutClientData;
+export function messageSizeWithinLimit(
+  message: unknown,
+  maxSize: number
+): boolean;
 export type FunctionCallParams = {
   functionName: string;
   arguments: Record<string, unknown>;
@@ -557,12 +614,15 @@ export type RTVIEventCallbacks = Partial<{
   onScreenShareError: (errorMessage: string) => void;
   onLocalAudioLevel: (level: number) => void;
   onRemoteAudioLevel: (level: number, participant: Participant) => void;
-  onBotStartedSpeaking: () => void;
-  onBotStoppedSpeaking: () => void;
   onUserStartedSpeaking: () => void;
   onUserStoppedSpeaking: () => void;
+  onBotStartedSpeaking: () => void;
+  onBotStoppedSpeaking: () => void;
+  onUserMuteStarted: () => void;
+  onUserMuteStopped: () => void;
   onUserTranscript: (data: TranscriptData) => void;
   onBotOutput: (data: BotOutputData) => void;
+  /** @deprecated Use onBotOutput instead */
   onBotTranscript: (data: BotLLMTextData) => void;
   onBotLlmText: (data: BotLLMTextData) => void;
   onBotLlmStarted: () => void;
@@ -570,8 +630,12 @@ export type RTVIEventCallbacks = Partial<{
   onBotTtsText: (data: BotTTSTextData) => void;
   onBotTtsStarted: () => void;
   onBotTtsStopped: () => void;
-  onLLMFunctionCall: (data: LLMFunctionCallData) => void;
+  onLLMFunctionCallStarted: (data: LLMFunctionCallStartedData) => void;
+  onLLMFunctionCallInProgress: (data: LLMFunctionCallInProgressData) => void;
+  onLLMFunctionCallStopped: (data: LLMFunctionCallStoppedData) => void;
   onBotLlmSearchResponse: (data: BotLLMSearchResponseData) => void;
+  /** @deprecated Use onLLMFunctionCallInProgress instead */
+  onLLMFunctionCall: (data: LLMFunctionCallData) => void;
 }>;
 export interface PipecatClientOptions {
   /**
