@@ -359,8 +359,9 @@ export class RNDailyTransport extends Transport {
 
   async sendReadyMessage(): Promise<void> {
     return new Promise<void>((resolve) => {
-      for (const id in this._daily.participants()) {
-        const p = this._daily.participants()[id];
+      const participants = this._daily.participants();
+      for (const id in participants) {
+        const p = participants[id];
         if (!p.local && p.tracks?.audio?.persistentTrack) {
           // If we already have a remote audio track, we can send the ready message immediately
           this.state = 'ready';
@@ -371,6 +372,7 @@ export class RNDailyTransport extends Transport {
       }
       const readyHandler = (ev: DailyEventObjectTrack) => {
         if (!ev.participant?.local) {
+          this._daily.off('track-started', readyHandler);
           this.state = 'ready';
           this.sendMessage(RTVIMessage.clientReady());
           resolve();
