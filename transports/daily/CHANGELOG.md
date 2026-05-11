@@ -5,6 +5,13 @@ All notable changes to **Pipecat Client React Native** will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Fixed
+
+- Fixed timing issue with client ready message. If the bot track came in before the client called `sendReadyMessage`,
+  the message might never send, waiting on the `track-started` event.
+
 ## [1.6.0] - 2026-03-24
 
 ### Added
