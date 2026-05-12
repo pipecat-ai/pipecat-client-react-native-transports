@@ -362,7 +362,7 @@ export class RNDailyTransport extends Transport {
       const participants = this._daily.participants();
       for (const id in participants) {
         const p = participants[id];
-        if (!p.local && p.tracks?.audio?.persistentTrack) {
+        if (!p?.local && p?.tracks?.audio?.persistentTrack) {
           // If we already have a remote audio track, we can send the ready message immediately
           this.state = 'ready';
           this.sendMessage(RTVIMessage.clientReady());

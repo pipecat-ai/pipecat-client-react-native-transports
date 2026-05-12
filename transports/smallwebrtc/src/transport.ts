@@ -155,6 +155,11 @@ export class RNSmallWebRTCTransport extends Transport {
   }
 
   private async _handleTrackStarted(event: TrackEvent) {
+    if (!this.pc) {
+      // If pc is not initialized yet, just return.
+      // The correct track will be handled once pc is initialized, inside addUserMedia.
+      return;
+    }
     if (event.type === 'audio') {
       logger.info('SmallWebRTCMediaManager replacing audio track');
       await this.getAudioTransceiver()?.sender.replaceTrack(event.track);
@@ -794,19 +799,19 @@ export class RNSmallWebRTCTransport extends Transport {
   private getAudioTransceiver() {
     // Transceivers always appear in creation-order for both peers
     // Look at addInitialTransceivers
-    return this.pc!.getTransceivers()[AUDIO_TRANSCEIVER_INDEX];
+    return this.pc?.getTransceivers()[AUDIO_TRANSCEIVER_INDEX];
   }
 
   private getVideoTransceiver() {
     // Transceivers always appear in creation-order for both peers
     // Look at addInitialTransceivers
-    return this.pc!.getTransceivers()[VIDEO_TRANSCEIVER_INDEX];
+    return this.pc?.getTransceivers()[VIDEO_TRANSCEIVER_INDEX];
   }
 
   private getScreenVideoTransceiver() {
     // Transceivers always appear in creation-order for both peers
     // Look at addInitialTransceivers
-    return this.pc!.getTransceivers()[SCREEN_VIDEO_TRANSCEIVER_INDEX];
+    return this.pc?.getTransceivers()[SCREEN_VIDEO_TRANSCEIVER_INDEX];
   }
 
   private async startNewPeerConnection(
