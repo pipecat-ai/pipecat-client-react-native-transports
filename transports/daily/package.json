@@ -71,10 +71,10 @@
     ]
   },
   "dependencies": {
-    "@pipecat-ai/client-js": "^1.6.0"
+    "@pipecat-ai/client-js": "^1.9.0"
   },
   "peerDependencies": {
-    "@daily-co/react-native-daily-js": "^0.82.0",
+    "@daily-co/react-native-daily-js": "^0.85.0",
     "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
     "@react-native-async-storage/async-storage": "^1.24.0",
     "react-native": "*",
@@ -82,7 +82,7 @@
     "react-native-get-random-values": "^1.11.0"
   },
   "devDependencies": {
-    "@daily-co/react-native-daily-js": "^0.82.0",
+    "@daily-co/react-native-daily-js": "^0.85.0",
     "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
     "@react-native-async-storage/async-storage": "^1.24.0",
     "@types/base-64": "^1.0.2",

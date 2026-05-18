@@ -1592,24 +1592,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@daily-co/daily-js@npm:^0.85.0":
-  version: 0.85.0
-  resolution: "@daily-co/daily-js@npm:0.85.0"
+"@daily-co/daily-js@npm:^0.90.0":
+  version: 0.90.0
+  resolution: "@daily-co/daily-js@npm:0.90.0"
   dependencies:
     "@babel/runtime": ^7.12.5
     "@sentry/browser": ^8.33.1
     bowser: ^2.8.1
     dequal: ^2.0.3
     events: ^3.1.0
-  checksum: 5a812cc629a9d7a733249a53c8ebb735ea65866fcf4d8d132c7b102fe9425d5d315c7ad20096050650c4ff2f09c4705f4332d96384fa885b1e3132212737a03d
+  checksum: 7df7f29c77381fa7d88497b8ccef6a04f6bf20358baf774d27f66ca84e7c2be249d379f536668fcdfb03d1cbd9ab3f5e09434500b556e10d90edb8c55d694129
   languageName: node
   linkType: hard
 
-"@daily-co/react-native-daily-js@npm:^0.82.0":
-  version: 0.82.0
-  resolution: "@daily-co/react-native-daily-js@npm:0.82.0"
+"@daily-co/react-native-daily-js@npm:^0.85.0":
+  version: 0.85.0
+  resolution: "@daily-co/react-native-daily-js@npm:0.85.0"
   dependencies:
-    "@daily-co/daily-js": ^0.85.0
+    "@daily-co/daily-js": ^0.90.0
     "@types/react-native-background-timer": ^2.0.0
     base-64: ^1.0.0
     react-native-url-polyfill: ^1.1.2
@@ -1619,7 +1619,7 @@ __metadata:
     react-native: ">=0.68.0"
     react-native-background-timer: ^2.4.1
     react-native-get-random-values: ^1.11.0
-  checksum: 441e41266e0e27d948682333b74156fdb0652c7766d97ed73ae9e6de452e4b8f3dca461927aba96c699b335ffbb1597a369c99256ff1fc9460ebfa88aeffd565
+  checksum: 9368d6d355f170681ab8d10381ead2328acb0f9521a1654514fa56409d7602d49e481e8d436491c88ee319e0004dc98d842097afab008af35973e15739886470
   languageName: node
   linkType: hard
 
@@ -2640,9 +2640,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pipecat-ai/client-js@npm:^1.4.0":
-  version: 1.4.1
-  resolution: "@pipecat-ai/client-js@npm:1.4.1"
+"@pipecat-ai/client-js@npm:^1.9.0":
+  version: 1.9.0
+  resolution: "@pipecat-ai/client-js@npm:1.9.0"
   dependencies:
     "@types/events": ^3.0.3
     bowser: ^2.11.0
@@ -2650,21 +2650,7 @@ __metadata:
     events: ^3.3.0
     typed-emitter: ^2.1.0
     uuid: ^10.0.0
-  checksum: b4346d15af18bfe5cf6bf1296b542898c102bf39f04705000c54d324064f95e1246774aaad691c47f44375ea7e80e6cf400cf6972edea4d5815c295afd4f60a3
-  languageName: node
-  linkType: hard
-
-"@pipecat-ai/client-js@npm:^1.6.0":
-  version: 1.6.0
-  resolution: "@pipecat-ai/client-js@npm:1.6.0"
-  dependencies:
-    "@types/events": ^3.0.3
-    bowser: ^2.11.0
-    clone-deep: ^4.0.1
-    events: ^3.3.0
-    typed-emitter: ^2.1.0
-    uuid: ^10.0.0
-  checksum: 408cb2eea5bc6e597fb927153ff866269d48eb23964590a6be64a99d5076bb1f52051cddfb726e31f3a7439cc8bb7cf4e5d80da55b238836354d2dfc48f9cf91
+  checksum: 6c0b1f82fdda33d41ac9d739d57e63ba9cef62a2462543c978038197d7b2c4cc2800a094e2bea8cf1c478015939a15189bb786249c6465bfd7cc45ca8421eed6
   languageName: node
   linkType: hard
 
@@ -2674,7 +2660,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.28.5
     "@daily-co/config-plugin-rn-daily-js": 0.0.11
-    "@daily-co/react-native-daily-js": ^0.82.0
+    "@daily-co/react-native-daily-js": ^0.85.0
     "@daily-co/react-native-webrtc": ^124.0.6-daily.1
     "@pipecat-ai/react-native-daily-transport": "*"
     "@react-native-async-storage/async-storage": 1.24.0
@@ -2698,7 +2684,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pipecat-ai/react-native-daily-media-manager@workspace:libs/daily-media-manager"
   dependencies:
-    "@daily-co/react-native-daily-js": ^0.82.0
+    "@daily-co/react-native-daily-js": ^0.85.0
     "@daily-co/react-native-webrtc": ^124.0.6-daily.1
     "@pipecat-ai/react-native-small-webrtc-transport": "*"
     "@react-native-async-storage/async-storage": ^1.24.0
@@ -2708,7 +2694,7 @@ __metadata:
     react-native-get-random-values: ^1.11.0
     typescript: "*"
   peerDependencies:
-    "@daily-co/react-native-daily-js": ^0.82.0
+    "@daily-co/react-native-daily-js": ^0.85.0
     "@daily-co/react-native-webrtc": ^124.0.6-daily.1
     "@pipecat-ai/react-native-small-webrtc-transport": "*"
     "@react-native-async-storage/async-storage": ^1.24.0
@@ -2722,9 +2708,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pipecat-ai/react-native-daily-transport@workspace:transports/daily"
   dependencies:
-    "@daily-co/react-native-daily-js": ^0.82.0
+    "@daily-co/react-native-daily-js": ^0.85.0
     "@daily-co/react-native-webrtc": ^124.0.6-daily.1
-    "@pipecat-ai/client-js": ^1.6.0
+    "@pipecat-ai/client-js": ^1.9.0
     "@react-native-async-storage/async-storage": ^1.24.0
     "@types/base-64": ^1.0.2
     del-cli: ^6.0.0
@@ -2733,7 +2719,7 @@ __metadata:
     react-native-get-random-values: ^1.11.0
     typescript: "*"
   peerDependencies:
-    "@daily-co/react-native-daily-js": ^0.82.0
+    "@daily-co/react-native-daily-js": ^0.85.0
     "@daily-co/react-native-webrtc": ^124.0.6-daily.1
     "@react-native-async-storage/async-storage": ^1.24.0
     react-native: "*"
@@ -2748,7 +2734,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.28.5
     "@daily-co/config-plugin-rn-daily-js": 0.0.11
-    "@daily-co/react-native-daily-js": ^0.82.0
+    "@daily-co/react-native-daily-js": ^0.85.0
     "@daily-co/react-native-webrtc": ^124.0.6-daily.1
     "@pipecat-ai/react-native-daily-media-manager": "*"
     "@pipecat-ai/react-native-small-webrtc-transport": "*"
@@ -2774,7 +2760,7 @@ __metadata:
   resolution: "@pipecat-ai/react-native-small-webrtc-transport@workspace:transports/smallwebrtc"
   dependencies:
     "@daily-co/react-native-webrtc": ^124.0.6-daily.1
-    "@pipecat-ai/client-js": ^1.6.0
+    "@pipecat-ai/client-js": ^1.9.0
     "@types/base-64": ^1.0.2
     "@types/lodash": ^4.17.20
     "@types/react": 18.3.21
@@ -9321,7 +9307,7 @@ __metadata:
     "@eslint/compat": ^1.4.1
     "@eslint/eslintrc": ^3.3.1
     "@eslint/js": ^9.39.1
-    "@pipecat-ai/client-js": ^1.4.0
+    "@pipecat-ai/client-js": ^1.9.0
     "@react-native/eslint-config": ^0.82.1
     "@types/jest": 29.5.5
     eslint: 9.39.1

@@ -28,7 +28,7 @@
     "@eslint/compat": "^1.4.1",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.39.1",
-    "@pipecat-ai/client-js": "^1.4.0",
+    "@pipecat-ai/client-js": "^1.9.0",
     "@react-native/eslint-config": "^0.82.1",
     "@types/jest": "29.5.5",
     "eslint": "9.39.1",
