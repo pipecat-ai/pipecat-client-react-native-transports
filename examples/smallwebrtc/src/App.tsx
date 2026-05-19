@@ -113,6 +113,7 @@ export default function App() {
         requestData: {
           createDailyRoom: false,
           enableDefaultIceServers: true,
+          transport: 'webrtc',
         },
       };
 

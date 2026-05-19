@@ -81,6 +81,10 @@ export default function App() {
       let client = createPipecatClient();
       await client?.startBotAndConnect({
         endpoint: baseUrl + '/start',
+        requestData: {
+          createDailyRoom: true,
+          transport: 'daily',
+        },
       });
       setPipecatClient(client);
     } catch (e) {
