@@ -1,6 +1,6 @@
 {
   "name": "@pipecat-ai/react-native-small-webrtc-transport",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "license": "BSD-2-Clause",
   "description": "React Native library for connecting to RTVI client using Small WebRTC",
   "main": "./lib/commonjs/index.js",
@@ -70,15 +70,15 @@
     ]
   },
   "dependencies": {
-    "@pipecat-ai/client-js": "^1.9.0",
+    "@pipecat-ai/client-js": "^1.12.0",
     "lodash": "^4.17.21"
   },
   "peerDependencies": {
-    "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
+    "@daily-co/react-native-webrtc": "^124.0.6-daily.2",
     "react-native": "*"
   },
   "devDependencies": {
-    "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
+    "@daily-co/react-native-webrtc": "^124.0.6-daily.2",
     "@types/base-64": "^1.0.2",
     "@types/lodash": "^4.17.20",
     "@types/react": "18.3.21",

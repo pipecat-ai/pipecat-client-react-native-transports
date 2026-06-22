@@ -1,6 +1,6 @@
 {
   "name": "@pipecat-ai/react-native-daily-media-manager",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "BSD-2-Clause",
   "description": "React Native Daily Media manager",
   "main": "./lib/commonjs/index.js",
@@ -68,19 +68,19 @@
     ]
   },
   "peerDependencies": {
-    "@daily-co/react-native-daily-js": "^0.85.0",
-    "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
+    "@daily-co/react-native-daily-js": "^0.86.0",
+    "@daily-co/react-native-webrtc": "^124.0.6-daily.2",
     "@pipecat-ai/react-native-small-webrtc-transport": "*",
-    "@react-native-async-storage/async-storage": "^1.24.0",
+    "@react-native-async-storage/async-storage": "^3.1.1",
     "react-native": "*",
     "react-native-background-timer": "^2.4.1",
     "react-native-get-random-values": "^1.11.0"
   },
   "devDependencies": {
-    "@daily-co/react-native-daily-js": "^0.85.0",
-    "@daily-co/react-native-webrtc": "^124.0.6-daily.1",
+    "@daily-co/react-native-daily-js": "^0.86.0",
+    "@daily-co/react-native-webrtc": "^124.0.6-daily.2",
     "@pipecat-ai/react-native-small-webrtc-transport": "*",
-    "@react-native-async-storage/async-storage": "^1.24.0",
+    "@react-native-async-storage/async-storage": "^3.1.1",
     "del-cli": "^6.0.0",
     "react-native-background-timer": "^2.4.1",
     "react-native-builder-bob": "^0.40.13",
