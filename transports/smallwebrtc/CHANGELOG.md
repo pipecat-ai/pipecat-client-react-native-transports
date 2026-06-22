@@ -5,6 +5,20 @@ All notable changes to **Pipecat Client React Native Small WebRTC** will be docu
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-06-22
+
+### Added
+
+- Added support for RTVI protocol 2.0.0 bot-output events, including the new `will_be_spoken`, `spoken_status`, `spoken_progress`, and `segment_id` fields that power word-level TTS progress tracking on the client.
+- Added `BotOutputProgressData` type exposing `segment_id`, `accumulated_text`, and `remaining_text` so clients can track which portion of a spoken segment has been played and which remains.
+- Added optional `segment_id` to `BotOutputData` for correlating output events with their corresponding progress updates.
+- Added `onUnsupportedFeature` callback, triggered when the transport encounters a feature it does not support, allowing clients to handle or surface unsupported-feature errors gracefully.
+
+### Changed
+
+- Bumped `@pipecat-ai/client-js` dependency to `1.12.0`.
+- Updated vulnerable dev dependencies.
+
 ## [1.7.0] - 2026-05-19
 
 ### Changed
