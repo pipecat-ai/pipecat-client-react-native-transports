@@ -1,6 +1,6 @@
 {
   "name": "@pipecat-ai/react-native-daily-media-manager",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "BSD-2-Clause",
   "description": "React Native Daily Media manager",
   "main": "./lib/commonjs/index.js",
