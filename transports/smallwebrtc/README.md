@@ -26,9 +26,9 @@ If you are using the [DailyMediaManager](../../libs/daily-media-manager/README.m
 
 ```bash
 npm i @pipecat-ai/react-native-daily-media-manager
-npm i @daily-co/react-native-daily-js@^0.82.0
-npm i @daily-co/react-native-webrtc@^124.0.6-daily.1
-npm i @react-native-async-storage/async-storage@^1.24.0
+npm i @daily-co/react-native-daily-js@^0.86.0
+npm i @daily-co/react-native-webrtc@^124.0.6-daily.2
+npm i @react-native-async-storage/async-storage@^3.1.1
 npm i react-native-background-timer@^2.4.1
 npm i react-native-get-random-values@^1.11.0
 ```
@@ -36,7 +36,7 @@ npm i react-native-get-random-values@^1.11.0
 If you are using Expo, you will also need to add the following dependencies:
 
 ```bash
-npm i @daily-co/config-plugin-rn-daily-js@0.0.10
+npm i @daily-co/config-plugin-rn-daily-js@0.0.12
 ```
 
 All the details about Expo can be found [here](https://github.com/daily-co/rn-daily-js-expo-config-plugin).
