@@ -23,6 +23,11 @@
     "trailingComma": "es5",
     "useTabs": false
   },
+  "resolutions": {
+    "ws": "^8.21.0",
+    "lodash": "^4.17.23",
+    "@babel/core": "^7.29.6"
+  },
   "devDependencies": {
     "@daily-co/react-native-webrtc": "^124.0.6-daily.2",
     "@eslint/compat": "^1.4.1",
