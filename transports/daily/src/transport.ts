@@ -605,7 +605,7 @@ export class RNDailyTransport extends Transport {
       if (ev.participantsAudioLevel.hasOwnProperty(participantId)) {
         const audioLevel = ev.participantsAudioLevel[participantId];
         let participant = participants[participantId];
-        if (audioLevel && participant) {
+        if (audioLevel !== undefined && participant) {
           this._callbacks.onRemoteAudioLevel?.(
             audioLevel,
             dailyParticipantToParticipant(participant)
