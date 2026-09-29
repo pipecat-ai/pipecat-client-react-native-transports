@@ -79,6 +79,7 @@ export class AudioLevelObserver {
           remoteParticipantAudioLevel,
           this.botParticipant
         );
+        this.failsCount = 0;
       } catch (e) {
         logger.warn('Failed to retrieve remote audio level', { error: e });
         this.failsCount++;
