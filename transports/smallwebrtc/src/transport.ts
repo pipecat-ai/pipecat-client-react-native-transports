@@ -510,8 +510,8 @@ export class RNSmallWebRTCTransport extends Transport {
     // TODO: need to fix our type definition
     // @ts-ignore
     pc.addEventListener('signalingstatechange', () => {
-      logger.debug(`signalingState: ${this.pc!.signalingState}`);
-      if (this.pc!.signalingState === 'stable') {
+      logger.debug(`signalingState: ${pc.signalingState}`);
+      if (pc.signalingState === 'stable') {
         this.handleReconnectionCompleted();
       }
     });
