@@ -22,8 +22,8 @@ Install `@pipecat-ai/react-native-daily-transport` along with its peer dependenc
 
 ```bash
 npm i @pipecat-ai/react-native-daily-transport
-npm i @daily-co/react-native-daily-js@^0.86.0
-npm i @daily-co/react-native-webrtc@^124.0.6-daily.2
+npm i @daily-co/react-native-daily-js@^0.90.0
+npm i @daily-co/react-native-webrtc@^155.0.1-daily.1
 npm i @react-native-async-storage/async-storage@^3.1.1
 npm i react-native-background-timer@^2.4.1
 npm i react-native-get-random-values@^1.11.0

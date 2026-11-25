@@ -1581,59 +1581,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@daily-co/config-plugin-rn-daily-js@npm:0.0.12":
-  version: 0.0.12
-  resolution: "@daily-co/config-plugin-rn-daily-js@npm:0.0.12"
+"@daily-co/config-plugin-rn-daily-js@npm:0.0.13":
+  version: 0.0.13
+  resolution: "@daily-co/config-plugin-rn-daily-js@npm:0.0.13"
   dependencies:
-    "@expo/config-plugins": ^55.0.7
-    expo-build-properties: ~55.0.11
+    "@expo/config-plugins": ^55.0.10
+    expo-build-properties: ~55.0.15
   peerDependencies:
-    expo: ^55.0.0
-  checksum: ee297ac4cacd7fcecd860a2000183aa34fe38c3df3fe42f1d55708a0d6414167bab461600973667b290c841fbec1ebd060e49d1fa37d521211c95540f7dd745c
+    expo: ">=55.0.0 <58.0.0"
+  checksum: 00e4c1eecea357dab0de1c6d2b5d5a53e6c239ce2936986177ab78acf877f7ca27349efaf152a928f8baca12b505247269397203e6e2d5c0f3b9bd767cf828b5
   languageName: node
   linkType: hard
 
-"@daily-co/daily-js@npm:^0.91.0":
-  version: 0.91.0
-  resolution: "@daily-co/daily-js@npm:0.91.0"
+"@daily-co/daily-js@npm:^0.95.0":
+  version: 0.95.0
+  resolution: "@daily-co/daily-js@npm:0.95.0"
   dependencies:
     "@babel/runtime": ^7.12.5
     "@sentry/browser": ^8.33.1
     bowser: ^2.8.1
     dequal: ^2.0.3
     events: ^3.1.0
-  checksum: b264ea059f24f7f5ae97034f652c1a925cbb2accd61439bf526d5da1591e44c803f31a54d81f330cdd88af33533c8402fff99655079f183fe2fc23a3218b82fb
+  checksum: b6baa789073c734bd5b985f74a16bea380905c31e577fc9308725d10511c32d3ad2302b2aee8dfd67ea8a7e88d9ee5ec591e4d12e789ed97eb95a623cdf23919
   languageName: node
   linkType: hard
 
-"@daily-co/react-native-daily-js@npm:^0.86.0":
-  version: 0.86.0
-  resolution: "@daily-co/react-native-daily-js@npm:0.86.0"
+"@daily-co/react-native-daily-js@npm:^0.90.0":
+  version: 0.90.0
+  resolution: "@daily-co/react-native-daily-js@npm:0.90.0"
   dependencies:
-    "@daily-co/daily-js": ^0.91.0
+    "@daily-co/daily-js": ^0.95.0
     "@types/react-native-background-timer": ^2.0.0
     base-64: ^1.0.0
     react-native-url-polyfill: ^1.1.2
   peerDependencies:
-    "@daily-co/react-native-webrtc": ^124.0.6-daily.1
+    "@daily-co/react-native-webrtc": ^155.0.1-daily.1
     "@react-native-async-storage/async-storage": ^1.24.0 || ^2.0.0 || ^3.0.0
     react-native: ">=0.68.0"
     react-native-background-timer: ^2.4.1
     react-native-get-random-values: ^1.11.0
-  checksum: 40c73e7c12e7df0f331405005bda1faeba81b8041ecab6645d9727c8031d06969858db9264ca99346f4707baf82124f660a83ea79f3ebe1768a61c9772401bc8
+  checksum: 27fd529cb1d58937c975feff07c59f87c93264d15eb200adc2ab82e07d7a6b3820c625dc6bbddbce50a479ec4c23fe76655305990cceeae6cda49752d33db3a8
   languageName: node
   linkType: hard
 
-"@daily-co/react-native-webrtc@npm:^124.0.6-daily.2":
-  version: 124.0.6-daily.2
-  resolution: "@daily-co/react-native-webrtc@npm:124.0.6-daily.2"
+"@daily-co/react-native-webrtc@npm:^155.0.1-daily.1":
+  version: 155.0.1-daily.1
+  resolution: "@daily-co/react-native-webrtc@npm:155.0.1-daily.1"
   dependencies:
     base64-js: 1.5.1
     debug: 4.3.4
-    event-target-shim: 6.0.2
   peerDependencies:
     react-native: ">=0.60.0"
-  checksum: e84dac517d26703e356c1896339a5efc4bcef60e36324509aa172e9859d71146c8303f5dd1124934d7f6728d060b5371208be37bcfacb4a70b66e673f4fcf642
+  checksum: fdb04920c52330cefd71f72861937e34b9ae80fa44fdac453ccda1cc9ade2e505450303d964de0c01a7acb10c1769ff70741033cc94cee1f03ccc0f61c648577
   languageName: node
   linkType: hard
 
@@ -1831,7 +1830,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@expo/config-plugins@npm:^55.0.7, @expo/config-plugins@npm:~55.0.11":
+"@expo/config-plugins@npm:^55.0.10":
+  version: 55.0.12
+  resolution: "@expo/config-plugins@npm:55.0.12"
+  dependencies:
+    "@expo/config-types": ^55.0.6
+    "@expo/json-file": ~10.0.15
+    "@expo/plist": ^0.5.4
+    "@expo/sdk-runtime-versions": ^1.0.0
+    chalk: ^4.1.2
+    debug: ^4.3.5
+    getenv: ^2.0.0
+    glob: ^13.0.0
+    resolve-from: ^5.0.0
+    semver: ^7.5.4
+    slugify: ^1.6.6
+    xcode: ^4.0.0
+    xml2js: 0.6.0
+  checksum: 8d7188b868914c40ae74e197ce1af6261fdafbd17535c28a5ae4dc84a6e82136b43eaf126ae3ffa5cf3ae468c44758ea05470e7015ed628a563507436acdde6b
+  languageName: node
+  linkType: hard
+
+"@expo/config-plugins@npm:~55.0.11":
   version: 55.0.11
   resolution: "@expo/config-plugins@npm:55.0.11"
   dependencies:
@@ -2670,8 +2690,8 @@ __metadata:
   linkType: hard
 
 "@pipecat-ai/client-js@npm:^1.12.0":
-  version: 1.13.0
-  resolution: "@pipecat-ai/client-js@npm:1.13.0"
+  version: 1.17.0
+  resolution: "@pipecat-ai/client-js@npm:1.17.0"
   dependencies:
     "@types/events": ^3.0.3
     bowser: ^2.11.0
@@ -2679,7 +2699,7 @@ __metadata:
     events: ^3.3.0
     typed-emitter: ^2.1.0
     uuid: ^11.1.1
-  checksum: e31996141702e67ad05b2cb002f51b3050a29f5b12c1bfd42af852d72998efd0c785ffb9c7f6a697b8485a3ab23b098b984e95d81739fb45d5edf35a325589de
+  checksum: d1aaa9dcc5046eeea445f80a184a7efe77652524a5eba4bc709438052b19711a25794299f81966b1a28afd7150381916a67c48ff4090348875b99bd966fd1442
   languageName: node
   linkType: hard
 
@@ -2688,9 +2708,9 @@ __metadata:
   resolution: "@pipecat-ai/react-native-daily-example@workspace:examples/daily"
   dependencies:
     "@babel/core": ^7.29.0
-    "@daily-co/config-plugin-rn-daily-js": 0.0.12
-    "@daily-co/react-native-daily-js": ^0.86.0
-    "@daily-co/react-native-webrtc": ^124.0.6-daily.2
+    "@daily-co/config-plugin-rn-daily-js": 0.0.13
+    "@daily-co/react-native-daily-js": ^0.90.0
+    "@daily-co/react-native-webrtc": ^155.0.1-daily.1
     "@pipecat-ai/react-native-daily-transport": "*"
     "@react-native-async-storage/async-storage": 3.1.1
     "@react-navigation/native": ^7.1.19
@@ -2713,8 +2733,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pipecat-ai/react-native-daily-media-manager@workspace:libs/daily-media-manager"
   dependencies:
-    "@daily-co/react-native-daily-js": ^0.86.0
-    "@daily-co/react-native-webrtc": ^124.0.6-daily.2
+    "@daily-co/react-native-daily-js": ^0.90.0
+    "@daily-co/react-native-webrtc": ^155.0.1-daily.1
     "@pipecat-ai/react-native-small-webrtc-transport": "*"
     "@react-native-async-storage/async-storage": ^3.1.1
     del-cli: ^6.0.0
@@ -2723,8 +2743,8 @@ __metadata:
     react-native-get-random-values: ^1.11.0
     typescript: "*"
   peerDependencies:
-    "@daily-co/react-native-daily-js": ^0.86.0
-    "@daily-co/react-native-webrtc": ^124.0.6-daily.2
+    "@daily-co/react-native-daily-js": ^0.90.0
+    "@daily-co/react-native-webrtc": ^155.0.1-daily.1
     "@pipecat-ai/react-native-small-webrtc-transport": "*"
     "@react-native-async-storage/async-storage": ^3.1.1
     react-native: "*"
@@ -2737,8 +2757,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pipecat-ai/react-native-daily-transport@workspace:transports/daily"
   dependencies:
-    "@daily-co/react-native-daily-js": ^0.86.0
-    "@daily-co/react-native-webrtc": ^124.0.6-daily.2
+    "@daily-co/react-native-daily-js": ^0.90.0
+    "@daily-co/react-native-webrtc": ^155.0.1-daily.1
     "@pipecat-ai/client-js": ^1.12.0
     "@react-native-async-storage/async-storage": ^3.1.1
     "@types/base-64": ^1.0.2
@@ -2748,8 +2768,8 @@ __metadata:
     react-native-get-random-values: ^1.11.0
     typescript: "*"
   peerDependencies:
-    "@daily-co/react-native-daily-js": ^0.86.0
-    "@daily-co/react-native-webrtc": ^124.0.6-daily.2
+    "@daily-co/react-native-daily-js": ^0.90.0
+    "@daily-co/react-native-webrtc": ^155.0.1-daily.1
     "@react-native-async-storage/async-storage": ^3.1.1
     react-native: "*"
     react-native-background-timer: ^2.4.1
@@ -2762,9 +2782,9 @@ __metadata:
   resolution: "@pipecat-ai/react-native-small-webrtc-example@workspace:examples/smallwebrtc"
   dependencies:
     "@babel/core": ^7.29.0
-    "@daily-co/config-plugin-rn-daily-js": 0.0.12
-    "@daily-co/react-native-daily-js": ^0.86.0
-    "@daily-co/react-native-webrtc": ^124.0.6-daily.2
+    "@daily-co/config-plugin-rn-daily-js": 0.0.13
+    "@daily-co/react-native-daily-js": ^0.90.0
+    "@daily-co/react-native-webrtc": ^155.0.1-daily.1
     "@pipecat-ai/react-native-daily-media-manager": "*"
     "@pipecat-ai/react-native-small-webrtc-transport": "*"
     "@react-native-async-storage/async-storage": 3.1.1
@@ -2788,7 +2808,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pipecat-ai/react-native-small-webrtc-transport@workspace:transports/smallwebrtc"
   dependencies:
-    "@daily-co/react-native-webrtc": ^124.0.6-daily.2
+    "@daily-co/react-native-webrtc": ^155.0.1-daily.1
     "@pipecat-ai/client-js": ^1.12.0
     "@types/base-64": ^1.0.2
     "@types/lodash": ^4.17.20
@@ -2799,7 +2819,7 @@ __metadata:
     react-native-builder-bob: ^0.40.13
     typescript: "*"
   peerDependencies:
-    "@daily-co/react-native-webrtc": ^124.0.6-daily.2
+    "@daily-co/react-native-webrtc": ^155.0.1-daily.1
     react-native: "*"
   languageName: unknown
   linkType: soft
@@ -5664,13 +5684,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"event-target-shim@npm:6.0.2":
-  version: 6.0.2
-  resolution: "event-target-shim@npm:6.0.2"
-  checksum: 9be93437e5b84056a7dc70af8b8962f4ef7f6fd41a988efcd39dfa2853e33242a4058e0dac9cc589cb16ed7409010590ac8cbcc2e3f823100cd337e13be953a0
-  languageName: node
-  linkType: hard
-
 "event-target-shim@npm:^5.0.0":
   version: 5.0.1
   resolution: "event-target-shim@npm:5.0.1"
@@ -5753,16 +5766,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-build-properties@npm:~55.0.11":
-  version: 55.0.16
-  resolution: "expo-build-properties@npm:55.0.16"
+"expo-build-properties@npm:~55.0.15":
+  version: 55.0.18
+  resolution: "expo-build-properties@npm:55.0.18"
   dependencies:
     "@expo/schema-utils": ^55.0.5
     resolve-from: ^5.0.0
     semver: ^7.6.0
   peerDependencies:
     expo: "*"
-  checksum: 46588c9a0eaab84cf01bbef044a4a91811883fd33e87df7edee60b624610f587ab27575851a5d8e45210fc342a642599852c0e5a30aaf94d2dfd62bae0c79901
+  checksum: a45c637ebbda26c7dcac07d5d35b89b01212db1bc83426a4f451ed11b537d5721fbb3ee9423cf5c6e7793502ac04b06aefd33c0b97720522e9c5eddecbfd79a2
   languageName: node
   linkType: hard
 
@@ -9221,7 +9234,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "pipecat-react-native-transports@workspace:."
   dependencies:
-    "@daily-co/react-native-webrtc": ^124.0.6-daily.2
+    "@daily-co/react-native-webrtc": ^155.0.1-daily.1
     "@eslint/compat": ^1.4.1
     "@eslint/eslintrc": ^3.3.5
     "@eslint/js": ^9.39.4
@@ -10169,7 +10182,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"simple-plist@npm:^1.1.0":
+"simple-plist@npm:^1.1.0, simple-plist@npm:^1.3.1":
   version: 1.4.0
   resolution: "simple-plist@npm:1.4.0"
   dependencies:
@@ -11146,6 +11159,15 @@ __metadata:
     simple-plist: ^1.1.0
     uuid: ^7.0.3
   checksum: 908ff85851f81aec6e36ca24427db092e1cc068f052716e14de5e762196858039efabbe053a1abe8920184622501049e74a93618e8692b982f7604a9847db108
+  languageName: node
+  linkType: hard
+
+"xcode@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "xcode@npm:4.0.0"
+  dependencies:
+    simple-plist: ^1.3.1
+  checksum: 798c388d5300e6a756b8927d0ac51a6d1cb780626c783eac454e0f5572af4d98eb97b9da8234c56e4f9cef73a14fcabed8435d13c3e7240864a98ee1bb8d6ae5
   languageName: node
   linkType: hard
 

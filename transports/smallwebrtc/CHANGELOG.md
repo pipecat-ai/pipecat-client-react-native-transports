@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - The local and remote audio levels are reported once when they reach 0, instead of every time the transport measures silence.
+- ⚠️ Requires `@daily-co/react-native-webrtc` 155.0.1-daily.1 or later. Update it in the app along with this transport.
 
 ## [1.8.0] - 2026-06-22
 
