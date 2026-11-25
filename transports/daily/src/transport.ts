@@ -31,9 +31,15 @@ import {
   TransportStartError,
   TransportState,
   logger,
+  MediaSupport,
   MessageTooLargeError,
 } from '@pipecat-ai/client-js';
 import { MediaDeviceInfo } from '@daily-co/react-native-webrtc';
+
+/** Whether a level is reported: any level but a 0 that follows another 0. */
+function isReported(level: number, lastLevel: number | undefined): boolean {
+  return level !== 0 || lastLevel !== 0;
+}
 
 class DailyCallWrapper {
   private _daily: DailyCall;
@@ -93,6 +99,10 @@ export class RNDailyTransport extends Transport {
   private _dailyFactoryOptions: DailyFactoryOptions;
 
   private _botId: string = '';
+  // The last levels reported, by participant for the remote ones, so silence is
+  // reported once and not every time it's measured.
+  private _lastLocalAudioLevel: number | undefined;
+  private _lastRemoteAudioLevels = new Map<string, number>();
   private _selectedCam: MediaDeviceInfo | Record<string, never> = {};
   private _selectedMic: MediaDeviceInfo | Record<string, never> = {};
   private _selectedSpeaker: MediaDeviceInfo | Record<string, never> = {};
@@ -230,6 +240,17 @@ export class RNDailyTransport extends Transport {
 
   public get isSharingScreen(): boolean {
     return this._daily.localScreenAudio() || this._daily.localScreenVideo();
+  }
+
+  /** Carries every kind of media. */
+  get mediaSupport(): MediaSupport {
+    return {
+      mic: true,
+      cam: true,
+      screenShare: true,
+      botAudio: true,
+      botVideo: true,
+    };
   }
 
   tracks() {
@@ -418,6 +439,8 @@ export class RNDailyTransport extends Transport {
     this.state = 'disconnecting';
     this._daily.stopLocalAudioLevelObserver();
     this._daily.stopRemoteParticipantsAudioLevelObserver();
+    this._lastLocalAudioLevel = undefined;
+    this._lastRemoteAudioLevels.clear();
     await this._daily.leave();
   }
 
@@ -588,11 +611,14 @@ export class RNDailyTransport extends Transport {
     if (p.local) return;
 
     this._botId = '';
+    this._lastRemoteAudioLevels.delete(ev.participant.session_id);
 
     this._callbacks.onBotDisconnected?.(p);
   }
 
   private handleLocalAudioLevel(ev: DailyEventObjectLocalAudioLevel) {
+    if (!isReported(ev.audioLevel, this._lastLocalAudioLevel)) return;
+    this._lastLocalAudioLevel = ev.audioLevel;
     this._callbacks.onLocalAudioLevel?.(ev.audioLevel);
   }
 
@@ -605,7 +631,12 @@ export class RNDailyTransport extends Transport {
       if (ev.participantsAudioLevel.hasOwnProperty(participantId)) {
         const audioLevel = ev.participantsAudioLevel[participantId];
         let participant = participants[participantId];
-        if (audioLevel && participant) {
+        if (
+          audioLevel !== undefined &&
+          participant &&
+          isReported(audioLevel, this._lastRemoteAudioLevels.get(participantId))
+        ) {
+          this._lastRemoteAudioLevels.set(participantId, audioLevel);
           this._callbacks.onRemoteAudioLevel?.(
             audioLevel,
             dailyParticipantToParticipant(participant)

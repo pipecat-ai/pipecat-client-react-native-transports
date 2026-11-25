@@ -69,6 +69,18 @@ export default function App() {
         onBotOutput: (output) => {
           console.log('Bot output:', output);
         },
+        onBotExpression: (expression) => {
+          console.log('Bot expression:', expression);
+        },
+        onBotDeliveryUpdated: (delivery) => {
+          console.log('Bot delivery:', delivery);
+        },
+        onClientUserAudioLevel: (level) => {
+          console.log('User audio level:', level);
+        },
+        onClientBotAudioLevel: (level) => {
+          console.log('Bot audio level:', level);
+        },
         onError: (error) => {
           console.log('Error:', JSON.stringify(error));
         },

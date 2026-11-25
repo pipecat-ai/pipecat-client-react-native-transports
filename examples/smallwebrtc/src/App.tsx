@@ -9,7 +9,6 @@ import {
 } from '@pipecat-ai/react-native-small-webrtc-transport';
 import {
   APIRequest,
-  Participant,
   PipecatClient,
   TransportState,
 } from '@pipecat-ai/client-js';
@@ -85,19 +84,20 @@ export default function App() {
         onError: (error) => {
           console.log('Error:', JSON.stringify(error));
         },
-        onLocalAudioLevel(level) {
-          console.log('Local audio level:', level);
+        onClientUserAudioLevel: (level) => {
+          console.log('User audio level:', level);
         },
-        onRemoteAudioLevel(level: number, participant: Participant) {
-          console.log(
-            'Remote audio level:',
-            level,
-            'participant:',
-            participant.id
-          );
+        onClientBotAudioLevel: (level) => {
+          console.log('Bot audio level:', level);
         },
         onBotOutput: (output) => {
           console.log('Bot output:', output);
+        },
+        onBotExpression: (expression) => {
+          console.log('Bot expression:', expression);
+        },
+        onBotDeliveryUpdated: (delivery) => {
+          console.log('Bot delivery:', delivery);
         },
       },
     });
