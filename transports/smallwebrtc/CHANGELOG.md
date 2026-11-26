@@ -5,23 +5,6 @@ All notable changes to **Pipecat Client React Native Small WebRTC** will be docu
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
-
-### Added
-
-- Supports RTVI protocol 2.4.0 through `@pipecat-ai/client-js`. Apps get the new callbacks from the client, such as `onFlowNodeEntered`, `onBotExpression`, `onBotDeliveryUpdated`, `onServerUserAudioLevel` and `onServerBotAudioLevel`, and the transport's levels through `onClientUserAudioLevel` and `onClientBotAudioLevel`.
-- Added `mediaSupport`, the media the transport carries: the microphone, the camera, the bot's audio and video, and screen share when the media manager can capture it.
-
-### Changed
-
-- Bumped `@pipecat-ai/client-js` dependency to `1.18.0`.
-- The local and remote audio levels are reported once when they reach 0, instead of every time the transport measures silence.
-- ⚠️ Requires `@daily-co/react-native-webrtc` 155.0.1-daily.1 or later. Update it in the app along with this transport.
-
-### Fixed
-
-- Leaving a session no longer throws `TypeError: Cannot read property 'signalingState' of null` when the peer connection reports its last state change as it closes.
-
 ## [1.8.0] - 2026-06-22
 
 ### Added
