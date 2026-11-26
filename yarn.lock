@@ -2689,9 +2689,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pipecat-ai/client-js@npm:^1.12.0":
-  version: 1.17.0
-  resolution: "@pipecat-ai/client-js@npm:1.17.0"
+"@pipecat-ai/client-js@npm:^1.18.0":
+  version: 1.18.0
+  resolution: "@pipecat-ai/client-js@npm:1.18.0"
   dependencies:
     "@types/events": ^3.0.3
     bowser: ^2.11.0
@@ -2699,7 +2699,7 @@ __metadata:
     events: ^3.3.0
     typed-emitter: ^2.1.0
     uuid: ^11.1.1
-  checksum: d1aaa9dcc5046eeea445f80a184a7efe77652524a5eba4bc709438052b19711a25794299f81966b1a28afd7150381916a67c48ff4090348875b99bd966fd1442
+  checksum: 36f2ca92472bde51276c6e9a35bbec5765e4585d3172f2dee27e8acbe3768348b1106cac129afc765e69ab17edb670e99e9e5a200fc4235cfcfa61fc87b1444a
   languageName: node
   linkType: hard
 
@@ -2759,7 +2759,7 @@ __metadata:
   dependencies:
     "@daily-co/react-native-daily-js": ^0.90.0
     "@daily-co/react-native-webrtc": ^155.0.1-daily.1
-    "@pipecat-ai/client-js": ^1.12.0
+    "@pipecat-ai/client-js": ^1.18.0
     "@react-native-async-storage/async-storage": ^3.1.1
     "@types/base-64": ^1.0.2
     del-cli: ^6.0.0
@@ -2809,7 +2809,7 @@ __metadata:
   resolution: "@pipecat-ai/react-native-small-webrtc-transport@workspace:transports/smallwebrtc"
   dependencies:
     "@daily-co/react-native-webrtc": ^155.0.1-daily.1
-    "@pipecat-ai/client-js": ^1.12.0
+    "@pipecat-ai/client-js": ^1.18.0
     "@types/base-64": ^1.0.2
     "@types/lodash": ^4.17.20
     "@types/react": 18.3.21
@@ -9238,7 +9238,7 @@ __metadata:
     "@eslint/compat": ^1.4.1
     "@eslint/eslintrc": ^3.3.5
     "@eslint/js": ^9.39.4
-    "@pipecat-ai/client-js": ^1.12.0
+    "@pipecat-ai/client-js": ^1.18.0
     "@react-native/eslint-config": ^0.82.1
     "@types/jest": 29.5.5
     eslint: 9.39.1
