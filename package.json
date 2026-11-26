@@ -37,11 +37,11 @@
     "undici": "^8.12.2"
   },
   "devDependencies": {
-    "@daily-co/react-native-webrtc": "^124.0.6-daily.2",
+    "@daily-co/react-native-webrtc": "^155.0.1-daily.1",
     "@eslint/compat": "^1.4.1",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.4",
-    "@pipecat-ai/client-js": "^1.12.0",
+    "@pipecat-ai/client-js": "^1.18.0",
     "@react-native/eslint-config": "^0.82.1",
     "@types/jest": "29.5.5",
     "eslint": "9.39.1",

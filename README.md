@@ -95,6 +95,14 @@ $ yarn install
 $ yarn build
 ```
 
+### Update the client-js types
+
+The packages type-check against a copy of `@pipecat-ai/client-js`'s types, in `types/@pipecat-ai/client-js/typeOverrides.d.ts`, that uses react-native-webrtc's media types and leaves out the UI features, which React Native doesn't support. After updating client-js, copy its types again:
+
+```bash
+$ node scripts/sync-client-js-types.mjs
+```
+
 ## License
 
 BSD-2 Clause

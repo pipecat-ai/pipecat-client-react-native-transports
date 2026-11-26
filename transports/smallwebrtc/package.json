@@ -70,15 +70,15 @@
     ]
   },
   "dependencies": {
-    "@pipecat-ai/client-js": "^1.12.0",
+    "@pipecat-ai/client-js": "^1.18.0",
     "lodash": "^4.17.23"
   },
   "peerDependencies": {
-    "@daily-co/react-native-webrtc": "^124.0.6-daily.2",
+    "@daily-co/react-native-webrtc": "^155.0.1-daily.1",
     "react-native": "*"
   },
   "devDependencies": {
-    "@daily-co/react-native-webrtc": "^124.0.6-daily.2",
+    "@daily-co/react-native-webrtc": "^155.0.1-daily.1",
     "@types/base-64": "^1.0.2",
     "@types/lodash": "^4.17.20",
     "@types/react": "18.3.21",

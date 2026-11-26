@@ -3,6 +3,15 @@ import { RTCPeerConnection } from '@daily-co/react-native-webrtc';
 import { MediaManager } from '@pipecat-ai/react-native-small-webrtc-transport';
 
 const DEFAULT_AUDIO_OBSERVER_INTERVAL_MS = 500;
+
+/** Whether a level is reported: any level but a 0 that follows another 0. */
+function shouldReportAudioLevel(
+  level: number,
+  lastLevel: number | undefined
+): boolean {
+  return level !== 0 || lastLevel !== 0;
+}
+
 export class AudioLevelObserver {
   private pc: RTCPeerConnection | null = null;
   private mediaManager: MediaManager;
@@ -16,6 +25,10 @@ export class AudioLevelObserver {
   private captureAudioLevelsInterval: ReturnType<typeof setInterval> | null =
     null;
   private botParticipant: Participant;
+  // The last levels reported, so silence is reported once and not every time
+  // it's measured.
+  private lastLocalAudioLevel: number | undefined;
+  private lastRemoteAudioLevel: number | undefined;
 
   constructor(mediaManager: MediaManager) {
     this.mediaManager = mediaManager;
@@ -51,6 +64,8 @@ export class AudioLevelObserver {
     logger.info('Stopping AudioLevelObserver.');
     this.pc = null;
     this.failsCount = 0;
+    this.lastLocalAudioLevel = undefined;
+    this.lastRemoteAudioLevel = undefined;
     if (this.captureAudioLevelsInterval) {
       clearInterval(this.captureAudioLevelsInterval);
       this.captureAudioLevelsInterval = null;
@@ -71,14 +86,30 @@ export class AudioLevelObserver {
     this.captureAudioLevelsInterval = setInterval(async () => {
       try {
         const localParticipantAudioLevel =
-          await this.getLocalParticipantAudioLevel();
-        this._onLocalAudioLevel?.(localParticipantAudioLevel);
+          (await this.getLocalParticipantAudioLevel()) ?? 0;
+        if (
+          shouldReportAudioLevel(
+            localParticipantAudioLevel,
+            this.lastLocalAudioLevel
+          )
+        ) {
+          this.lastLocalAudioLevel = localParticipantAudioLevel;
+          this._onLocalAudioLevel?.(localParticipantAudioLevel);
+        }
         const remoteParticipantAudioLevel =
-          await this.getRemoteParticipantAudioLevel();
-        this._onRemoteAudioLevel?.(
-          remoteParticipantAudioLevel,
-          this.botParticipant
-        );
+          (await this.getRemoteParticipantAudioLevel()) ?? 0;
+        if (
+          shouldReportAudioLevel(
+            remoteParticipantAudioLevel,
+            this.lastRemoteAudioLevel
+          )
+        ) {
+          this.lastRemoteAudioLevel = remoteParticipantAudioLevel;
+          this._onRemoteAudioLevel?.(
+            remoteParticipantAudioLevel,
+            this.botParticipant
+          );
+        }
       } catch (e) {
         logger.warn('Failed to retrieve remote audio level', { error: e });
         this.failsCount++;

@@ -2,6 +2,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import {
   logger,
   makeRequest,
+  MediaSupport,
   RTVIError,
   RTVIMessage,
   PipecatClientOptions,
@@ -509,8 +510,8 @@ export class RNSmallWebRTCTransport extends Transport {
     // TODO: need to fix our type definition
     // @ts-ignore
     pc.addEventListener('signalingstatechange', () => {
-      logger.debug(`signalingState: ${this.pc!.signalingState}`);
-      if (this.pc!.signalingState === 'stable') {
+      logger.debug(`signalingState: ${pc.signalingState}`);
+      if (pc.signalingState === 'stable') {
         this.handleReconnectionCompleted();
       }
     });
@@ -1067,6 +1068,20 @@ export class RNSmallWebRTCTransport extends Transport {
   }
   get isSharingScreen(): boolean {
     return this.mediaManager.isSharingScreen;
+  }
+
+  /**
+   * Carries every kind of media; screen share when the media manager can
+   * capture it.
+   */
+  get mediaSupport(): MediaSupport {
+    return {
+      mic: true,
+      cam: true,
+      screenShare: this.mediaManager.supportsScreenShare,
+      botAudio: true,
+      botVideo: true,
+    };
   }
 
   get state(): TransportState {
