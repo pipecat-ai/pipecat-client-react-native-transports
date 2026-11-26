@@ -10,6 +10,12 @@ updates:
     # hold the app keys.
     cooldown:
       default-days: 7
+    # Dependabot copies the commit style of the repo's history, which isn't
+    # conventional here, so the prefix is set to pass the commit lint:
+    # "chore(deps): bump ...".
+    commit-message:
+      prefix: chore
+      include: scope
     # Minor and patch updates in one pull request; each major on its own.
     groups:
       actions:
