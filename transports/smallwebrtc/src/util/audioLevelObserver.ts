@@ -5,7 +5,10 @@ import { MediaManager } from '@pipecat-ai/react-native-small-webrtc-transport';
 const DEFAULT_AUDIO_OBSERVER_INTERVAL_MS = 500;
 
 /** Whether a level is reported: any level but a 0 that follows another 0. */
-function isReported(level: number, lastLevel: number | undefined): boolean {
+function shouldReportAudioLevel(
+  level: number,
+  lastLevel: number | undefined
+): boolean {
   return level !== 0 || lastLevel !== 0;
 }
 
@@ -84,14 +87,22 @@ export class AudioLevelObserver {
       try {
         const localParticipantAudioLevel =
           (await this.getLocalParticipantAudioLevel()) ?? 0;
-        if (isReported(localParticipantAudioLevel, this.lastLocalAudioLevel)) {
+        if (
+          shouldReportAudioLevel(
+            localParticipantAudioLevel,
+            this.lastLocalAudioLevel
+          )
+        ) {
           this.lastLocalAudioLevel = localParticipantAudioLevel;
           this._onLocalAudioLevel?.(localParticipantAudioLevel);
         }
         const remoteParticipantAudioLevel =
           (await this.getRemoteParticipantAudioLevel()) ?? 0;
         if (
-          isReported(remoteParticipantAudioLevel, this.lastRemoteAudioLevel)
+          shouldReportAudioLevel(
+            remoteParticipantAudioLevel,
+            this.lastRemoteAudioLevel
+          )
         ) {
           this.lastRemoteAudioLevel = remoteParticipantAudioLevel;
           this._onRemoteAudioLevel?.(

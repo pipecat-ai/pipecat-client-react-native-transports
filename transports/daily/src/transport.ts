@@ -37,7 +37,10 @@ import {
 import { MediaDeviceInfo } from '@daily-co/react-native-webrtc';
 
 /** Whether a level is reported: any level but a 0 that follows another 0. */
-function isReported(level: number, lastLevel: number | undefined): boolean {
+function shouldReportAudioLevel(
+  level: number,
+  lastLevel: number | undefined
+): boolean {
   return level !== 0 || lastLevel !== 0;
 }
 
@@ -617,7 +620,8 @@ export class RNDailyTransport extends Transport {
   }
 
   private handleLocalAudioLevel(ev: DailyEventObjectLocalAudioLevel) {
-    if (!isReported(ev.audioLevel, this._lastLocalAudioLevel)) return;
+    if (!shouldReportAudioLevel(ev.audioLevel, this._lastLocalAudioLevel))
+      return;
     this._lastLocalAudioLevel = ev.audioLevel;
     this._callbacks.onLocalAudioLevel?.(ev.audioLevel);
   }
@@ -634,7 +638,10 @@ export class RNDailyTransport extends Transport {
         if (
           audioLevel !== undefined &&
           participant &&
-          isReported(audioLevel, this._lastRemoteAudioLevels.get(participantId))
+          shouldReportAudioLevel(
+            audioLevel,
+            this._lastRemoteAudioLevels.get(participantId)
+          )
         ) {
           this._lastRemoteAudioLevels.set(participantId, audioLevel);
           this._callbacks.onRemoteAudioLevel?.(
