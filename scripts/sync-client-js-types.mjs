@@ -106,9 +106,23 @@ function withoutUnavailable(source) {
   const found = new Set();
   const remove = (node, name) => {
     // An enum member's comma follows it.
-    const end =
-      source[node.getEnd()] === ',' ? node.getEnd() + 1 : node.getEnd();
-    ranges.push([node.getFullStart(), end]);
+    let end = source[node.getEnd()] === ',' ? node.getEnd() + 1 : node.getEnd();
+    // The leading trivia starts with the rest of the previous line, such as
+    // its trailing comment, so the removal starts on the next line and runs
+    // to the end of the node's own line.
+    let start = node.getFullStart();
+    const newline = source.indexOf('\n', start);
+    if (newline !== -1 && newline < node.getStart(file)) {
+      start = newline + 1;
+      const endOfLine = source.indexOf('\n', end);
+      if (
+        endOfLine !== -1 &&
+        /^\s*(\/\/.*)?$/.test(source.slice(end, endOfLine))
+      ) {
+        end = endOfLine + 1;
+      }
+    }
+    ranges.push([start, end]);
     found.add(name);
   };
   for (const statement of file.statements) {

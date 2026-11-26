@@ -716,7 +716,7 @@ export enum RTVIMessageType {
   SERVER_RESPONSE = 'server-response', // Server response to client message
   ERROR_RESPONSE = 'error-response', // Error message in response to an outbound message
   SYSTEM_LOG = 'system-log', // A line of the bot's log, sent only when enabled
-  APPEND_TO_CONTEXT_RESULT = 'append-to-context-result',
+  APPEND_TO_CONTEXT_RESULT = 'append-to-context-result', // Result of appending to context
   FLOW_NODE_ENTERED = 'flow-node-entered', // The bot's conversation flow entered a node (RTVI 2.4.0+)
   /** Speaking and Transcription Messages */
   USER_STARTED_SPEAKING = 'user-started-speaking', // User started speaking
