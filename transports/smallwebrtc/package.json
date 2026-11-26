@@ -18,9 +18,7 @@
     "lint:fix": "eslint \"**/*.{js,ts,tsx}\" --fix",
     "clean": "del-cli lib",
     "prepare": "bob build",
-    "build": "bob build",
-    "tag": "../../scripts/tag",
-    "prepublishOnly": "npm run tag"
+    "build": "bob build"
   },
   "keywords": [
     "react-native",

@@ -1,0 +1,78 @@
+name: Publish RC
+
+on:
+  workflow_dispatch:
+    inputs:
+      package:
+        description: 'Which package to publish'
+        required: true
+        type: choice
+        options:
+          - transports/daily
+          - transports/smallwebrtc
+          - libs/daily-media-manager
+      preid:
+        description: 'Prerelease identifier'
+        required: true
+        default: 'rc'
+        type: string
+
+jobs:
+  publish-rc:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Node 24 ships the npm (11.5.1 or later) that publishes through OIDC.
+      - name: Setup Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: yarn install --immutable --mode=skip-build
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'github-actions@github.com'
+
+      # The bump is committed and tagged here rather than by npm version, so the
+      # tag is named like the ones release-please creates. Release-please reads
+      # its last release from GitHub releases, not tags, so this tag doesn't
+      # move its baseline.
+      - name: Bump prerelease version
+        id: bump
+        working-directory: ${{ inputs.package }}
+        env:
+          PREID: ${{ inputs.preid }}
+        run: |
+          npm version prerelease --preid="$PREID" --no-git-tag-version
+          name=$(node -p "require('./package.json').name.replace(/^@[^/]+\//, '')")
+          version=$(node -p "require('./package.json').version")
+          # build: is a hidden type, so the bump stays out of the changelogs.
+          git commit -am "build: prerelease $name $version"
+          git tag "$name-v$version"
+          echo "tag=$name-v$version" >> "$GITHUB_OUTPUT"
+
+      - name: Build
+        run: yarn build
+
+      - name: Publish to NPM (dev tag)
+        working-directory: ${{ inputs.package }}
+        run: npm publish --tag dev --provenance
+
+      - name: Push version bump
+        env:
+          TAG: ${{ steps.bump.outputs.tag }}
+        run: |
+          git push
+          git push origin "$TAG"
