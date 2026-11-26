@@ -50,7 +50,6 @@ Releases are automated with [Release Please](https://github.com/googleapis/relea
 - Each merge to `main` updates one release PR per package (`chore(main): release <package> <version>`). The version comes from the conventional commits since the last release: `fix` bumps the patch version, `feat` the minor version, and `feat!`/`fix!` or a `BREAKING CHANGE:` footer the major version.
 - The release PR's CHANGELOG entry is built from the `## Release Notes` section of each PR it covers (see the PR template). PRs without one fall back to their commit messages.
 - Merging a release PR tags the release, creates the GitHub release, and publishes the package to npm through trusted publishing.
-- To publish a release candidate under the npm `dev` tag, run the "Publish RC" workflow from the Actions tab.
 
 # Contributor Covenant Code of Conduct
 
