@@ -5,6 +5,23 @@ All notable changes to **Pipecat Client React Native Small WebRTC** will be docu
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0](https://github.com/pipecat-ai/pipecat-client-react-native-transports/compare/react-native-small-webrtc-transport-v1.8.0...react-native-small-webrtc-transport-v1.9.0) (2026-11-26)
+
+### Features
+
+* Supports RTVI protocol 2.4.0 through `@pipecat-ai/client-js`. Apps get the new callbacks from the client, such as `onFlowNodeEntered`, `onBotExpression`, `onBotDeliveryUpdated`, `onServerUserAudioLevel` and `onServerBotAudioLevel`, and the transport's levels through `onClientUserAudioLevel` and `onClientBotAudioLevel`. ([e0cb38c](https://github.com/pipecat-ai/pipecat-client-react-native-transports/commit/e0cb38cfa110b10f1591229dc6508c71a8e362af))
+* Added `mediaSupport`, the media the transport carries: the microphone, the camera, the bot's audio and video, and screen share when the media manager can capture it. ([e0cb38c](https://github.com/pipecat-ai/pipecat-client-react-native-transports/commit/e0cb38cfa110b10f1591229dc6508c71a8e362af))
+
+### Changed
+
+* Bumped `@pipecat-ai/client-js` dependency to `1.18.0`. ([1325144](https://github.com/pipecat-ai/pipecat-client-react-native-transports/commit/13251446849f067cffa4a48ff4a6c46f4dffa8e8))
+* The local and remote audio levels are reported once when they reach 0, instead of every time the transport measures silence. ([e0cb38c](https://github.com/pipecat-ai/pipecat-client-react-native-transports/commit/e0cb38cfa110b10f1591229dc6508c71a8e362af))
+* ⚠️ Requires `@daily-co/react-native-webrtc` 155.0.1-daily.1 or later. Update it in the app along with this transport. ([9d9884b](https://github.com/pipecat-ai/pipecat-client-react-native-transports/commit/9d9884b077fecd6cabcfb5d922cefff7de9548b8))
+
+### Bug Fixes
+
+* Leaving a session no longer throws `TypeError: Cannot read property 'signalingState' of null` when the peer connection reports its last state change as it closes. ([bb7ac3e](https://github.com/pipecat-ai/pipecat-client-react-native-transports/commit/bb7ac3e9c004cc56f9f67cd59436db7c1d76815f))
+
 ## [1.8.0] - 2026-06-22
 
 ### Added
