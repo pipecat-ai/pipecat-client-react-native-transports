@@ -5,6 +5,23 @@ All notable changes to **Pipecat Client React Native** will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0](https://github.com/pipecat-ai/pipecat-client-react-native-transports/compare/react-native-daily-transport-v1.8.0...react-native-daily-transport-v1.9.0) (2026-11-26)
+
+### Features
+
+* Supports RTVI protocol 2.4.0 through `@pipecat-ai/client-js`. Apps get the new callbacks from the client, such as `onFlowNodeEntered`, `onBotExpression`, `onBotDeliveryUpdated`, `onServerUserAudioLevel` and `onServerBotAudioLevel`, and the transport's levels through `onClientUserAudioLevel` and `onClientBotAudioLevel`. ([e0cb38c](https://github.com/pipecat-ai/pipecat-client-react-native-transports/commit/e0cb38cfa110b10f1591229dc6508c71a8e362af))
+* Added `mediaSupport`, the media the transport carries: the microphone, the camera, screen share, and the bot's audio and video. ([e0cb38c](https://github.com/pipecat-ai/pipecat-client-react-native-transports/commit/e0cb38cfa110b10f1591229dc6508c71a8e362af))
+
+### Changed
+
+* Bumped `@pipecat-ai/client-js` dependency to `1.18.0`. ([1325144](https://github.com/pipecat-ai/pipecat-client-react-native-transports/commit/13251446849f067cffa4a48ff4a6c46f4dffa8e8))
+* The local and remote audio levels are reported once when they reach 0, instead of every time the transport measures silence. ([e0cb38c](https://github.com/pipecat-ai/pipecat-client-react-native-transports/commit/e0cb38cfa110b10f1591229dc6508c71a8e362af))
+* ⚠️ Requires `@daily-co/react-native-daily-js` 0.90.0 or later and `@daily-co/react-native-webrtc` 155.0.1-daily.1 or later. Update both in the app along with this transport. ([9d9884b](https://github.com/pipecat-ai/pipecat-client-react-native-transports/commit/9d9884b077fecd6cabcfb5d922cefff7de9548b8))
+
+### Bug Fixes
+
+* The remote audio level is reported when it reaches 0. It was skipped, so a level meter kept showing the bot's last level once it stopped speaking. ([e0cb38c](https://github.com/pipecat-ai/pipecat-client-react-native-transports/commit/e0cb38cfa110b10f1591229dc6508c71a8e362af))
+
 ## [1.8.0] - 2026-06-22
 
 ### Added
