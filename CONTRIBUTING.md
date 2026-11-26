@@ -14,11 +14,23 @@ We welcome contributions of all kinds! Your help is appreciated. Follow these st
    ```
 4. **Make your changes**: Edit or add files as necessary.
 5. **Test your changes**: Ensure that your changes look correct and follow the style set in the codebase.
-6. **Commit your changes**: Once you're satisfied with your changes, commit them with a meaningful message.
+6. **Commit your changes**: This project uses [Conventional Commits](https://www.conventionalcommits.org/). At least one commit per PR must follow the format:
 
-```bash
-git commit -m "Description of your changes"
-```
+   ```
+   <type>(<optional scope>): <description>
+   ```
+
+   Common types: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`, `ci`
+
+   PR commits are validated in CI via the `lint-commits` workflow. You are free to use any message for intermediate commits (e.g. `tmp`, `wip`) as long as at least one commit in the PR is conventional.
+
+   **Local commitlint (opt-in):** If you'd like commit messages validated locally, enable the Husky hook:
+
+   ```bash
+   git config --local hooks.commitlint true
+   ```
+
+   To disable: `git config --local --unset hooks.commitlint`
 
 7. **Push your changes**: Push your branch to your forked repository.
 
@@ -30,6 +42,14 @@ git push origin your-branch-name
    > Important: Describe the changes you've made clearly!
 
 Our maintainers will review your PR, and once everything is good, your contributions will be merged!
+
+## Releases
+
+Releases are automated with [Release Please](https://github.com/googleapis/release-please):
+
+- Each merge to `main` updates one release PR per package (`chore(main): release <package> <version>`). The version comes from the conventional commits since the last release: `fix` bumps the patch version, `feat` the minor version, and `feat!`/`fix!` or a `BREAKING CHANGE:` footer the major version.
+- The release PR's CHANGELOG entry is built from the `## Release Notes` section of each PR it covers (see the PR template). PRs without one fall back to their commit messages.
+- Merging a release PR tags the release, creates the GitHub release, and publishes the package to npm through trusted publishing.
 
 # Contributor Covenant Code of Conduct
 

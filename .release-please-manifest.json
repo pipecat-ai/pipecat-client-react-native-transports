@@ -1,0 +1,5 @@
+{
+  "transports/daily": "1.8.0",
+  "transports/smallwebrtc": "1.8.0",
+  "libs/daily-media-manager": "0.0.2"
+}

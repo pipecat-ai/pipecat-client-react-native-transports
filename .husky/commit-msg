@@ -1,0 +1,3 @@
+if [ "$(git config --local hooks.commitlint)" = "true" ]; then
+  yarn commitlint --edit "$1"
+fi
